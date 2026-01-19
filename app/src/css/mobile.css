@@ -1,0 +1,110 @@
+/************************************/
+/* Responsive Styling               */
+/************************************/
+
+@media (max-width: 768px) {
+    .header_bar {
+        position: fixed;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    nav {
+        display: flex;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--primary-bg-color);
+        transition: right 0.4s;
+        font-size: 2em;
+        z-index: 8;
+    }
+
+    nav.hidden {
+        right: -100%;
+    }
+
+    nav ul {
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul li {
+        border-bottom: 1px solid #CCC;
+    }
+
+    nav ul li:last-child {
+        border-bottom: none;
+    }
+
+    .toggle_menu {
+        display: block;
+        padding: 0 16px;
+        z-index: 9;
+        order: 2;
+    }
+
+    .toggle_menu img {
+        width: 44px;
+        transform: rotate(0deg);
+        transition: transform 0.4s;
+    }
+
+    .toggle_menu.active img {
+        transform: rotate(90deg);
+    }
+
+    .dark_mode_toggle {
+        order: 1;
+    }
+
+    section#mainframe {
+        margin-top: 84px;
+    }
+
+    /* Tables */
+    table, tbody, tr, td {
+        display: block;
+        width: 100%;
+    }
+
+    /* Hide headers */
+    table thead {
+        display: none;
+    }
+
+    /* Turn each tablerow into own card */
+    table tr {
+        background-color: var(--primary-card-bg-color);
+        border: 1px solid #d0d5da;
+        border-radius: 10px;
+        padding: 8px;
+        margin-bottom: 12px;
+        box-shadow: var(--box-shadow-default);
+    }
+
+    /* mobile: less padding for cells */
+    table td {
+        border: none;
+        padding: 4px 2px;
+        font-size: 14px;
+    }
+
+    /* rounded corners at bottom / top */
+    table td:first-child {
+        margin-top: 2px;
+    }
+    table td:last-child {
+        margin-bottom: 2px;
+    }
+
+    table tr:nth-child(even) td {
+        background: none;
+    }
+
+}

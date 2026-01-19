@@ -1,0 +1,31 @@
+<div class="title_bar">
+  <h1>{{ user.firstname }} {{ user.lastname }}</h1>
+  <p><a href="/users/{{ user.id }}/edit" title="Edit {{ user.firstname }} {{ user.lastname }}">Edit user</a></p>
+</div>
+
+<table>
+  <tr>
+    <td>Birthdate</td>
+    <td>{{ user.birthdate }}</td>
+  </tr>
+  <tr>
+    <td>Profession</td>
+    <td>{{ user.profession }}</td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td>{{ user.email }}</td>
+  </tr>
+  <tr>
+    <td>Gender</td>
+    <td>{{ user.gender }}</td>
+  </tr>
+  <tr>
+    <td>Description</td>
+    <td>{{ user.description }}</td>
+  </tr>
+  <tr>
+    <td>Newsletter?</td>
+    <td>{{ user.newsletter }}</td>
+  </tr>
+</table>

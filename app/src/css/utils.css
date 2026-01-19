@@ -1,0 +1,120 @@
+/*************************************/
+/* Login Page Layout
+/*************************************/
+.login-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.login-card {
+    background-color: var(--primary-card-bg-color);
+    width: 100%;
+    max-width: 380px;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    will-change: transform;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*************************************/
+/* Header inside Login Card
+/*************************************/
+.login-header h1 {
+    font-size: 1.4rem;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.login-header p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/*************************************/
+/* Password Toggle Button
+/*************************************/
+#togglePassword {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 44px;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: #888;
+    border-radius: 0 8px 8px 0;
+    margin: 0;
+}
+
+/*************************************/
+/* Login Button
+/*************************************/
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--primary-button-color);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s ease;
+}
+
+/*******************************/
+/* Display Form Error Messages
+/*******************************/
+.form-error {
+    border: 1px solid var(--error-border-color);
+    background-color: var(--error-bg-color);
+    color: var(--error-text-color);
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+.form-error.hidden {
+    display: none;
+}
+
+/*************************************/
+/* Shake Animation for Login Card
+/*************************************/
+@keyframes shake {
+    10%, 90% {
+        transform: translateX(-2px);
+    }
+    20%, 80% {
+        transform: translateX(4px);
+    }
+    30%, 50%, 70% {
+        transform: translateX(-8px);
+    }
+    40%, 60% {
+        transform: translateX(8px);
+    }
+}
+
+.login-card.shake {
+    animation: shake 0.8s ease-out;
+    animation-fill-mode: both;
+}
