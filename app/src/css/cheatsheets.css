@@ -1,0 +1,36 @@
+#cs_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#cs_editor {
+
+    border: 1px solid var(--primary-card-bg-color);
+}
+
+#cs_preview {
+    border: 1px solid var(--primary-card-bg-color);
+}
+
+#edit_cheatsheet {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 80vh;
+}
+
+#edit_cheatsheet #editor_wrapper {
+    height: 100%;
+}
+
+#cs_preview object {
+    width: 100%;
+    height: 100%;
+}
+
+/* PDF */
+#cheatsheet_pdf {
+    height: 100%;
+    font-size: 6pt;
+    line-height: 1;
+    column-count: 5;
+}

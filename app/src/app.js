@@ -2,7 +2,12 @@ import {Router} from "./js/utils/router.js";
 
 import {checkDarkMode} from "./js/controller/darkmodeHandler";
 import {showDashboard} from "./js/views/dashboardView";
-import {viewCheatsheetCreate, viewCheatsheetDetail, viewCheatsheetList} from "./js/views/cheatsheetsView";
+import {
+  viewCheatsheetCreate,
+  viewCheatsheetDetail,
+  viewCheatsheetEdit,
+  viewCheatsheetList, viewCheatsheetPreview
+} from "./js/views/cheatsheetsView";
 //
 checkDarkMode();
 console.log("Hello!");
@@ -11,7 +16,7 @@ const router = new Router();
 
 const mainframe = document.getElementById("mainframe");
 
-router.add("/", () => {
+router.add("/", async () => {
   return showDashboard();
 });
 
@@ -38,7 +43,7 @@ router.add("/cheatsheets/:id", (params) => {
 });
 
 router.add("/cheatsheets/:id/edit", (params) => {
-  mainframe.innerHTML = `<h1>Cheatsheet Edit #${params.id}</h1>`;
+  return viewCheatsheetEdit();
 });
 
 router.add("/cheatsheets/:id/delete", (params) => {
@@ -82,3 +87,7 @@ router.add("/admin/users", () => {
   mainframe.innerHTML = "<h1>Users</h1>";
 });
 
+/* PDF Debugger */
+router.add("/cheatsheet_pdf", () => {
+  return viewCheatsheetPreview();
+});

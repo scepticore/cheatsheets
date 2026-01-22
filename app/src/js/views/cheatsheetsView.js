@@ -46,12 +46,20 @@ export function viewCheatsheetCreate() {
   return renderTemplate("cheatsheets/create.html", {result, form});
 }
 
-export function viewCheatsheetEdit() {
+export async function viewCheatsheetEdit() {
   const result = {}; // await getCheatsheetList();
-  return renderTemplate("cheatsheets/index.html", {result});
+  await renderTemplate("cheatsheets/edit.html", {result}, true);
+
+  const editor = ace.edit("editor");
+  editor.setTheme("ace/theme/github_dark");
+  editor.session.setMode("ace/mode/markdown");
 }
 
 export function viewCheatsheetDelete() {
   const result = {}; // await getCheatsheetList();
   return renderTemplate("cheatsheets/index.html", {result});
+}
+
+export function viewCheatsheetPreview() {
+  return renderTemplate("cheatsheets/preview.html", {}, true);
 }
