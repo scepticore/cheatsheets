@@ -46,6 +46,10 @@ export async function renderTemplate(templateName, context = null, style = false
     MAINFRAME.innerHTML = template;
     replaceTables(context);
     replaceForms(context);
+
+    window.dispatchEvent(new CustomEvent("renderComplete", {
+      detail: { template: templateName }
+    }));
   } catch (e) {
     console.error(e);
     MAINFRAME.innerHTML = e;
@@ -347,6 +351,7 @@ function resolvePath(obj, path) {
 async function addTemplateCSS(templatePath) {
   const parts = templatePath.split("/");
   const folderName = parts[0];
+  console.log(folderName);
   const cssPath = `${BASE_URL}src/css/${folderName}.css`;
 
   try {
