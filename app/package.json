@@ -13,6 +13,8 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "jspdf": "^4.0.0",
+    "marked": "^17.0.1",
     "vite": "^7.3.1"
   }
 }
