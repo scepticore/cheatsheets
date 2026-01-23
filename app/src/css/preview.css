@@ -102,3 +102,9 @@ p {
 ul, li, p, table {
     break-inside: avoid;
 }
+
+@media print {
+    #renderBtn {
+        display: none;
+    }
+}

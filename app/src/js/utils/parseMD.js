@@ -1,7 +1,7 @@
 import {marked} from 'marked';
 
 /* Unit test */
-const text = "<h1># Introduction</h1>\n" +
+const text = "# Introduction\n" +
   "\n" +
   "* Heilmittelgesetz (HMG, SR 812.21)\n" +
   "* Medizinprodukteverordnung (MepV, SR 812.213)\n" +
@@ -121,12 +121,12 @@ const text = "<h1># Introduction</h1>\n" +
   "* Zweck: Diagnose, Heilung, Linderung oder Vorbeugung von Krankheiten.\n" +
   "* Beeinflussung von Körperstruktur oder -funktionen (Mensch/Tier).\n" +
   "\n" +
+  "![Some random code screenshot](https://cdn.hashnode.com/res/hashnode/image/upload/v1677781943492/c64cae30-2543-4bd8-be4c-54f9871a3c8d.png 'Random screenshot')\n" +
   "### Wirkweise (Abgrenzung zu Medikamenten):\n" +
   "* Keine primär chemische Wirkung im/am Körper.\n" +
   "* Keine Abhängigkeit vom Stoffwechsel (Metabolisierung).\n" +
   "* Status: Anerkannt durch offizielle Arzneibücher (z. B. USP).\n" +
   "\n" +
-  "![Some random code screenshot](https://cdn.hashnode.com/res/hashnode/image/upload/v1677781943492/c64cae30-2543-4bd8-be4c-54f9871a3c8d.png 'Random screenshot')\n" +
   "### Klassifizierungsregeln gemäss FDA\n" +
   "\n" +
   "| Klasse | Beispiele |\n" +
@@ -145,68 +145,9 @@ const text = "<h1># Introduction</h1>\n" +
   "Ist obligatorisch. Beinhaltet zusammengefasst eine Sammlung aller Informationen über ein Produkt, welche benötigt werden, um die Einhaltung der gesetzlichen Anforderungen zu überprüfen (z.B. Sicherheit und Leistung).\n" +
   "\n" +
   "### Lebenszyklus\n" +
-  "### Policy for Low-Risk devices\n" +
-  "* **Zielgruppe:** Medizinprodukte & Entscheidungsunterstützungs-Tools mit geringem Risiko.\n" +
-  "* **Regel:** Verzicht auf übliche Produkt- oder Dokumentenprüfung durch die FDA.\n" +
-  "* **Vorteil:** Direkte Markteinführung ohne vorherige Genehmigung möglich.\n" +
-  "* **Besonderheit:** Besonders vorteilhaft für Software-Produkte.\n" +
-  "\n" +
-  "## Technische Dokumentation\n" +
-  "Ist obligatorisch. Beinhaltet zusammengefasst eine Sammlung aller Informationen über ein Produkt, welche benötigt werden, um die Einhaltung der gesetzlichen Anforderungen zu überprüfen (z.B. Sicherheit und Leistung).\n" +
-  "\n" +
-  "### Lebenszyklus\n" +
-  "### Policy for Low-Risk devices\n" +
-  "* **Zielgruppe:** Medizinprodukte & Entscheidungsunterstützungs-Tools mit geringem Risiko.\n" +
-  "* **Regel:** Verzicht auf übliche Produkt- oder Dokumentenprüfung durch die FDA.\n" +
-  "* **Vorteil:** Direkte Markteinführung ohne vorherige Genehmigung möglich.\n" +
-  "* **Besonderheit:** Besonders vorteilhaft für Software-Produkte.\n" +
-  "\n" +
-  "## Technische Dokumentation\n" +
-  "Ist obligatorisch. Beinhaltet zusammengefasst eine Sammlung aller Informationen über ein Produkt, welche benötigt werden, um die Einhaltung der gesetzlichen Anforderungen zu überprüfen (z.B. Sicherheit und Leistung).\n" +
-  "\n" +
-  "### Lebenszyklus\n" +
-  "### Policy for Low-Risk devices\n" +
-  "* **Zielgruppe:** Medizinprodukte & Entscheidungsunterstützungs-Tools mit geringem Risiko.\n" +
-  "* **Regel:** Verzicht auf übliche Produkt- oder Dokumentenprüfung durch die FDA.\n" +
-  "* **Vorteil:** Direkte Markteinführung ohne vorherige Genehmigung möglich.\n" +
-  "* **Besonderheit:** Besonders vorteilhaft für Software-Produkte.\n" +
-  "\n" +
-  "## Technische Dokumentation\n" +
-  "Ist obligatorisch. Beinhaltet zusammengefasst eine Sammlung aller Informationen über ein Produkt, welche benötigt werden, um die Einhaltung der gesetzlichen Anforderungen zu überprüfen (z.B. Sicherheit und Leistung).\n" +
-  "\n" +
-  "### Lebenszyklus\n" +
-  "### Policy for Low-Risk devices\n" +
-  "* **Zielgruppe:** Medizinprodukte & Entscheidungsunterstützungs-Tools mit geringem Risiko.\n" +
-  "* **Regel:** Verzicht auf übliche Produkt- oder Dokumentenprüfung durch die FDA.\n" +
-  "* **Vorteil:** Direkte Markteinführung ohne vorherige Genehmigung möglich.\n" +
-  "* **Besonderheit:** Besonders vorteilhaft für Software-Produkte.\n" +
-  "\n" +
-  "## Technische Dokumentation\n" +
-  "Ist obligatorisch. Beinhaltet zusammengefasst eine Sammlung aller Informationen über ein Produkt, welche benötigt werden, um die Einhaltung der gesetzlichen Anforderungen zu überprüfen (z.B. Sicherheit und Leistung).\n" +
-  "\n" +
-  "### Lebenszyklus\n" +
-  "### Policy for Low-Risk devices\n" +
-  "* **Zielgruppe:** Medizinprodukte & Entscheidungsunterstützungs-Tools mit geringem Risiko.\n" +
-  "* **Regel:** Verzicht auf übliche Produkt- oder Dokumentenprüfung durch die FDA.\n" +
-  "* **Vorteil:** Direkte Markteinführung ohne vorherige Genehmigung möglich.\n" +
-  "* **Besonderheit:** Besonders vorteilhaft für Software-Produkte.\n" +
-  "\n" +
-  "## Technische Dokumentation\n" +
-  "Ist obligatorisch. Beinhaltet zusammengefasst eine Sammlung aller Informationen über ein Produkt, welche benötigt werden, um die Einhaltung der gesetzlichen Anforderungen zu überprüfen (z.B. Sicherheit und Leistung).\n" +
-  "\n" +
-  "### Lebenszyklus\n" +
-  "### Policy for Low-Risk devices\n" +
-  "* **Zielgruppe:** Medizinprodukte & Entscheidungsunterstützungs-Tools mit geringem Risiko.\n" +
-  "* **Regel:** Verzicht auf übliche Produkt- oder Dokumentenprüfung durch die FDA.\n" +
-  "* **Vorteil:** Direkte Markteinführung ohne vorherige Genehmigung möglich.\n" +
-  "* **Besonderheit:** Besonders vorteilhaft für Software-Produkte.\n" +
-  "\n" +
-  "## Technische Dokumentation\n" +
-  "Ist obligatorisch. Beinhaltet zusammengefasst eine Sammlung aller Informationen über ein Produkt, welche benötigt werden, um die Einhaltung der gesetzlichen Anforderungen zu überprüfen (z.B. Sicherheit und Leistung).\n" +
-  "\n" +
-  "### Lebenszyklus\n" +
   "* Mehrere Stakeholder tragen dazu bei und verwenden die Dokumentation während dem ganzen Lebenszyklus des Produkts\n" +
-  "* Gleichzeitig dient Dokumentation als Basis für Genehmigung von regulatorischen Behörden\n";
+  "* Gleichzeitig dient Dokumentation als Basis für Genehmigung von regulatorischen Behörden";
+
 
 const html = marked.parse(`<div class='page'>${text}</div><div class='page'>${text}</div>`);
 const renderView = document.getElementById("render_wrapper");
