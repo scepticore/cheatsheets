@@ -12,6 +12,7 @@ designed for printed A4 cheatsheets
 
 ## Planned features
 - Group-Working
+- Image Upload (External sources via markdown should work)
 
 # Notes
 
