@@ -53,6 +53,66 @@ const text = "# Introduction\n" +
   "* Für medizinische Verwendung bestimmt\n" +
   "* Wenn Hauptwirkung nicht durch Arzneimittel erreicht wird\n" +
   "\n" +
+  "### Art. 95 Absatz 1\n" +
+  "Der Bund kann Vorschriften erlassen über die Ausübung der privatwirtschaftlichen Erwerbstätigkeit.\n" +
+  "\n" +
+  "### Art. 118 Absatz 2\n" +
+  "Er (der Bund) erlässt Vorschriften über:\n" +
+  "\n" +
+  "* Umgang mit Lebensmitteln / Heilmitteln, Betäubungsmitteln, Organismen, Chemikalien und Gegenständen, welche die Gesundheit gefährden können;\n" +
+  "* die Bekämpfung übertragbarer, stark verbreiteter oder bösartiger Krankheiten von Menschen und Tieren;\n" +
+  "* den Schutz vor ionisierenden Strahlen.\n" +
+  "\n" +
+  "## Heilmittelgesetz, HMG\n" +
+  "\n" +
+  "### Art. 95 Absatz 1\n" +
+  "Der Bund kann Vorschriften erlassen über die Ausübung der privatwirtschaftlichen Erwerbstätigkeit.\n" +
+  "\n" +
+  "### Art. 118 Absatz 2\n" +
+  "Er (der Bund) erlässt Vorschriften über:\n" +
+  "\n" +
+  "* Umgang mit Lebensmitteln / Heilmitteln, Betäubungsmitteln, Organismen, Chemikalien und Gegenständen, welche die Gesundheit gefährden können;\n" +
+  "* die Bekämpfung übertragbarer, stark verbreiteter oder bösartiger Krankheiten von Menschen und Tieren;\n" +
+  "* den Schutz vor ionisierenden Strahlen.\n" +
+  "\n" +
+  "## Heilmittelgesetz, HMG\n" +
+  "\n" +
+  "### Art. 95 Absatz 1\n" +
+  "Der Bund kann Vorschriften erlassen über die Ausübung der privatwirtschaftlichen Erwerbstätigkeit.\n" +
+  "\n" +
+  "### Art. 118 Absatz 2\n" +
+  "Er (der Bund) erlässt Vorschriften über:\n" +
+  "\n" +
+  "* Umgang mit Lebensmitteln / Heilmitteln, Betäubungsmitteln, Organismen, Chemikalien und Gegenständen, welche die Gesundheit gefährden können;\n" +
+  "* die Bekämpfung übertragbarer, stark verbreiteter oder bösartiger Krankheiten von Menschen und Tieren;\n" +
+  "* den Schutz vor ionisierenden Strahlen.\n" +
+  "\n" +
+  "## Heilmittelgesetz, HMG\n" +
+  "\n" +
+  "### Art. 95 Absatz 1\n" +
+  "Der Bund kann Vorschriften erlassen über die Ausübung der privatwirtschaftlichen Erwerbstätigkeit.\n" +
+  "\n" +
+  "### Art. 118 Absatz 2\n" +
+  "Er (der Bund) erlässt Vorschriften über:\n" +
+  "\n" +
+  "* Umgang mit Lebensmitteln / Heilmitteln, Betäubungsmitteln, Organismen, Chemikalien und Gegenständen, welche die Gesundheit gefährden können;\n" +
+  "* die Bekämpfung übertragbarer, stark verbreiteter oder bösartiger Krankheiten von Menschen und Tieren;\n" +
+  "* den Schutz vor ionisierenden Strahlen.\n" +
+  "\n" +
+  "## Heilmittelgesetz, HMG\n" +
+  "\n" +
+  "### Art. 95 Absatz 1\n" +
+  "Der Bund kann Vorschriften erlassen über die Ausübung der privatwirtschaftlichen Erwerbstätigkeit.\n" +
+  "\n" +
+  "### Art. 118 Absatz 2\n" +
+  "Er (der Bund) erlässt Vorschriften über:\n" +
+  "\n" +
+  "* Umgang mit Lebensmitteln / Heilmitteln, Betäubungsmitteln, Organismen, Chemikalien und Gegenständen, welche die Gesundheit gefährden können;\n" +
+  "* die Bekämpfung übertragbarer, stark verbreiteter oder bösartiger Krankheiten von Menschen und Tieren;\n" +
+  "* den Schutz vor ionisierenden Strahlen.\n" +
+  "\n" +
+  "## Heilmittelgesetz, HMG\n" +
+  "\n" +
   "## Sorgfaltspflicht (HMG Art. 3)\n" +
   "Wer mit Heilmitteln umgeht, muss dabei alle Massnahmen treffen, die nach dem Stand von Wissenschaft und Technik erforderlich sind, damit die Gesundheit von Mensch und Tier nicht gefährdet wird.\n" +
   "\n" +
@@ -146,10 +206,51 @@ const text = "# Introduction\n" +
   "\n" +
   "### Lebenszyklus\n" +
   "* Mehrere Stakeholder tragen dazu bei und verwenden die Dokumentation während dem ganzen Lebenszyklus des Produkts\n" +
+  "* Gleichzeitig dient Dokumentation als Basis für Genehmigung von regulatorischen Behörden\n" +
+  "\n" +
+  "\n" +
+  "## Klassifizierungsregeln gemäss MDR\n" +
+  "Total 22 Regeln zur Klassifizierung:\n" +
+  "* Regeln 1-4 → Nicht-Invasive Produkte\n" +
+  "* Regeln 5-8 → Invasive Produkte\n" +
+  "* Regeln 9-12 → Aktive Produkte\n" +
+  "* Regeln 13-22 → Spezielle Regeln\n" +
+  "\n" +
+  "## Ausserhalb von Europa (FDA)\n" +
+  "* Instrument, Gerät, Maschine, Implantat, Reagenz oder Zubehör.\n" +
+  "* Zweck: Diagnose, Heilung, Linderung oder Vorbeugung von Krankheiten.\n" +
+  "* Beeinflussung von Körperstruktur oder -funktionen (Mensch/Tier).\n" +
+  "\n" +
+  "![Some random code screenshot](https://cdn.hashnode.com/res/hashnode/image/upload/v1677781943492/c64cae30-2543-4bd8-be4c-54f9871a3c8d.png 'Random screenshot')\n" +
+  "### Wirkweise (Abgrenzung zu Medikamenten):\n" +
+  "* Keine primär chemische Wirkung im/am Körper.\n" +
+  "* Keine Abhängigkeit vom Stoffwechsel (Metabolisierung).\n" +
+  "* Status: Anerkannt durch offizielle Arzneibücher (z. B. USP).\n" +
+  "\n" +
+  "### Klassifizierungsregeln gemäss FDA\n" +
+  "\n" +
+  "| Klasse | Beispiele |\n" +
+  "| :--- | :--- |\n" +
+  "| **Class I** | Untersuchungshandschuhe, mechanischer Rollstuhl |\n" +
+  "| **Class II** | Diagnostischer Ultraschall, die meisten IVD-Geräte |\n" +
+  "| **Class III** | Aktive implantierbare Geräte |\n" +
+  "\n" +
+  "### Policy for Low-Risk devices\n" +
+  "* **Zielgruppe:** Medizinprodukte & Entscheidungsunterstützungs-Tools mit geringem Risiko.\n" +
+  "* **Regel:** Verzicht auf übliche Produkt- oder Dokumentenprüfung durch die FDA.\n" +
+  "* **Vorteil:** Direkte Markteinführung ohne vorherige Genehmigung möglich.\n" +
+  "* **Besonderheit:** Besonders vorteilhaft für Software-Produkte.\n" +
+  "\n" +
+  "## Technische Dokumentation\n" +
+  "Ist obligatorisch. Beinhaltet zusammengefasst eine Sammlung aller Informationen über ein Produkt, welche benötigt werden, um die Einhaltung der gesetzlichen Anforderungen zu überprüfen (z.B. Sicherheit und Leistung).\n" +
+  "\n" +
+  "### Lebenszyklus\n" +
+  "* Mehrere Stakeholder tragen dazu bei und verwenden die Dokumentation während dem ganzen Lebenszyklus des Produkts\n" +
   "* Gleichzeitig dient Dokumentation als Basis für Genehmigung von regulatorischen Behörden";
 
 
-const html = marked.parse(`<div class='page'>${text}</div><div class='page'>${text}</div>`);
+const rendered = marked.parse(text);
+const html = `<div class='page'>${rendered}</div><div class='page'>${rendered}</div>`;
 const renderView = document.getElementById("render_wrapper");
 
 renderView.innerHTML = html;
