@@ -1,19 +1,26 @@
-# API for Cheatsheets
+# Cheatsheets: Backend
 
-## Setting up
+# Install instructions
+Move to directory
+```terminaloutput
+cd /api/
 ```
+
+Installation
+```terminaloutput
 npm install
 ```
 
-## For dev
-```
+Run dev
+```terminaloutput
 npm run dev
 ```
 
-## Production
-```
+Run production
+```terminaloutput
 npm start
 ```
+
 
 # Making API-calls in frontend
 ```javascript
