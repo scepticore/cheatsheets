@@ -10,6 +10,7 @@ Optimized for A4 prints.
 - Font-Size-Picking between 6Pt and 12Pt
 - Live-Preview in Browser (like Overleaf)
 - PDF-Export
+- Run in Docker-Container
 
 ## Planned features
 - Group-Working
@@ -24,6 +25,11 @@ Optimized for A4 prints.
 | MongoDB | tbd | Database to store cheatsheets as objects with markdown |
 
 # Example PDF (Screenshot)
+- Font Size: 6pt
+- Font: Arial
+- 5 Columns
+- Format: A4 Landscape
+
 ![Example Cheatsheet](/example/example.png)
 
 # Notes

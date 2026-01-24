@@ -178,6 +178,7 @@ function replaceSingleValues(templateContent, context) {
 
 /**
  * Erstellt Platzhalter für einfache, globale {{ table ... }} Aufrufe.
+ * Usage: {{ table tableName actions fields(field1, field2) }}
  * @param {string} templateContent - The template string to search for matches
  * @returns {string}
  */
