@@ -7,7 +7,7 @@ export async function viewCheatsheetList() {
   const cheatsheets = await cheatsheetsService.getCheatsheets();
 
   console.log(cheatsheets);
-  return renderTemplate("cheatsheets/index.html", {cheatsheets});
+  return renderTemplate("cheatsheets/index.html", {cheatsheets: cheatsheets.data});
 }
 
 export function viewCheatsheetDetail(id) {

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express, { Request, Response } from "express";
 import cors from 'cors';
 import userRoutes from "./routes/userRoutes";
@@ -6,6 +7,7 @@ import authRoutes from "./routes/authRoutes";
 
 const app = express();
 const PORT = process.env.PORT || 3030;
+// const mongoUri = process.env.MONGO_URL;
 
 /* @todo put port in .env */
 app.use(cors({
@@ -21,6 +23,6 @@ app.get("/", (req: Request, res: Response) => {
     res.json("Cheatsheet API v 0.0.1");
 });
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
+app.listen(Number(PORT), '0.0.0.0', () => {
+    console.log(`API läuft auf http://0.0.0.0:${PORT}`);
 });

@@ -1,16 +1,27 @@
+import {requestService} from "../utils/requests";
+const API_BASE = import.meta.env.VITE_API_URL;
+
 export class cheatsheetsService {
+
   static async getCheatsheets() {
-    return [
-      {
-        "id": "1",
-        "title": "MI.EWA",
-        "description": "MI.EWA cheatsheet"
-      },
-      {
-        "id": "2",
-        "title": "MI.RSM",
-        "description": "MI.RSM cheatsheet"
-      }
-    ];
+    // Run API-Call with current user id
+    // console.log("Getting cheatsheets...");
+    return requestService.fetchResponse(API_BASE+"cheatsheets?user_id="+1, "cheatsheet", "GET", {}, {});
+  }
+
+  static async getCheatsheetById(uuid) {
+    // Run API-Call
+  }
+
+  static async getCheatSheetMD() {
+    // Run API-Call
+  }
+
+  static async updateCheatsheet(uuid) {
+    // Run API-Call
+  }
+
+  static async deleteCheatsheet(uuid) {
+    // Run API-Call
   }
 }

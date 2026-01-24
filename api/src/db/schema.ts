@@ -2,7 +2,7 @@ import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import {sql} from "drizzle-orm";
 
 export const usersTable = sqliteTable("users_table", {
-    user_id: int().primaryKey({autoIncrement: true}),
+    id: int().primaryKey({autoIncrement: true}),
     name: text(),
     firstname: text(),
     email: text().notNull().unique(),
@@ -11,8 +11,8 @@ export const usersTable = sqliteTable("users_table", {
 });
 
 export const cheatsheetsTable = sqliteTable("cheatsheet_table", {
-    cheatsheet_id: text(),
-    user_id: int().notNull().references(() => usersTable.user_id),
+    id: text(),
+    user_id: int().notNull().references(() => usersTable.id),
     title: text(),
     description: text(),
     filename: text(),

@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "ts,js,json",
+  "ignore": ["cheatsheet.db", "cheatsheet.db-journal", "cheatsheet.db-wal"],
+  "exec": "ts-node src/index.ts"
+}

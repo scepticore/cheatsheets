@@ -12,7 +12,7 @@ const db = drizzle(process.env.DB_FILE_NAME!);
 export async function getUsers(res: Response) {
     try {
         const result = await db.select({
-            id: usersTable.user_id,
+            id: usersTable.id,
             name: usersTable.name,
             firstname: usersTable.firstname,
             email: usersTable.email,
@@ -29,10 +29,10 @@ export async function getUsers(res: Response) {
 export async function getUserById(id: number, req: Request, res: Response) {
     try {
         const result = await db.select({
-            id: usersTable.user_id,
+            id: usersTable.id,
             name: usersTable.name,
             email: usersTable.email
-        }).from(usersTable).where(eq(usersTable.user_id, id));
+        }).from(usersTable).where(eq(usersTable.id, id));
         res.status(200).json(result);
     } catch (error) {
         console.log(error);
@@ -48,7 +48,7 @@ export async function getUserById(id: number, req: Request, res: Response) {
 export async function getUserByCredentials(req: Request, res: Response) {
     try {
         const result = await db.select({
-            id: usersTable.user_id,
+            id: usersTable.id,
             username: usersTable.username,
             email: usersTable.email,
             password: usersTable.password
@@ -109,7 +109,7 @@ export async function createUser(req: Request, res: Response) {
 
 export async function updateUser(id: number, req: Request, res: Response) {
     try {
-        const result = await db.update(usersTable).set(req.body).where(eq(usersTable.user_id, id));
+        const result = await db.update(usersTable).set(req.body).where(eq(usersTable.id, id));
         res.status(200).json({result});
     } catch (error) {
         console.error(error);
@@ -119,7 +119,7 @@ export async function updateUser(id: number, req: Request, res: Response) {
 
 export async function deleteUser(id: number, req: Request, res: Response) {
     try {
-        const result = await db.delete(usersTable).where(eq(usersTable.user_id, id));
+        const result = await db.delete(usersTable).where(eq(usersTable.id, id));
         res.status(200).json({result});
     } catch (error) {
         console.error(error);
