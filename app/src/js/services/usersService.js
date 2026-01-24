@@ -37,4 +37,20 @@ export class usersService {
   static async handleUserForm(formData) {
     console.log(formData);
   }
+
+  static async createUser(formData) {
+    // Make API-Call to create user
+
+    // If user creation successful, return uuid
+
+    // create dir in /output/
+  }
+
+  static async updateUser(formData) {
+    // Make API-Call to update user
+  }
+
+  static async deleteUser(id) {
+    // Make API-call to delete user (set status to inactive)
+  }
 }

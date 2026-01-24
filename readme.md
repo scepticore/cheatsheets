@@ -14,8 +14,16 @@ designed for printed A4 cheatsheets
 - Group-Working
 - Image Upload (External sources via markdown should work)
 
-# Notes
+# Services / Ports
+| Service | Port | Description |
+|-|-|-|
+| Frontend | 5173 | Frontend for Cheatsheets |
+| PDF-Generator | 3000 | PDF-Generator Service for live preview |
+| Backend | 3030 | ExpressJS API for Backend Calls |
+| MongoDB | tbd | Database to store cheatsheets as objects with markdown |
 
+
+# Notes
 - MongoDB for Cheatsheets
 - SQLite for User Data and Stuff
 

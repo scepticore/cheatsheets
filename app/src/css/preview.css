@@ -30,7 +30,7 @@
     height: auto;
     min-height: 180mm;
     margin-bottom: 4mm;
-    border: 1px dashed #333;
+    /*border: 1px dashed #333;*/
 }
 
 @media print {

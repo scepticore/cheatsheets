@@ -1,0 +1,21 @@
+import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {sql} from "drizzle-orm";
+
+export const usersTable = sqliteTable("users_table", {
+    user_id: int().primaryKey({autoIncrement: true}),
+    name: text(),
+    firstname: text(),
+    email: text().notNull().unique(),
+    username: text().notNull().unique(),
+    password: text().notNull(),
+});
+
+export const cheatsheetsTable = sqliteTable("cheatsheet_table", {
+    cheatsheet_id: text(),
+    user_id: int().notNull().references(() => usersTable.user_id),
+    title: text(),
+    description: text(),
+    filename: text(),
+    created_at: text().default(sql`(current_timestamp)`).notNull(),
+    updated_at: text()
+});

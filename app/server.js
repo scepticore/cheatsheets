@@ -20,6 +20,7 @@ app.get('/generate-pdf', async (req, res) => {
     // Deine lokale URL
     await page.goto('http://localhost:5173/preview.html', { waitUntil: 'networkidle0' });
 
+    /* @todo replace name, and add user uuid as subdir (e.g. /output/123e4567-e89b-12d3-a456-426614174000/file.pdf) */
     const outputPath = path.join(__dirname, 'output', 'dokumentation.pdf');
     await page.emulateMediaType('screen');
 
