@@ -1,5 +1,3 @@
-// Import classes
-
 /**
  * Service to handle all API requests.
  * Uses fetch to communicate with the API.
@@ -18,13 +16,13 @@ export class requestService {
   /**
    * Connect and get data from REST API
    * @param {string} apiBaseURL - Base URL of the API endpoint
-   * @param {string} type - Type of data to fetch (e.g., "patients", "incident")
+   * @param {string} type - Type of data to fetch
    * @param {string} method - HTTP method (e.g., "GET", "POST")
    * @param {object} headers -  HTTP headers
    * @param {object} body - HTTP body
    * @returns {Promise<object>} - Processed response object or array of objects
    */
-  async fetchResponse(apiBaseURL, type, method, headers, body) {
+  static async fetchResponse(apiBaseURL, type, method, headers, body) {
     let token = "";
     if (window.sessionStorage.getItem("token")) {
       token = window.sessionStorage.getItem("token");
@@ -36,9 +34,9 @@ export class requestService {
       method: method || 'GET',
       headers: headers || {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        // 'Authorization': `Bearer ${token}`,
       },
-      body: body ? JSON.stringify(body) : undefined,
+      // body: body ? JSON.stringify(body) : undefined,
       signal: AbortSignal.timeout(5000)
     };
     try {
@@ -55,6 +53,7 @@ export class requestService {
       }
       return handled;
     } catch (error) {
+      console.log(error);
       return {
         status: 503,
         notification: {
@@ -64,10 +63,10 @@ export class requestService {
         }
       }
     }
-  }
+  };
 
   // Handle server response by
-  async handleResponse(response, type) {
+  static async handleResponse(response, type) {
     // Read body ONCE
     let rawBody;
     const contentType = response.headers.get("content-type") || "";
@@ -164,7 +163,7 @@ export class requestService {
    * @param {string} type - type of data to process
    * @returns
    */
-  async returnResponse(response, type) {
+  static async returnResponse(response, type) {
     if (response.status !== 200) {
       return response;
     }
@@ -186,7 +185,7 @@ export class requestService {
    * @param {object} data -  data to populate the object
    * @returns
    */
-  async objectFactory(type, data) {
+  static async objectFactory(type, data) {
     const classMap = {};
 
     const objectClass = classMap[type];
@@ -200,7 +199,7 @@ export class requestService {
    * @param {object} data - Data object
    * @returns {{type: string, title: string, message: string}}
    */
-  async buildSuccessNotification(type, method, data) {
+  static async buildSuccessNotification(type, method, data) {
     let obj = {};
     let name = "";
     if (typeof data === "string") {

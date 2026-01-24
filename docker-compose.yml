@@ -1,0 +1,54 @@
+services:
+  # Datenbank: MongoDB
+  mongodb:
+    image: mongo:latest
+    container_name: cheatsheet_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  # Backend: Express API
+  api:
+    build: ./api
+    container_name: cheatsheet_api
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - MONGO_URL=${MONGO_URL}
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=${API_PORT}
+
+  # PDF-Generator: Nutzt den Code aus ./app
+  pdf-gen:
+    build: ./app
+    container_name: cheatsheet_pdf
+    ports:
+      - "${PDF_PORT}:${PDF_PORT}"
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    command: node server.js
+    environment:
+      - API_URL=http://api:${API_PORT}
+
+  # Frontend: Vite
+  frontend:
+    build: ./app
+    container_name: cheatsheet_frontend
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+    command: npm run dev -- --host 0.0.0.0
+    depends_on:
+      - api
+
+volumes:
+  mongo_data:
