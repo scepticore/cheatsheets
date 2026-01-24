@@ -1,7 +1,8 @@
 # Cheatsheet creator
 
-A simple cheatsheet creator with Markdown-Inspired Syntax,
-designed for printed A4 cheatsheets
+Create cheatsheets with Markdown.
+Designed for allowed computer-written cheatsheets at school.
+Optimized for A4 prints.
 
 ## MVP Features
 
@@ -27,9 +28,12 @@ designed for printed A4 cheatsheets
 - MongoDB for Cheatsheets
 - SQLite for User Data and Stuff
 
-# Dev notes:
-- [Multi-Column Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Multicol_layout)
-- [MD Syntax](https://www.markdownguide.org/basic-syntax/)
+# Third party libraries:
 - [Ace9 Editor](https://github.com/ajaxorg/ace-builds)
 - [MarkedJS](https://marked.js.org/)
-- [jsPDF](https://raw.githack.com/MrRio/jsPDF/master/docs/index.html)
+
+# Guides
+- [MD Syntax](https://www.markdownguide.org/basic-syntax/)
+
+# Dev notes
+- [Multi-Column Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Multicol_layout)
