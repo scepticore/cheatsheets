@@ -23,7 +23,7 @@ Optimized for A4 prints.
 | Backend | 3030 | ExpressJS API for Backend Calls |
 | MongoDB | tbd | Database to store cheatsheets as objects with markdown |
 
-# Example
+# Example PDF (Screenshot)
 ![Example Cheatsheet](/example/example.png)
 
 # Notes
