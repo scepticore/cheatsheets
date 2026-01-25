@@ -20,11 +20,13 @@ export function viewCheatsheetDetail(id) {
 export async function viewCheatsheetForm(id = null) {
   let result = {};
   let markdown = "";
+  let title = "Create new cheatsheet";
   let callback = "window.cheatsheetsService.createCheatsheet()";
 
   if(id) {
     result = await cheatsheetsService.getCheatsheetById(id);
     markdown = result.markdown ? result.markdown.body : "";
+    title = "Edit cheatsheet";
     callback = "window.cheatsheetsService.updateCheatsheet()";
   }
 
@@ -39,20 +41,21 @@ export async function viewCheatsheetForm(id = null) {
           "maxLength": 100,
           "required": false,
           "class": "first_class second_class",
-          "value": result.cheatsheet.title ? result.cheatsheet.title : "",
+          "value": result.cheatsheet ? result.cheatsheet.title : "",
         },
       },
       "description": {
         "type": "textarea",
-        "content": result.cheatsheet.description ? result.cheatsheet.description : "",
+        "content": result.cheatsheet ? result.cheatsheet.description : "",
         "attr": {
           "maxLength": 500
         }
       }
     });
 
-  await renderTemplate("cheatsheets/form.html", {markdown, form}, true);
+  await renderTemplate("cheatsheets/form.html", {title, markdown, form}, true);
 
+  // Init ace9 editor
   const editor = ace.edit("editor");
   editor.setTheme("ace/theme/github_dark");
   editor.session.setMode("ace/mode/markdown");
