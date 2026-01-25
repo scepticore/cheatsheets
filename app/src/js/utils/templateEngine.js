@@ -11,7 +11,6 @@ const BASE_URL = "http://localhost:5173/";
  */
 export async function renderTemplate(templateName, context = null, style = false) {
   if (style) {
-    console.log("hello");
     await addTemplateCSS(templateName);
   }
   const templatePath = `${BASE_URL}src/templates/${templateName}`;
@@ -352,7 +351,6 @@ function resolvePath(obj, path) {
 async function addTemplateCSS(templatePath) {
   const parts = templatePath.split("/");
   const folderName = parts[0];
-  console.log(folderName);
   const cssPath = `${BASE_URL}src/css/${folderName}.css`;
 
   try {

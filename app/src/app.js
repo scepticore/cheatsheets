@@ -10,7 +10,6 @@ import {
 } from "./js/views/cheatsheetsView";
 //
 checkDarkMode();
-console.log("Hello!");
 
 const router = new Router();
 

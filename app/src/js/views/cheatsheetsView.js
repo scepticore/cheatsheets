@@ -24,7 +24,7 @@ export async function viewCheatsheetForm(id = null) {
 
   if(id) {
     result = await cheatsheetsService.getCheatsheetById(id);
-    console.log(result);
+    markdown = result.markdown ? result.markdown.body : "";
     callback = "window.cheatsheetsService.updateCheatsheet()";
   }
 
@@ -51,7 +51,7 @@ export async function viewCheatsheetForm(id = null) {
       }
     });
 
-  await renderTemplate("cheatsheets/form.html", {markdown: result.markdown.body, form}, true);
+  await renderTemplate("cheatsheets/form.html", {markdown, form}, true);
 
   const editor = ace.edit("editor");
   editor.setTheme("ace/theme/github_dark");
