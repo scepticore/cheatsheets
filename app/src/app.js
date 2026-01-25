@@ -8,12 +8,17 @@ import {
   viewCheatsheetEdit,
   viewCheatsheetList, viewCheatsheetPreview
 } from "./js/views/cheatsheetsView";
+import {showPreview} from "./js/views/previewView";
 //
 checkDarkMode();
 
 const router = new Router();
 
 const mainframe = document.getElementById("mainframe");
+
+router.add("/preview/:id", async(params) => {
+  return showPreview();
+});
 
 router.add("/", async () => {
   return showDashboard();
