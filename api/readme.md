@@ -33,6 +33,16 @@ const cheatsheetsURL = apiURL + "cheatsheets";
 npx drizzle-kit studio
 ```
 
+# Connect to mongoDB via Terminal
+Start bash inside mongoDB
+```terminaloutput
+docker exec -t -i cheatsheet_mongo /bin/bash
+```
+Connect to database:
+```terminaloutput
+mongosh "mongodb://localhost:27017/cheatsheets" --apiVersion 1
+```
+
 ---
 # Route usage
 ## Cheatsheets

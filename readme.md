@@ -17,12 +17,12 @@ Optimized for A4 prints.
 - Image Upload (External sources via markdown should work)
 
 # Services / Ports
-| Service | Port | Description |
-|-|-|-|
-| Frontend | 5173 | Frontend for Cheatsheets |
-| PDF-Generator | 3000 | PDF-Generator Service for live preview |
-| Backend | 3030 | ExpressJS API for Backend Calls |
-| MongoDB | tbd | Database to store cheatsheets as objects with markdown |
+| Service | Port  | Description |
+|-|-------|-|
+| Frontend | 5173  | Frontend for Cheatsheets |
+| PDF-Generator | 3000  | PDF-Generator Service for live preview |
+| Backend | 3030  | ExpressJS API for Backend Calls |
+| MongoDB | 27017 | Database to store cheatsheets as objects with markdown |
 
 # Example PDF (Screenshot)
 - Font Size: 6pt
