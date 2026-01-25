@@ -2,8 +2,9 @@ import "dotenv/config";
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import {and, eq} from "drizzle-orm";
-import { Response, Request, NextFunction } from "express";
+import {Response, Request, NextFunction} from "express";
 import { cheatsheetsTable } from "../db/schema";
+import {MongoClient} from "mongodb";
 
 console.log("Trying to open DB: ", process.env.DATABASE_URL);
 if (!process.env.DATABASE_URL) {
@@ -43,11 +44,25 @@ export async function getCheatsheetById(userId: number, cheatsheetId: string, re
             updated_at: cheatsheetsTable.updated_at,
         }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId), eq(cheatsheetsTable.id, cheatsheetId)));
         if (result) {
-            res.status(200).json(result);
+            // res.status(200).json(result);
+            return result[0];
         }
     } catch (error) {
         console.log(error);
         res.status(500).json({error: "An error occured"});
+    }
+}
+
+export async function getCheatsheetMarkdown(id: string) {
+    const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
+    try {
+        await client.connect();
+        const doc = await client.db("cheatsheets").collection("cheatsheets").findOne({id: id});
+        return doc; // Nur Daten zurückgeben
+    } catch (error) {
+        throw error; // Fehler nach oben "werfen"
+    } finally {
+        await client.close();
     }
 }
 

@@ -1,5 +1,12 @@
 import {Router, Request, Response} from "express";
-import { createCheatsheet, getCheatsheets, getCheatsheetById, updateCheatsheet, deleteCheatsheet } from "../services/cheatsheets";
+import {
+    createCheatsheet,
+    getCheatsheets,
+    getCheatsheetById,
+    updateCheatsheet,
+    deleteCheatsheet,
+    getCheatsheetMarkdown
+} from "../services/cheatsheets";
 
 const router = Router();
 const userId = 1;
@@ -33,9 +40,11 @@ router.post("/cheatsheets/create", async (req: Request, res: Response) => {
 
 router.get("/cheatsheet/:id", async (req: Request, res: Response) => {
     try {
-        const notesId = req.params.id;
-        const users = await getCheatsheetById(userId, notesId, req, res);
-        res.json(users);
+        const cheatsheetId = req.params.id;
+        const cheatsheet = await getCheatsheetById(userId, cheatsheetId, req, res);
+        const markdown = await getCheatsheetMarkdown(cheatsheetId);
+        console.log("Markdown: ", markdown);
+        res.json({cheatsheet, markdown});
     } catch (error) {
         console.log(error);
         res.status(500).json({error: "An error occured"})
