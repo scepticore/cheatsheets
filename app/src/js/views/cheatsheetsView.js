@@ -2,6 +2,7 @@ import {renderTemplate} from "../utils/templateEngine";
 import {formGenerator} from "../utils/formBuilder";
 import {cheatsheetsService} from "../services/cheatsheetsService";
 
+
 export async function viewCheatsheetList() {
   const result = {};
   const cheatsheets = await cheatsheetsService.getCheatsheets();
@@ -16,12 +17,20 @@ export function viewCheatsheetDetail(id) {
   return renderTemplate("cheatsheets/detail.html", {result});
 }
 
-export function viewCheatsheetCreate() {
-  const result = {}; // await getCheatsheetList();
-  // const title = params.id ? "Edit cheatsheet": "Create new cheatsheet";
+export async function viewCheatsheetForm(id = null) {
+  let result = {};
+  let markdown = "";
+  let callback = "window.cheatsheetsService.createCheatsheet()";
+
+  if(id) {
+    result = await cheatsheetsService.getCheatsheetById(id);
+    console.log(result);
+    callback = "window.cheatsheetsService.updateCheatsheet()";
+  }
+
   const form = new formGenerator(null,
     {
-      "callback": "window.usersService.handleUserForm()" // edit this
+      "callback":  callback
     },
     {
       "title": {
@@ -30,29 +39,28 @@ export function viewCheatsheetCreate() {
           "maxLength": 100,
           "required": false,
           "class": "first_class second_class",
-          "value": ""
+          "value": result.cheatsheet.title ? result.cheatsheet.title : "",
         },
       },
       "description": {
         "type": "textarea",
-        "content": "",
+        "content": result.cheatsheet.description ? result.cheatsheet.description : "",
         "attr": {
           "maxLength": 500
         }
       }
     });
 
-
-  return renderTemplate("cheatsheets/create.html", {result, form});
-}
-
-export async function viewCheatsheetEdit() {
-  const result = {}; // await getCheatsheetList();
-  await renderTemplate("cheatsheets/edit.html", {result}, true);
+  await renderTemplate("cheatsheets/form.html", {markdown: result.markdown.body, form}, true);
 
   const editor = ace.edit("editor");
   editor.setTheme("ace/theme/github_dark");
   editor.session.setMode("ace/mode/markdown");
+}
+
+export async function viewCheatsheetEdit() {
+  const result = {}; // await getCheatsheetList();
+
 }
 
 export function viewCheatsheetDelete() {

@@ -3,7 +3,7 @@ import {Router} from "./js/utils/router.js";
 import {checkDarkMode} from "./js/controller/darkmodeHandler";
 import {showDashboard} from "./js/views/dashboardView";
 import {
-  viewCheatsheetCreate,
+  viewCheatsheetForm,
   viewCheatsheetDetail,
   viewCheatsheetEdit,
   viewCheatsheetList, viewCheatsheetPreview
@@ -32,7 +32,7 @@ router.add("/cheatsheets", () => {
 });
 
 router.add("/cheatsheets/new", () => {
-  return viewCheatsheetCreate();
+  return viewCheatsheetForm();
   // mainframe.innerHTML = "<h1>Create new cheatsheet</h1>";
   // mainframe.innerHTML += "<div id='cs_wrapper'><div id='cs_editor'>#Title<br>- List<br>- List<br>Normal text and stuff. Hehe.</div><div id='cs_preview'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem inventore ipsam molestiae, odit officiis quia soluta sunt! Aliquid, aperiam doloribus ex facere, fugit necessitatibus nisi placeat quidem quod repellendus totam.</div></div>";
 });
@@ -43,7 +43,7 @@ router.add("/cheatsheets/:id", (params) => {
 });
 
 router.add("/cheatsheets/:id/edit", (params) => {
-  return viewCheatsheetEdit();
+  return viewCheatsheetForm(params.id);
 });
 
 router.add("/cheatsheets/:id/delete", (params) => {

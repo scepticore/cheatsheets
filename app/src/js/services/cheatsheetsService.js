@@ -9,8 +9,14 @@ export class cheatsheetsService {
     return requestService.fetchResponse(API_BASE+"cheatsheets?user_id="+1, "cheatsheet", "GET", {}, {});
   }
 
-  static async getCheatsheetById(uuid) {
+  static async getCheatsheetById(id) {
     // Run API-Call
+    const result = await requestService.fetchResponse(API_BASE+"cheatsheet/"+id, "cheatsheet", "GET", {}, {});
+    return result.data;
+  }
+
+  static async createCheatsheet() {
+
   }
 
   static async getCheatSheetMD() {
