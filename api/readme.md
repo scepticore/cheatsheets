@@ -43,6 +43,16 @@ Connect to database:
 mongosh "mongodb://localhost:27017/cheatsheets" --apiVersion 1
 ```
 
+Create collection
+```terminaloutput
+db.createCollection("cheatsheets")
+```
+
+Add example post
+```terminaloutput
+db.cheatsheets.insertOne({"id": "ac46a36a-a993-4053-9043-2a97bee089dc", "body": "# Vorlesung 1\nLorem ipsum\n\n- Liste\n- Liste\n- Liste\n\n-- Liste\n-- Liste\n\n[Link](https://google.com);\n\n## Vorlesung 1: Unterkapitel"}
+```
+
 ---
 # Route usage
 ## Cheatsheets

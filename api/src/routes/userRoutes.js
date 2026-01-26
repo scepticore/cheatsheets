@@ -1,9 +1,9 @@
-import {Router, Request, Response} from "express";
-import {createUser, getUserById, getUsers, updateUser, deleteUser,} from "../services/users";
+import express from "express";
+import {createUser, getUserById, getUsers, updateUser, deleteUser,} from "../services/users.js";
 
-const router = Router();
+const router = express.Router();
 
-router.get("/users", async (req: Request, res: Response) => {
+router.get("/users", async (req, res) => {
     try {
         const users = await getUsers(res);
         res.json(users);
@@ -13,7 +13,7 @@ router.get("/users", async (req: Request, res: Response) => {
     }
 });
 
-router.post("/users/create", async (req: Request, res: Response) => {
+router.post("/users/create", async (req, res) => {
     try {
         const result = await createUser(req, res);
         res.status(201).json(result);
@@ -23,7 +23,7 @@ router.post("/users/create", async (req: Request, res: Response) => {
     }
 });
 
-router.get("/user/:id", async (req: Request, res: Response) => {
+router.get("/user/:id", async (req, res) => {
     try {
         const users = await getUserById(parseInt(req.params.id), req, res);
         res.json(users);
@@ -33,7 +33,7 @@ router.get("/user/:id", async (req: Request, res: Response) => {
     }
 })
 
-router.put("/user/:id/update", async (req: Request, res: Response) => {
+router.put("/user/:id/update", async (req, res) => {
     try {
         const users = await updateUser(parseInt(req.params.id), req, res);
         res.json(users);
@@ -43,7 +43,7 @@ router.put("/user/:id/update", async (req: Request, res: Response) => {
     }
 })
 
-router.delete("/user/:id/delete", async (req: Request, res: Response) => {
+router.delete("/user/:id/delete", async (req, res) => {
     try {
         const result = await deleteUser(parseInt(req.params.id), req, res);
         res.json(result);

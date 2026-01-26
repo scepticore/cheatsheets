@@ -1,9 +1,9 @@
 import 'dotenv/config';
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from 'cors';
-import userRoutes from "./routes/userRoutes";
-import cheatsheetRoutes from "./routes/cheatsheetRoutes";
-import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes.js";
+import cheatsheetRoutes from "./routes/cheatsheetRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3030;
@@ -19,7 +19,7 @@ app.use(cors({
 app.use(express.json());
 app.use("/api", [userRoutes, cheatsheetRoutes, authRoutes]);
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req, res) => {
     res.json("Cheatsheet API v 0.0.1");
 });
 

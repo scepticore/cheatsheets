@@ -1,14 +1,13 @@
 {
-  "name": "express_test",
+  "name": "cheatsheet_api",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
-  "main": "api.js",
+  "type": "module",
   "scripts": {
-    "start": "node_modules/.bin/ts-node src/index.ts",
-    "dev": "node_modules/.bin/nodemon src/index.ts",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "build": "node_modules/.bin/tsc",
     "serve": "node dist/index.js"
   },
@@ -19,17 +18,12 @@
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
-    "jose": "^6.1.3"
+    "jose": "^6.1.3",
+    "mongodb": "^7.0.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.0.3",
     "drizzle-kit": "^0.31.8",
-    "mongodb": "^7.0.0",
-    "nodemon": "^3.1.11",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "marked": "^17.0.1",
+    "nodemon": "^3.1.11"
   }
 }

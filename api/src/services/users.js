@@ -1,15 +1,25 @@
 import "dotenv/config";
 import {drizzle} from "drizzle-orm/libsql";
 import {and, eq, or} from "drizzle-orm";
-import {Response, Request, NextFunction} from "express";
-import {usersTable} from "../db/schema";
+import {usersTable} from "../db/schema.js";
 import * as jose from "jose";
 import {SignJWT} from "jose";
 import {createSecretKey} from "node:crypto";
+import {createClient} from "@libsql/client";
+import { randomUUID } from "node:crypto";
 
-const db = drizzle(process.env.DB_FILE_NAME!);
+console.log("Trying to open DB: ", process.env.DATABASE_URL);
+if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL not defined!");
+}
+const client = createClient({
+    url: process.env.DATABASE_URL
+});
 
-export async function getUsers(res: Response) {
+const db = drizzle(client);
+
+
+export async function getUsers(res) {
     try {
         const result = await db.select({
             id: usersTable.id,
@@ -26,7 +36,7 @@ export async function getUsers(res: Response) {
     }
 }
 
-export async function getUserById(id: number, req: Request, res: Response) {
+export async function getUserById(id, req, res) {
     try {
         const result = await db.select({
             id: usersTable.id,
@@ -45,7 +55,7 @@ export async function getUserById(id: number, req: Request, res: Response) {
  * @param req
  * @param res
  */
-export async function getUserByCredentials(req: Request, res: Response) {
+export async function getUserByCredentials(req, res) {
     try {
         const result = await db.select({
             id: usersTable.id,
@@ -94,11 +104,18 @@ export async function getUserByCredentials(req: Request, res: Response) {
     }
 }
 
-export async function createUser(req: Request, res: Response) {
+export async function createUser(req, res) {
     // const { name, email, password } = req.body;
     // console.log(req);
     try {
-        const result = await db.insert(usersTable).values(req.body);
+        const uuid = randomUUID();
+
+        const newUser = {
+            ...req.body,
+            id: uuid
+        }
+        console.log(newUser);
+        const result = await db.insert(usersTable).values(newUser);
         console.log(result);
         res.status(201).json({result});
     } catch (error) {
@@ -107,7 +124,7 @@ export async function createUser(req: Request, res: Response) {
     }
 }
 
-export async function updateUser(id: number, req: Request, res: Response) {
+export async function updateUser(id, req, res) {
     try {
         const result = await db.update(usersTable).set(req.body).where(eq(usersTable.id, id));
         res.status(200).json({result});
@@ -117,7 +134,7 @@ export async function updateUser(id: number, req: Request, res: Response) {
     }
 }
 
-export async function deleteUser(id: number, req: Request, res: Response) {
+export async function deleteUser(id, req, res) {
     try {
         const result = await db.delete(usersTable).where(eq(usersTable.id, id));
         res.status(200).json({result});
