@@ -7,7 +7,7 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 export default defineConfig({
     out: "./drizzle",
-    schema: "./src/db/schema.ts",
+    schema: "./src/db/schema.js",
     dialect: "sqlite",
     dbCredentials: {
         // Nutzt DATABASE_URL aus der .env
