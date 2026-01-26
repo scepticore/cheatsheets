@@ -3,35 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Preview</title>
-  <link rel="stylesheet" href="src/css/preview.css" /> <!-- Add media print? -->
+  <link rel="stylesheet" href="/src/css/preview.css" /> <!-- Add media print? -->
 </head>
 <body>
-<!--<button id="renderBtn">Generate PDF</button>-->
 <div id="render_wrapper"></div>
-<script src="src/js/utils/parseMD.js" type="module"></script>
-<script>
-  document.getElementById('renderBtn').addEventListener('click', async () => {
-    const btn = document.getElementById('renderBtn');
-    btn.innerText = 'Generiere...';
-    btn.disabled = true;
-
-    try {
-      // Wir rufen unseren eben erstellten Node-Server an
-      const response = await fetch('http://localhost:3000/generate-pdf');
-      const data = await response.json();
-
-      if(data.status === 'success') {
-        alert('Erfolg! PDF wurde im Ordner /app/output/ abgelegt.');
-      } else {
-        alert('Fehler: ' + data.message);
-      }
-    } catch (err) {
-      alert('Server nicht erreichbar. Hast du "node server.js" gestartet?');
-    } finally {
-      btn.innerText = 'PDF generieren & speichern';
-      btn.disabled = false;
-    }
-  });
-</script>
 </body>
 </html>

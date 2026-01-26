@@ -29,17 +29,34 @@ export class requestService {
     } else if (window.localStorage.getItem("token")) {
       token = window.localStorage.getItem("token");
     }
-
-    const config = {
-      method: method || 'GET',
-      headers: headers || {
-        'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`,
-      },
-      // body: body ? JSON.stringify(body) : undefined,
-      signal: AbortSignal.timeout(5000)
-    };
     try {
+      let config = {};
+      console.log(body);
+
+      if (method === "POST" || method === "PUT") {
+        config = {
+          method: method || 'POST',
+          headers: headers || {
+            'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${token}`,
+          },
+          body: body ? JSON.stringify(body) : null,
+          signal: AbortSignal.timeout(5000)
+        };
+      } else {
+        config = {
+          method: method || 'GET',
+          headers: headers || {
+            'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${token}`,
+          },
+          // body: body ? JSON.stringify(body) : null,
+          signal: AbortSignal.timeout(5000)
+        };
+      }
+
+      console.log(config);
+
       const response = await fetch(apiBaseURL, config);
       const handled = await this.handleResponse(response, type);
 

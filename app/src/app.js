@@ -9,6 +9,7 @@ import {
   viewCheatsheetList, viewCheatsheetPreview
 } from "./js/views/cheatsheetsView";
 import {showPreview} from "./js/views/previewView";
+import {formSignIn, formSignUp} from "./js/views/usersView";
 //
 checkDarkMode();
 
@@ -17,7 +18,7 @@ const router = new Router();
 const mainframe = document.getElementById("mainframe");
 
 router.add("/preview/:id", async(params) => {
-  return showPreview();
+  return showPreview(params.id);
 });
 
 router.add("/", async () => {
@@ -78,12 +79,12 @@ router.add("/account/delete", () => {
 });
 
 /* Auth routes */
-router.add("/login", () => {
-  mainframe.innerHTML = "<h1>Login</h1>";
+router.add("/signin", () => {
+  return formSignIn();
 });
 
-router.add("/logout", () => {
-  mainframe.innerHTML = "<h1>Logout</h1>";
+router.add("/signup", () => {
+  return formSignUp();
 });
 
 /* Admin Routes */

@@ -4,10 +4,8 @@ import {cheatsheetsService} from "../services/cheatsheetsService";
 
 
 export async function viewCheatsheetList() {
-  const result = {};
   const cheatsheets = await cheatsheetsService.getCheatsheets();
 
-  console.log(cheatsheets);
   return renderTemplate("cheatsheets/index.html", {cheatsheets: cheatsheets.data});
 }
 
@@ -25,6 +23,7 @@ export async function viewCheatsheetForm(id = null) {
 
   if(id) {
     result = await cheatsheetsService.getCheatsheetById(id);
+    console.log(result);
     markdown = result.markdown ? result.markdown.body : "";
     title = "Edit cheatsheet";
     callback = "window.cheatsheetsService.updateCheatsheet()";
@@ -53,7 +52,7 @@ export async function viewCheatsheetForm(id = null) {
       }
     });
 
-  await renderTemplate("cheatsheets/form.html", {title, markdown, form}, true);
+  await renderTemplate("cheatsheets/form.html", {title, markdown, form, cheatsheet: result.cheatsheet}, true);
 
   // Init ace9 editor
   const editor = ace.edit("editor");

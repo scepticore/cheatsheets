@@ -230,8 +230,8 @@ export class formGenerator {
   }
 
   /**
-   * Listens to submit and sends date over to the defined callback function
-   * which then can handle data.
+   * Listens to submit and sends data over to the defined callback function
+   * which then can handle form data.
    */
   formEventListener() {
     this.formElement.addEventListener("submit", (e) => {
@@ -241,10 +241,9 @@ export class formGenerator {
       delete formData.callback;
 
       const sanitizedFormData = this.sanitizeFormData(formData);
-      console.log(sanitizedFormData);
 
       try {
-        const functionCall = callBackString.replace("()", `(this.formData)`);
+        const functionCall = callBackString.replace("()", `(sanitizedFormData)`);
         eval(functionCall);
       } catch (e) {
         console.error(e);
@@ -258,20 +257,10 @@ export class formGenerator {
    * @returns {object} sanitizedFormData - Sanitized form data
    */
   sanitizeFormData(formData) {
-    console.log(formData);
     const sanitizedFormData = {};
-    const debug = document.getElementById("debug");
 
     for (const [key, value] of Object.entries(formData)) {
-      console.log(`${key}: ${value}`);
       sanitizedFormData[key] = encodeURI(value);
-
-    }
-
-    console.log(sanitizedFormData);
-
-    for (const [key, value] of Object.entries(sanitizedFormData)) {
-      debug.textContent += `<p>${key}: ${decodeURI(value)}</p>`;
     }
 
     return sanitizedFormData;

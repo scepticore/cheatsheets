@@ -4,14 +4,15 @@
   "description": "Frontend for Cheatsheet-App",
   "license": "ISC",
   "author": "Andreas Urben",
-  "type": "commonjs",
+  "type": "module",
   "main": "app.js",
   "scripts": {
     "dev": "vite --host 0.0.0.0"
   },
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "marked": "^17.0.1",

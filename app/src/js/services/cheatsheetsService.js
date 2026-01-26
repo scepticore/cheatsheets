@@ -1,17 +1,23 @@
 import {requestService} from "../utils/requests";
-const API_BASE = import.meta.env.VITE_API_URL;
+import {API_BASE} from "../constants.js";
 
 export class cheatsheetsService {
 
   static async getCheatsheets() {
     // Run API-Call with current user id
-    // console.log("Getting cheatsheets...");
-    return requestService.fetchResponse(API_BASE+"cheatsheets?user_id="+1, "cheatsheet", "GET", {}, {});
+    return requestService.fetchResponse(API_BASE+"cheatsheets?user_id=700a71fb-9f0e-4bf4-9f86-41c66ada062e", "cheatsheet", "GET", {}, {});
   }
 
   static async getCheatsheetById(id) {
     // Run API-Call
-    const result = await requestService.fetchResponse(API_BASE+"cheatsheet/"+id, "cheatsheet", "GET", {}, {});
+    const cheatsheet = await requestService.fetchResponse(API_BASE+"cheatsheet/"+id, "cheatsheet", "GET", {}, {});
+    const markdown = await requestService.fetchResponse(API_BASE+"cheatsheet/"+id+"/markdown", "cheatsheet", "GET", {}, {});
+    return {cheatsheet: cheatsheet.data, markdown: markdown.data};
+  }
+
+  static async getCheatsheetMarkdown(id) {
+    const result = await requestService.fetchResponse(API_BASE+"cheatsheet/"+id+"/markdown", "cheatsheet", "GET", {}, {});
+    console.log(result);
     return result.data;
   }
 
