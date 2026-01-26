@@ -17,6 +17,7 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
+      - ./app/src/css:/usr/src/app/src/shared_css:ro
     environment:
       - MONGO_URL=${MONGO_URL}
       - DATABASE_URL=${DATABASE_URL}
@@ -26,6 +27,7 @@ services:
   pdf-gen:
     build: ./app
     container_name: cheatsheet_pdf
+    shm_size: '2gb'
     ports:
       - "${PDF_PORT}:${PDF_PORT}"
     volumes:
@@ -33,6 +35,7 @@ services:
       - /usr/src/app/node_modules
     command: node server.js
     environment:
+      - NODE_ENV=development
       - API_URL=http://api:${API_PORT}
 
   # Frontend: Vite
