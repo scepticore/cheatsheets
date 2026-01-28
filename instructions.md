@@ -26,7 +26,12 @@ VITE_API_URL=http://api.example.com
 PDF_GEN_URL=http://pdf-gen:3000
 ```
 
-Run production:
+Run dev:
+```terminaloutput
+docker compose up
 ```
+
+Run production:
+```terminaloutput
 docker compose up -d --build
 ```
