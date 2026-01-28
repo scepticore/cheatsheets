@@ -1,6 +1,5 @@
 FROM node:20-slim
 
-# Installiere System-Abhängigkeiten für Puppeteer/Chrome
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
@@ -42,15 +41,16 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/app
-
 # Falls Puppeteer Chrome nicht findet, erzwingen wir den Download hier
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
 
+WORKDIR /usr/src/app
+
 COPY package*.json ./
+
 RUN npm install
 
 COPY . .
 
 EXPOSE 3000
-CMD ["node", "server.js"]
+#CMD ["node", "server.js"]
