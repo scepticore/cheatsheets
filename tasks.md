@@ -7,10 +7,18 @@
 ---
 
 # Frontend
+- [ ] Notifications
+  - [ ] Autosave
+  - [ ] Registration
+  - [ ] Sign In Errors
+  - [ ] PDF Export
+
 ## Auth
 - [ ] Auth Service
-- [ ] SignUp Form
+- [x] SignUp Form
 - [ ] SignIn Form
+- [ ] Redirect after signin / create or load session
+- [ ] Redirect after signup / create session
 - [ ] Create User Folder in /output/ with uuid after successfull registration
 
 ## Pages
@@ -26,17 +34,19 @@
 - [ ] Create Form
   - [ ] Read formData
   - [ ] Read ace-Content
-- [ ] Edit Form
-  - [ ] Read formData on submit and save
-  - [ ] Read formData change and save
-  - [ ] Read ace-Content on submit and save
-  - [ ] Read ace-Content on change and save
+- [x] Edit Form
+  - [x] Read formData change (and save)
+  - [x] Read ace-Content on change (and save)
 - [ ] Delete Dialogue
 - [ ] Render-Button to reload PDF
+- [ ] Download as .md-file
+- [ ] Notification on autosave
+
 
 ---
 
 # API / Backend
+- [ ] Use JWT for requests
 - [x] Create Cheatsheet
 - [x] Read Cheatsheet
   - [x] Connection to SQLite DB
@@ -45,11 +55,14 @@
   - [ ] Update in SQLite DB
   - [ ] Update MongoDB Object
 - [x] Delete Cheatsheet
+- [ ] PDF Storage
+- [ ] Route To Get PDF (e.g. api:3030/api/cheatsheet/:uuid/pdf)
+- [ ] Button to download markdown file (write text into file and store as .md)
 
 ---
 # PDF-Generator
 - [ ] TaskItem
-- [ ]
+- [ ] Store PDF on Backend
 
 ---
 # MongoDB

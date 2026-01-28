@@ -45,3 +45,7 @@ Optimized for A4 prints.
 
 # Dev notes
 - [Multi-Column Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Multicol_layout)
+- [JWT Express](https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs)
+- [Nodemailer](https://www.w3schools.com/nodejs/nodejs_email.asp)
+- [Stackoverflow](https://stackoverflow.com/questions/66748197/node-js-speed-up-puppeteer-html-to-pdf)
+- [Codepasta](https://www.codepasta.com/2024/04/19/optimizing-puppeteer-pdf-generation)
