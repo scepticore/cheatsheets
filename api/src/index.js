@@ -4,6 +4,7 @@ import cors from 'cors';
 import userRoutes from "./routes/userRoutes.js";
 import cheatsheetRoutes from "./routes/cheatsheetRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import pdfRoutes from "./routes/pdfRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3030;
@@ -17,7 +18,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use("/api", [userRoutes, cheatsheetRoutes, authRoutes]);
+app.use("/api", [userRoutes, cheatsheetRoutes, authRoutes, pdfRoutes]);
 
 app.get("/", (req, res) => {
     res.json("Cheatsheet API v 0.0.1");

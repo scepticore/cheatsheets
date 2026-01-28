@@ -1,7 +1,6 @@
 import express from "express";
 import {getUserByCredentials} from "../services/users.js";
 
-
 const router = express.Router();
 
 /**

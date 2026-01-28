@@ -5,7 +5,7 @@ import {
   getCheatsheetById,
   updateCheatsheet,
   deleteCheatsheet,
-  getCheatsheetMarkdown
+  getCheatsheetMarkdown, updateMarkdown
 } from "../services/cheatsheets.js";
 import {marked} from "marked";
 import fs from "node:fs/promises";
@@ -65,6 +65,15 @@ router.get("/cheatsheet/:id/markdown", async (req, res) => {
   }
 });
 
+router.put("/cheatsheet/:id/markdown/update", async (req, res) => {
+  try {
+    const cheatsheetId = req.params.id;
+    const result = await updateMarkdown(cheatsheetId, req, res);
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 router.get("/cheatsheet/:id/pdf", async (req, res) => {
   const {id} = req.params;
 
@@ -79,7 +88,10 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
 
     const fullHtml = `
    <html>
-   <head><style>${styles}</style></head>
+   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.2, maximum-scale=1.0, user-scalable=no" />
+    <style>${styles}</style>
+    </head>
    <body>${paginatedHtml}</body>
    </html>
    `
@@ -112,14 +124,44 @@ router.delete("/cheatsheet/:id/delete", async (req, res) => {
 })
 
 function paginateMarkdown(htmlString) {
-  const sections = htmlString.split(/(?=<h1>)/g);
-  const paginated = sections.map(section => {
-    if (section.trim() === "") return "";
-    return `<div class="page">${section}</div>`;
-  })
-    .join("");
+  // 1. Wir splitten bei JEDER Überschrift (h1-h6)
+  const sections = htmlString.split(/(?=<h[1-6]>)/g);
 
-  return paginated;
+  let result = "";
+  let isInsidePage = false;
+
+  sections.forEach(section => {
+    if (section.trim() === "") return;
+
+    // Wenn eine H1 kommt, müssen wir ggf. die vorherige Seite schließen
+    if (section.startsWith("<h1>")) {
+      if (isInsidePage) {
+        result += `</div>`; // Schließt die vorherige <div class="page">
+      }
+      result += `<div class="page">`;
+      isInsidePage = true;
+    }
+
+    // Jede Sektion (egal welche H-Ebene) wird in einen Paragraph gepackt
+    result += `<div class="paragraph">${section}</div>`;
+  });
+
+  // Am Ende den letzten Page-Container schließen
+  if (isInsidePage) {
+    result += `</div>`;
+  }
+
+  return result;
 }
+// function paginateMarkdown(htmlString) {
+//   const sections = htmlString.split(/(?=<h1>)/g);
+//   const paginated = sections.map(section => {
+//     if (section.trim() === "") return "";
+//     return `<div class="page">${section}</div>`;
+//   })
+//     .join("");
+//
+//   return paginated;
+// }
 
 export default router;

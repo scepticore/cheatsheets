@@ -22,6 +22,7 @@ export async function getCheatsheets(userId, res) {
       user_id: cheatsheetsTable.user_id,
       title: cheatsheetsTable.title,
       description: cheatsheetsTable.description,
+      filename: cheatsheetsTable.filename,
       created_at: cheatsheetsTable.created_at,
       updated_at: cheatsheetsTable.updated_at,
     }).from(cheatsheetsTable).where(eq(cheatsheetsTable.user_id, userId));
@@ -89,8 +90,12 @@ export async function updateCheatsheet(id, req, res) {
 }
 
 export async function updateMarkdown(id, req, res) {
+  const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
   try {
-
+    await client.connect();
+    const doc = await client.db("cheatsheets").collection("cheatsheets").updateOne({"id": id}, { $set: req.body });
+    res.send(doc);
+    return doc;
   } catch (error) {
     console.error(error);
     res.status(500).json({error});
