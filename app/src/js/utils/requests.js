@@ -31,7 +31,6 @@ export class requestService {
     }
     try {
       let config = {};
-      console.log(body);
 
       if (method === "POST" || method === "PUT") {
         config = {
@@ -54,8 +53,6 @@ export class requestService {
           signal: AbortSignal.timeout(5000)
         };
       }
-
-      console.log(config);
 
       const response = await fetch(apiBaseURL, config);
       const handled = await this.handleResponse(response, type);

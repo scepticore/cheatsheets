@@ -18,6 +18,7 @@
 
 .page {
     break-before: page;
+    break-after: page;
     /*break-after: always;*/
     column-count: 5;
     column-rule-color: #333;
@@ -31,6 +32,15 @@
     min-height: 180mm;
     margin-bottom: 4mm;
     /*border: 1px dashed #333;*/
+}
+
+.paragraph {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    display: block;
+}
+.paragraph:first-child h1 {
+    margin-top: 0;
 }
 
 @media print {

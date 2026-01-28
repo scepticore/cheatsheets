@@ -1,7 +1,8 @@
 import {renderTemplate} from "../utils/templateEngine";
 import {formGenerator} from "../utils/formBuilder";
 import {cheatsheetsService} from "../services/cheatsheetsService";
-
+import {loadAce} from "../controller/editorHandler";
+import {handleFormUpdates} from "../controller/formHandler";
 
 export async function viewCheatsheetList() {
   const cheatsheets = await cheatsheetsService.getCheatsheets();
@@ -23,7 +24,6 @@ export async function viewCheatsheetForm(id = null) {
 
   if(id) {
     result = await cheatsheetsService.getCheatsheetById(id);
-    console.log(result);
     markdown = result.markdown ? result.markdown.body : "";
     title = "Edit cheatsheet";
     callback = "window.cheatsheetsService.updateCheatsheet()";
@@ -54,10 +54,8 @@ export async function viewCheatsheetForm(id = null) {
 
   await renderTemplate("cheatsheets/form.html", {title, markdown, form, cheatsheet: result.cheatsheet}, true);
 
-  // Init ace9 editor
-  const editor = ace.edit("editor");
-  editor.setTheme("ace/theme/github_dark");
-  editor.session.setMode("ace/mode/markdown");
+  loadAce(id);
+  handleFormUpdates(id, form);
 }
 
 export async function viewCheatsheetEdit() {

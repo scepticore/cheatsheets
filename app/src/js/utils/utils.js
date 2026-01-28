@@ -3,7 +3,7 @@
  * @param {string} string - String to replace first letter with uppercase
  * @returns {string} - Updated string
  */
-function firstLetterUppercase(string) {
+export function firstLetterUppercase(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
@@ -12,10 +12,16 @@ function firstLetterUppercase(string) {
  * @param string
  * @returns {*}
  */
-function removeSFromString(string) {
+export function removeSFromString(string) {
   if (string.endsWith("s")) {
     return string.replace("s", "");
   }
 }
 
-export { firstLetterUppercase, removeSFromString };
+export function debounce(func, timeout = 500) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}

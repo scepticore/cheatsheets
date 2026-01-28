@@ -5,7 +5,7 @@ export class cheatsheetsService {
 
   static async getCheatsheets() {
     // Run API-Call with current user id
-    return requestService.fetchResponse(API_BASE+"cheatsheets?user_id=700a71fb-9f0e-4bf4-9f86-41c66ada062e", "cheatsheet", "GET", {}, {});
+    return requestService.fetchResponse(API_BASE+"cheatsheets?user_id=700a71fb-9f0e-4bf4-9f86-41c66ada062e", "cheatsheet", "GET", null, null);
   }
 
   static async getCheatsheetById(id) {
@@ -29,8 +29,28 @@ export class cheatsheetsService {
     // Run API-Call
   }
 
-  static async updateCheatsheet(uuid) {
-    // Run API-Call
+  /**
+   *
+   * @param uuid
+   * @param value
+   * @returns {Promise<void>}
+   */
+  static async updateCheatsheet(uuid, value) {
+    const newValue = JSON.parse(value);
+    const result = await requestService.fetchResponse(API_BASE+"cheatsheet/"+uuid+"/update", "cheatsheet", "PUT", null, newValue);
+    return result.data;
+  }
+
+  /**
+   *
+   * @param uuid
+   * @param value
+   * @returns {Promise<void>}
+   */
+  static async updateCheatsheetMarkdown(uuid, value) {
+    const newValue = JSON.parse(value);
+    const result = await requestService.fetchResponse(API_BASE+"cheatsheet/"+uuid+"/markdown/update", "cheatsheet", "PUT", null, newValue);
+    return result.data;
   }
 
   static async deleteCheatsheet(uuid) {

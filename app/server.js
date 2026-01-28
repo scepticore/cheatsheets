@@ -1,3 +1,4 @@
+// @todo move this code to api/src/services/cheatsheets
 const express = require('express');
 const puppeteer = require('puppeteer');
 const path = require('path');
@@ -55,7 +56,7 @@ app.get('/generate-pdf/:id', async (req, res) => {
       console.warn("Inhalt wurde nicht rechtzeitig geladen - PDF könnte leer sein.");
     }
 
-    await page.screenshot({ path: path.join(__dirname, 'output', 'debug_screenshot.png') });
+    // await page.screenshot({ path: path.join(__dirname, 'output', 'debug_screenshot.png') });
     await page.pdf({
       path: outputPath,
       format: 'A4',

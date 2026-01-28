@@ -6,6 +6,7 @@ export class formGenerator {
     this.title = formTitle ? formTitle : null;
     this.fields = fields;
     this.onSubmit = config.onSubmit; // Callback function
+    this.change = "";
 
     // Create form
     this.formElement = document.createElement("form");
@@ -19,7 +20,7 @@ export class formGenerator {
     this.formElement.appendChild(this.callBack);
 
     // Create form header
-    if(this.title) {
+    if (this.title) {
       this.formElement.append(this.formHeader());
     }
 
@@ -31,7 +32,7 @@ export class formGenerator {
     this.formElement.append(this.formFooter());
 
     // Init eventListener
-    this.formEventListener();
+    this.formSubmitListener();
 
     // Return form
     return this.formElement;
@@ -106,7 +107,6 @@ export class formGenerator {
     }
 
 
-
     return fieldContainer;
   }
 
@@ -156,7 +156,7 @@ export class formGenerator {
     fieldElement.type = this.fields[field].type;
     fieldElement.placeholder = field;
     this.addAttributes(fieldElement, field);
-    if(this.fields[field].attr?.maxLength) {
+    if (this.fields[field].attr?.maxLength) {
       this.lengthCounter(fieldElement, this.lengthIndicator);
     }
     return fieldElement;
@@ -189,8 +189,7 @@ export class formGenerator {
       const selectOption = document.createElement("option");
       selectOption.textContent = String(value);
       selectOption.value = key;
-      if ( key === String(this.fields[field].selected) )
-      {
+      if (key === String(this.fields[field].selected)) {
         selectOption.selected = true;
       }
       fieldElement.append(selectOption);
@@ -209,9 +208,9 @@ export class formGenerator {
     fieldElement.id = field;
     fieldElement.name = field;
     fieldElement.placeholder = field;
-    fieldElement.innerText = this.fields[field].content;
+    fieldElement.value = this.fields[field].content || "";
     this.addAttributes(fieldElement, field);
-    if(this.fields[field].attr?.maxLength) {
+    if (this.fields[field].attr?.maxLength) {
       this.lengthCounter(fieldElement, this.lengthIndicator);
     }
     return fieldElement;
@@ -233,7 +232,7 @@ export class formGenerator {
    * Listens to submit and sends data over to the defined callback function
    * which then can handle form data.
    */
-  formEventListener() {
+  formSubmitListener() {
     this.formElement.addEventListener("submit", (e) => {
       e.preventDefault();
       const formData = Object.fromEntries(new FormData(event.target));
