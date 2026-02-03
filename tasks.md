@@ -29,18 +29,21 @@
 
 ## Cheatsheets
 - [ ] Settings (Column-Count, Font-Size)
-- [ ] Single View
-- [ ] New Cheatsheet triggers SQLite Create and MongoDB Create and uses uuid
-- [ ] Create Form
-  - [ ] Read formData
-  - [ ] Read ace-Content
+- [x] Single View
+- [x] New Cheatsheet triggers SQLite Create and MongoDB Create and uses uuid
+- [x] Create Form
+  - [x] Read formData
+  - [x] Read ace-Content
 - [x] Edit Form
   - [x] Read formData change (and save)
   - [x] Read ace-Content on change (and save)
 - [ ] Delete Dialogue
-- [ ] Render-Button to reload PDF
-- [ ] Download as .md-file
+- [ ] Download as .pdf
+- [ ] Download as .md
+- [ ] Print dialogue (opens /pdf from API)
 - [ ] Notification on autosave
+- [ ] Share cheatsheet
+- [ ] Trash / Bin for inactive cheatsheets, will be deleted after 30 days
 
 
 ---
