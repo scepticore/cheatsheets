@@ -10,6 +10,7 @@ import {
 } from "./js/views/cheatsheetsView";
 import {showPreview} from "./js/views/previewView";
 import {formSignIn, formSignUp} from "./js/views/usersView";
+import {renderTemplate} from "./js/utils/templateEngine.js";
 //
 checkDarkMode();
 
@@ -57,7 +58,8 @@ router.add("/examples", () => {
 
 /* Help routes */
 router.add("/help", () => {
-  mainframe.innerHTML = "<h1>Need help?</h1>";
+  // mainframe.innerHTML = "<h1>Need help?</h1>";
+  return renderTemplate("app/help.html");
 });
 
 /* Account routes */
