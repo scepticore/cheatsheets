@@ -24,19 +24,19 @@ services:
       - PORT=${API_PORT}
 
   # PDF-Generator: Nutzt den Code aus ./app
-  pdf-gen:
-    build: ./app
-    container_name: cheatsheet_pdf
-    shm_size: '2gb'
-    ports:
-      - "${PDF_PORT}:${PDF_PORT}"
-    volumes:
-      - ./app:/usr/src/app
-      - /usr/src/app/node_modules
-    command: node server.js
-    environment:
-      - NODE_ENV=development
-      - API_URL=http://api:${API_PORT}
+#  pdf-gen:
+#    build: ./app
+#    container_name: cheatsheet_pdf
+#    shm_size: '2gb'
+#    ports:
+#      - "${PDF_PORT}:${PDF_PORT}"
+#    volumes:
+#      - ./app:/usr/src/app
+#      - /usr/src/app/node_modules
+#    command: node server.js
+#    environment:
+#      - NODE_ENV=development
+#      - API_URL=http://api:${API_PORT}
 
   # Frontend: Vite
   frontend:
