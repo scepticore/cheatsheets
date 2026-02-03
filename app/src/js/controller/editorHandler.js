@@ -25,6 +25,9 @@ export function loadAce(uuid) {
       const result = await cheatsheetsService.updateCheatsheetMarkdown(uuid, objectString);
       // if no internetion connection, store value in window.sessionStorage
       // window.sessionStorage.setItem("markdown", value);
+
+      const iframe = document.getElementById("cs_frame");
+      iframe.src = iframe.src;
     }, 500);
   });
 }

@@ -1,7 +1,12 @@
 <div class="button_bar">
   <h1>Your personal cheatsheets</h1>
-  <p><a href="/cheatsheets/new/" class="button" title="Create new cheatsheet">Create
-    new</a></p>
+  <!-- href="/cheatsheets/new/" -->
+  <p>
+    <!-- @todo show amount of cheatsheets in bin -->
+    <a href="#" class="button secondary" title="Bin">Bin (0)</a>
+    <button id="createNewCheatsheet" class="button" title="Create new cheatsheet">Create
+      new
+    </button></p>
 </div>
 
 {{ table cheatsheets actions fields(title, description, created_at, updated_at) }}

@@ -3,11 +3,14 @@ import {formGenerator} from "../utils/formBuilder";
 import {cheatsheetsService} from "../services/cheatsheetsService";
 import {loadAce} from "../controller/editorHandler";
 import {handleFormUpdates} from "../controller/formHandler";
+import {createCheatsheet} from "../controller/createCheatsheet.js";
 
 export async function viewCheatsheetList() {
   const cheatsheets = await cheatsheetsService.getCheatsheets();
+  await renderTemplate("cheatsheets/index.html", {cheatsheets: cheatsheets.data});
 
-  return renderTemplate("cheatsheets/index.html", {cheatsheets: cheatsheets.data});
+  // Listen for new cheatsheet button
+  createCheatsheet();
 }
 
 export function viewCheatsheetDetail(id) {
@@ -48,6 +51,12 @@ export async function viewCheatsheetForm(id = null) {
         "content": result.cheatsheet ? result.cheatsheet.description : "",
         "attr": {
           "maxLength": 500
+        }
+      },
+      "public": {
+        "type": "checkbox",
+        "attr": {
+          "checked": result.cheatsheet?.public === 1 ? "checked" : undefined,
         }
       }
     });

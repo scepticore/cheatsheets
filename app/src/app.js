@@ -32,19 +32,14 @@ router.add("/dashboard", () => {
 /* Cheatsheet Routes */
 router.add("/cheatsheets", () => {
   return viewCheatsheetList();
-  // mainframe.innerHTML = "<h1>Your personal cheatsheets</h1>";
-  // mainframe.innerHTML += "<p><a href='/cheatsheets/new/' title='Create new cheatsheet' class='button'>Create new</a></p>";
 });
 
-router.add("/cheatsheets/new", () => {
-  return viewCheatsheetForm();
-  // mainframe.innerHTML = "<h1>Create new cheatsheet</h1>";
-  // mainframe.innerHTML += "<div id='cs_wrapper'><div id='cs_editor'>#Title<br>- List<br>- List<br>Normal text and stuff. Hehe.</div><div id='cs_preview'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem inventore ipsam molestiae, odit officiis quia soluta sunt! Aliquid, aperiam doloribus ex facere, fugit necessitatibus nisi placeat quidem quod repellendus totam.</div></div>";
-});
+// router.add("/cheatsheets/new", () => {
+//   return viewCheatsheetForm();
+// });
 
 router.add("/cheatsheets/:id", (params) => {
   return viewCheatsheetDetail(params.id);
-  // mainframe.innerHTML = `<h1>Cheatsheet ID #${params.id}</h1>`;
 });
 
 router.add("/cheatsheets/:id/edit", (params) => {
