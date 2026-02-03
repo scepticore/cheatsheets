@@ -8,7 +8,6 @@
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: white;
 }
 
 #render_wrapper {
@@ -33,6 +32,7 @@
     min-height: 180mm;
     margin-bottom: 4mm;
     /*border: 1px dashed #333;*/
+    background-color: white;
 }
 
 .paragraph {
@@ -67,7 +67,6 @@ h1 {
     break-inside: avoid;
     -webkit-column-break-inside: avoid;
     margin-top: 0;
-    padding: 2pt 0.2em;
 }
 
 h2 {

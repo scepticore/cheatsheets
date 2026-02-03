@@ -7,15 +7,20 @@ import {
   deleteCheatsheet,
   getCheatsheetMarkdown, updateMarkdown
 } from "../services/cheatsheets.js";
-import {marked} from "marked";
+import {Marked} from "marked";
+import {markedHighlight} from "marked-highlight";
+import hljs from "highlight.js";
+
 import fs from "node:fs/promises";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const router = express.Router();
 const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e";
+
 
 router.get("/cheatsheets", async (req, res) => {
   try {
@@ -76,21 +81,51 @@ router.put("/cheatsheet/:id/markdown/update", async (req, res) => {
 
 router.get("/cheatsheet/:id/pdf", async (req, res) => {
   const {id} = req.params;
+  const darculaTheme = `
+  .hljs { display: block; overflow-x: auto; padding: 1em; background: #2b2b2b; color: #a9b7c6; border-radius: 4px; }
+  .hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-link { color: #cc7832; }
+  .hljs-function, .hljs-code, .hljs-title { color: #ffc66d; }
+  .hljs-string, .hljs-attribute { color: #6a8759; }
+  .hljs-number, .hljs-symbol, .hljs-bullet { color: #6897bb; }
+  .hljs-comment, .hljs-quote { color: #808080; font-style: italic; }
+  pre { margin: 0; background: #2b2b2b; }
+`;
 
-  const markdownData = await getCheatsheetMarkdown(id);
+  const marked = new Marked(
+    markedHighlight({
+      langPrefix: "hljs language-",
+      highlight(code, lang) {
+        const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+        return hljs.highlight(code, {language}).value
+      }
+    })
+  )
 
-  const contentHtml = await marked.parse(markdownData?.body);
-  const paginatedHtml = paginateMarkdown(contentHtml);
+
 
   try {
+    const markdownData = await getCheatsheetMarkdown(id);
+    const contentHtml = await marked.parse(markdownData?.body || "");
+    const paginatedHtml = paginateMarkdown(contentHtml);
+
     const cssPath = path.join(__dirname, "../shared_css/preview.css");
     const styles = await fs.readFile(cssPath, "utf-8");
 
     const fullHtml = `
    <html>
    <head>
+   <title>${id}</title>
     <meta name="viewport" content="width=device-width, initial-scale=0.2, maximum-scale=1.0, user-scalable=no" />
-    <style>${styles}</style>
+    <style>
+      ${styles}
+      ${darculaTheme}
+      pre {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+      </style>
     </head>
    <body>${paginatedHtml}</body>
    </html>
