@@ -5,7 +5,6 @@ Designed for allowed computer-written cheatsheets at school.
 Optimized for A4 prints.
 
 ## MVP Features
-
 - Multi-Column-Cheatsheet creator (1-5)
 - Font-Size-Picking between 6Pt and 12Pt
 - Live-Preview in Browser (like Overleaf)
@@ -14,6 +13,7 @@ Optimized for A4 prints.
 
 ## Planned features
 - Group-Working
+- Download Markdown
 - Image Upload (External sources via markdown should work)
 
 # Services / Ports
