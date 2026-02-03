@@ -4,6 +4,7 @@ import {createClient} from "@libsql/client";
 import {and, eq} from "drizzle-orm";
 import {cheatsheetsTable} from "../db/schema.js";
 import {MongoClient} from "mongodb";
+import {randomUUID} from "node:crypto";
 
 console.log("Trying to open DB: ", process.env.DATABASE_URL);
 if (!process.env.DATABASE_URL) {
@@ -23,6 +24,7 @@ export async function getCheatsheets(userId, res) {
       title: cheatsheetsTable.title,
       description: cheatsheetsTable.description,
       filename: cheatsheetsTable.filename,
+      public: cheatsheetsTable.public,
       created_at: cheatsheetsTable.created_at,
       updated_at: cheatsheetsTable.updated_at,
     }).from(cheatsheetsTable).where(eq(cheatsheetsTable.user_id, userId));
@@ -41,6 +43,7 @@ export async function getCheatsheetById(userId, cheatsheetId, req, res) {
       title: cheatsheetsTable.title,
       description: cheatsheetsTable.description,
       filename: cheatsheetsTable.filename,
+      public: cheatsheetsTable.public,
       created_at: cheatsheetsTable.created_at,
       updated_at: cheatsheetsTable.updated_at,
     }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId), eq(cheatsheetsTable.id, cheatsheetId)));
@@ -67,12 +70,37 @@ export async function getCheatsheetMarkdown(id) {
 }
 
 export async function createCheatsheet(req, res) {
+
   try {
-    const result = await db.insert(cheatsheetsTable).values(req.body);
+    const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e"
+    const UUID = randomUUID();
+    const body = {
+      "id": UUID,
+      "user_id": userId,
+      "title": `Draft ${UUID}`
+    }
+    const result = await db.insert(cheatsheetsTable).values(body).returning({uuid: cheatsheetsTable.id});
+    const markdown = await createCheatsheetMarkdown(UUID, body, req, res);
+    console.log(markdown);
     res.status(201).json({result});
   } catch (error) {
     console.error(error);
     res.status(500).json({error});
+  }
+}
+
+export async function createCheatsheetMarkdown(id, body, req, res) {
+  const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
+  try {
+    // const newUuid = result[0].uuid;
+    await client.connect();
+    await client.db("cheatsheets").collection("cheatsheets").insertOne({id: id, body: "", createdAt: new Date()});
+    return true;
+  } catch (error) {
+    console.error(error);
+    return error;
+  } finally {
+    await client.close();
   }
 }
 
@@ -104,10 +132,15 @@ export async function updateMarkdown(id, req, res) {
 
 export async function deleteCheatsheet(id, req, res) {
   try {
+    // @todo set status to inactive (0)
     const result = await db.delete(cheatsheetsTable).where(eq(cheatsheetsTable.id, id));
     res.status(200).json({result});
   } catch (error) {
     console.error(error);
     res.status(500).json({error});
   }
+}
+
+export async function deleteCheatsheetMarkdown(id, req, res) {
+
 }

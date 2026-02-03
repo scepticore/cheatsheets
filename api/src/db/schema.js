@@ -1,4 +1,4 @@
-import {sqliteTable, text} from "drizzle-orm/sqlite-core";
+import {integer, sqliteTable, text} from "drizzle-orm/sqlite-core";
 import {sql} from "drizzle-orm";
 
 export const usersTable = sqliteTable("users_table", {
@@ -16,6 +16,7 @@ export const cheatsheetsTable = sqliteTable("cheatsheet_table", {
   title: text(),
   description: text(),
   filename: text(),
+  public: integer({ mode: 'boolean'}),
   created_at: text().default(sql`(current_timestamp)`).notNull(),
   updated_at: text()
 });
