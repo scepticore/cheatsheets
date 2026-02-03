@@ -16,6 +16,9 @@ export const cheatsheetsTable = sqliteTable("cheatsheet_table", {
   title: text(),
   description: text(),
   filename: text(),
+  columns: integer(),
+  font_size: integer(),
+  status: integer().default(1),
   public: integer({ mode: 'boolean'}),
   created_at: text().default(sql`(current_timestamp)`).notNull(),
   updated_at: text()
