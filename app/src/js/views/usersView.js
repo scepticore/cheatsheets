@@ -1,6 +1,7 @@
 import {renderTemplate} from "../utils/templateEngine";
 import {formGenerator} from "../utils/formBuilder";
 import {usersService} from "../services/usersService";
+import {authService} from "../services/authService.js";
 
 export async function showUsers() {
   const users = await usersService.getUserList();
@@ -14,7 +15,7 @@ export async function showUser(id) {
 
 export async function formSignIn() {
   const form = new formGenerator("Sign In", {
-      "callback": "window.usersService.signIn()"
+      "callback": "window.authService.signIn()"
     },
     {
       "username": {
@@ -40,7 +41,7 @@ export async function formSignIn() {
 
 export async function formSignUp() {
   const form = new formGenerator("Sign Up", {
-      "callback": "window.usersService.signUp()"
+      "callback": "window.authService.signUp()"
     },
     {
       "username": {

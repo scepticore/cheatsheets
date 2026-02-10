@@ -3,5 +3,7 @@ export function renderMarkdownToPdf() {
 
   renderButton.addEventListener("click", function (event) {
     // Call pdf-generator service
+
+    // Open PDF-Link in new tab
   });
 }

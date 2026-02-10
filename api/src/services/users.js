@@ -7,6 +7,7 @@ import {SignJWT} from "jose";
 import {createSecretKey} from "node:crypto";
 import {createClient} from "@libsql/client";
 import { randomUUID } from "node:crypto";
+import bcrypt from "bcrypt";
 
 console.log("Trying to open DB: ", process.env.DATABASE_URL);
 if (!process.env.DATABASE_URL) {
@@ -19,6 +20,11 @@ const client = createClient({
 const db = drizzle(client);
 
 
+/**
+ *
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function getUsers(res) {
     try {
         const result = await db.select({
@@ -26,8 +32,7 @@ export async function getUsers(res) {
             name: usersTable.name,
             firstname: usersTable.firstname,
             email: usersTable.email,
-            username: usersTable.username,
-            password: usersTable.password,
+            username: usersTable.username
         }).from(usersTable);
         res.status(200).json(result);
     } catch (error) {
@@ -36,6 +41,13 @@ export async function getUsers(res) {
     }
 }
 
+/**
+ *
+ * @param id
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function getUserById(id, req, res) {
     try {
         const result = await db.select({
@@ -104,14 +116,24 @@ export async function getUserByCredentials(req, res) {
     }
 }
 
+/**
+ *
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function createUser(req, res) {
     // const { name, email, password } = req.body;
     // console.log(req);
     try {
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
         const uuid = randomUUID();
 
         const newUser = {
-            ...req.body,
+            "email": req.body.email,
+            "username": req.body.username,
+            "password": hashedPassword,
             id: uuid
         }
         console.log(newUser);
@@ -124,6 +146,13 @@ export async function createUser(req, res) {
     }
 }
 
+/**
+ *
+ * @param id
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function updateUser(id, req, res) {
     try {
         const result = await db.update(usersTable).set(req.body).where(eq(usersTable.id, id));
@@ -134,6 +163,13 @@ export async function updateUser(id, req, res) {
     }
 }
 
+/**
+ *
+ * @param id
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function deleteUser(id, req, res) {
     try {
         const result = await db.delete(usersTable).where(eq(usersTable.id, id));

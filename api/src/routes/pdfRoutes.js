@@ -8,6 +8,9 @@ import {fileURLToPath} from "node:url";
 
 const router = express.Router();
 
+/**
+ * Route to generate PDF by given Cheatsheet ID
+ */
 router.get("/generate-pdf/:id", async (req, res) => {
   let browser;
   try {

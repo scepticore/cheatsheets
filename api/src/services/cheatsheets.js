@@ -16,6 +16,12 @@ const client = createClient({
 
 const db = drizzle(client);
 
+/**
+ * Get cheatsheet list
+ * @param userId
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function getCheatsheets(userId, res) {
   try {
     const result = await db.select({
@@ -35,6 +41,14 @@ export async function getCheatsheets(userId, res) {
   }
 }
 
+/**
+ * Get cheatsheet by ID
+ * @param userId
+ * @param cheatsheetId
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ */
 export async function getCheatsheetById(userId, cheatsheetId, req, res) {
   try {
     const result = await db.select({
@@ -56,6 +70,11 @@ export async function getCheatsheetById(userId, cheatsheetId, req, res) {
   }
 }
 
+/**
+ * Get Markdown for cheatsheet
+ * @param id
+ * @returns {Promise<Document & {_id: InferIdType<Document>}>}
+ */
 export async function getCheatsheetMarkdown(id) {
   const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
   try {
@@ -69,6 +88,12 @@ export async function getCheatsheetMarkdown(id) {
   }
 }
 
+/**
+ * Create new cheatsheet in SQLite
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function createCheatsheet(req, res) {
 
   try {
@@ -89,6 +114,14 @@ export async function createCheatsheet(req, res) {
   }
 }
 
+/**
+ * Create new cheatsheet in MongoDB
+ * @param id
+ * @param body
+ * @param req
+ * @param res
+ * @returns {Promise<*|boolean>}
+ */
 export async function createCheatsheetMarkdown(id, body, req, res) {
   const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
   try {
@@ -104,6 +137,13 @@ export async function createCheatsheetMarkdown(id, body, req, res) {
   }
 }
 
+/**
+ * Update cheatsheet meta in SQLite
+ * @param id
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function updateCheatsheet(id, req, res) {
   try {
     // @todo get real userId
@@ -117,6 +157,13 @@ export async function updateCheatsheet(id, req, res) {
   }
 }
 
+/**
+ * Update markdown in MongoDB
+ * @param id
+ * @param req
+ * @param res
+ * @returns {Promise<UpdateResult<Document>>}
+ */
 export async function updateMarkdown(id, req, res) {
   const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
   try {
@@ -130,6 +177,30 @@ export async function updateMarkdown(id, req, res) {
   }
 }
 
+/**
+ * Move cheatsheet to trash
+ * @param id
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
+export async function trashCheatsheet(id, req, res) {
+  try {
+
+  } catch (e) {
+    console.error(e);
+  } finally {
+
+  }
+}
+
+/**
+ * Delete cheatsheet in SQLite
+ * @param id
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function deleteCheatsheet(id, req, res) {
   try {
     // @todo set status to inactive (0)
@@ -141,6 +212,19 @@ export async function deleteCheatsheet(id, req, res) {
   }
 }
 
+/**
+ * Delete Cheatsheet markdown from MongoDB
+ * @param id
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
 export async function deleteCheatsheetMarkdown(id, req, res) {
+  try {
 
+  } catch (e) {
+    console.error(e);
+  } finally {
+
+  }
 }

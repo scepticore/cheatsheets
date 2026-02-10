@@ -49,12 +49,8 @@ export class cheatsheetsService {
     }
   }
 
-  static async getCheatSheetMD() {
-    // Run API-Call
-  }
-
   /**
-   *
+   * Update Cheatsheet (SQLite)
    * @param uuid
    * @param value
    * @returns {Promise<void>}
@@ -66,7 +62,7 @@ export class cheatsheetsService {
   }
 
   /**
-   *
+   * Update Markdown (MongoDB)
    * @param uuid
    * @param value
    * @returns {Promise<void>}

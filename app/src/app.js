@@ -5,7 +5,6 @@ import {showDashboard} from "./js/views/dashboardView";
 import {
   viewCheatsheetForm,
   viewCheatsheetDetail,
-  viewCheatsheetEdit,
   viewCheatsheetList, viewCheatsheetPreview
 } from "./js/views/cheatsheetsView";
 import {showPreview} from "./js/views/previewView";

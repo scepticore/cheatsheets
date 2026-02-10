@@ -3,6 +3,9 @@ import {createUser, getUserById, getUsers, updateUser, deleteUser,} from "../ser
 
 const router = express.Router();
 
+/**
+ * Get Userlist
+ */
 router.get("/users", async (req, res) => {
     try {
         const users = await getUsers(res);
@@ -13,6 +16,9 @@ router.get("/users", async (req, res) => {
     }
 });
 
+/**
+ * Create user
+ */
 router.post("/users/create", async (req, res) => {
     try {
         const result = await createUser(req, res);
@@ -23,6 +29,9 @@ router.post("/users/create", async (req, res) => {
     }
 });
 
+/**
+ * Get User by ID
+ */
 router.get("/user/:id", async (req, res) => {
     try {
         const users = await getUserById(parseInt(req.params.id), req, res);
@@ -33,6 +42,9 @@ router.get("/user/:id", async (req, res) => {
     }
 })
 
+/**
+ * Update User
+ */
 router.put("/user/:id/update", async (req, res) => {
     try {
         const users = await updateUser(parseInt(req.params.id), req, res);
@@ -43,6 +55,9 @@ router.put("/user/:id/update", async (req, res) => {
     }
 })
 
+/**
+ * Delete User
+ */
 router.delete("/user/:id/delete", async (req, res) => {
     try {
         const result = await deleteUser(parseInt(req.params.id), req, res);

@@ -1,0 +1,4 @@
+/.idea/
+/api/node_modules/
+/.env
+/app/node_modules/

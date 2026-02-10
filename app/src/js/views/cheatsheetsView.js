@@ -13,12 +13,22 @@ export async function viewCheatsheetList() {
   createCheatsheet();
 }
 
+/**
+ * View single cheatsheet, currently loads HTML-Page from API
+ * @param id
+ * @returns {Promise<void>}
+ */
 export function viewCheatsheetDetail(id) {
-  const result = {}; // await getCheatsheetList();
+  const result = {};
   result.id = id;
   return renderTemplate("cheatsheets/detail.html", {result});
 }
 
+/**
+ * View Cheatsheet Form (same for edit and new cheatsheet)
+ * @param id
+ * @returns {Promise<void>}
+ */
 export async function viewCheatsheetForm(id = null) {
   let result = {};
   let markdown = "";
@@ -65,16 +75,6 @@ export async function viewCheatsheetForm(id = null) {
 
   loadAce(id);
   handleFormUpdates(id, form);
-}
-
-export async function viewCheatsheetEdit() {
-  const result = {}; // await getCheatsheetList();
-
-}
-
-export function viewCheatsheetDelete() {
-  const result = {}; // await getCheatsheetList();
-  return renderTemplate("cheatsheets/index.html", {result});
 }
 
 export function viewCheatsheetPreview() {

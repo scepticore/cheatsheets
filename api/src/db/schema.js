@@ -1,6 +1,9 @@
 import {integer, sqliteTable, text} from "drizzle-orm/sqlite-core";
 import {sql} from "drizzle-orm";
 
+/**
+ * usersTable for Drizzle
+ */
 export const usersTable = sqliteTable("users_table", {
   id: text().primaryKey(),
   name: text(),
@@ -10,6 +13,9 @@ export const usersTable = sqliteTable("users_table", {
   password: text().notNull()
 });
 
+/**
+ * cheatsheetsTable for Drizzle
+ */
 export const cheatsheetsTable = sqliteTable("cheatsheet_table", {
   id: text().primaryKey(),
   user_id: text().notNull().references(() => usersTable.id),

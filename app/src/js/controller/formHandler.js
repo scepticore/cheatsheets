@@ -1,7 +1,7 @@
 import {cheatsheetsService as cheatsheetService} from "../services/cheatsheetsService.js";
 
 /**
- *
+ * Listens to form changes for cheatsheet editor
  */
 export function handleFormUpdates(csUUID, form) {
   // Listen for changes
@@ -14,14 +14,16 @@ export function handleFormUpdates(csUUID, form) {
       const value = JSON.stringify(e.target.value);
       const field = e.target.id;
       const objectString = `{"${field}": ${value}}`;
-      // console.log(objectString);
-      // store value in database with API call
+
       const result = await cheatsheetService.updateCheatsheet(csUUID, objectString);
+
+      // @todo backup if internet connection fails
       // if no internetion connection, store value in window.sessionStorage
       // window.sessionStorage.setItem("markdown", value);
     }, 500);
   });
 
+  // @todo make checkboxes work for autosave
   // Checkboxes
   form.addEventListener("change", (e) => {
     // console.log(e);

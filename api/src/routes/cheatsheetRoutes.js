@@ -22,6 +22,9 @@ const router = express.Router();
 const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e";
 
 
+/**
+ * Cheatsheet Route, shows own cheatsheets
+ */
 router.get("/cheatsheets", async (req, res) => {
   try {
     console.log(req.query);
@@ -37,6 +40,9 @@ router.get("/cheatsheets", async (req, res) => {
   }
 });
 
+/**
+ * Create new cheatsheet
+ */
 router.post("/cheatsheets/create", async (req, res) => {
   try {
     const result = await createCheatsheet(req, res);
@@ -49,6 +55,9 @@ router.post("/cheatsheets/create", async (req, res) => {
   }
 });
 
+/**
+ * View single cheatsheet by ID
+ */
 router.get("/cheatsheet/:id", async (req, res) => {
   try {
     const cheatsheetId = req.params.id;
@@ -60,6 +69,9 @@ router.get("/cheatsheet/:id", async (req, res) => {
   }
 })
 
+/**
+ * Get cheatsheet markdown from MongoDB
+ */
 router.get("/cheatsheet/:id/markdown", async (req, res) => {
   try {
     const cheatsheedId = req.params.id;
@@ -70,6 +82,9 @@ router.get("/cheatsheet/:id/markdown", async (req, res) => {
   }
 });
 
+/**
+ * Update markdown in MongoDB
+ */
 router.put("/cheatsheet/:id/markdown/update", async (req, res) => {
   try {
     const cheatsheetId = req.params.id;
@@ -79,6 +94,9 @@ router.put("/cheatsheet/:id/markdown/update", async (req, res) => {
   }
 })
 
+/**
+ * Get PDF-Ready HTML-View
+ */
 router.get("/cheatsheet/:id/pdf", async (req, res) => {
   const {id} = req.params;
   const darculaTheme = `
@@ -100,8 +118,6 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
       }
     })
   )
-
-
 
   try {
     const markdownData = await getCheatsheetMarkdown(id);
@@ -135,9 +151,11 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
     console.error(e);
     res.status(500).send("An error occured");
   }
-
 });
 
+/**
+ * Update cheatsheet SQLite
+ */
 router.put("/cheatsheet/:id/update", async (req, res) => {
   try {
     const users = await updateCheatsheet(req.params.id, req, res);
@@ -148,6 +166,9 @@ router.put("/cheatsheet/:id/update", async (req, res) => {
   }
 })
 
+/**
+ * Delete cheatsheet
+ */
 router.delete("/cheatsheet/:id/delete", async (req, res) => {
   try {
     const result = await deleteCheatsheet(req.params.id, req, res);
@@ -158,6 +179,11 @@ router.delete("/cheatsheet/:id/delete", async (req, res) => {
   }
 })
 
+/**
+ * Helper function: Paginate markdown, so each H1 starts a new page
+ * @param htmlString
+ * @returns {string}
+ */
 function paginateMarkdown(htmlString) {
   // 1. Wir splitten bei JEDER Überschrift (h1-h6)
   const sections = htmlString.split(/(?=<h[1-6]>)/g);
@@ -188,15 +214,5 @@ function paginateMarkdown(htmlString) {
 
   return result;
 }
-// function paginateMarkdown(htmlString) {
-//   const sections = htmlString.split(/(?=<h1>)/g);
-//   const paginated = sections.map(section => {
-//     if (section.trim() === "") return "";
-//     return `<div class="page">${section}</div>`;
-//   })
-//     .join("");
-//
-//   return paginated;
-// }
 
 export default router;

@@ -18,12 +18,24 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use("/api", [userRoutes, cheatsheetRoutes, authRoutes, pdfRoutes]);
+app.use("/api", [userRoutes, cheatsheetRoutes, pdfRoutes]);
+app.use("/api/auth", authRoutes);
+// @todo split and make app.use("/users") as well as app.use("/cheatsheets") etc.
+// app.use("/api/users", userRoutes);
+// app.use("/api/cheatsheets", cheatsheetRoutes);
+// app.use("/api/pdf", pdfRoutes);
 
+
+/**
+ * Main entry point for API
+ */
 app.get("/", (req, res) => {
-    res.json("Cheatsheet API v 0.0.1");
+    res.json("Cheatsheet API v 1.0.0");
 });
 
+/**
+ * Start server
+ */
 app.listen(Number(PORT), '0.0.0.0', () => {
-    console.log(`API läuft auf http://0.0.0.0:${PORT}`);
+    console.log(`Cheatsheets API runs on http://0.0.0.0:${PORT}`);
 });
