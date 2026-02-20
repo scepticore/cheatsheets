@@ -28,8 +28,6 @@ router.get("/generate-pdf/:id", async (req, res) => {
 
     const page = await browser.newPage();
 
-    // WICHTIG: Nutze den Service-Namen 'frontend' statt 'localhost'
-    // Und warte länger, falls das Frontend noch lädt
     const frontendUrl = `http://api:3030/api/cheatsheet/${req.params.id}/pdf`;
     console.log(`Navigiere zu: ${frontendUrl}`);
 
@@ -40,8 +38,7 @@ router.get("/generate-pdf/:id", async (req, res) => {
 
     // Verzeichnis sicherstellen (Falls noch nicht existiert)
     const dirName = dirname(fileURLToPath(import.meta.url));
-    console.log(dirName);
-    const outputDir = path.join(dirName, 'files');
+    const outputDir = path.join(dirName, '../../output');
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, {recursive: true});
     }

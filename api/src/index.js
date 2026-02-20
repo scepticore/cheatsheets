@@ -20,6 +20,8 @@ app.use(cors({
 app.use(express.json());
 app.use("/api", [userRoutes, cheatsheetRoutes, pdfRoutes]);
 app.use("/api/auth", authRoutes);
+app.use("/output", express.static("output"));
+
 // @todo split and make app.use("/users") as well as app.use("/cheatsheets") etc.
 // app.use("/api/users", userRoutes);
 // app.use("/api/cheatsheets", cheatsheetRoutes);

@@ -91,7 +91,6 @@ export async function getUserByCredentials(req, res) {
 
         const secretKey = createSecretKey("secret", "utf-8");
 
-
         const token = await new SignJWT({
             username: req.body.username
         })
@@ -105,7 +104,6 @@ export async function getUserByCredentials(req, res) {
             .sign(secretKey);
         console.log(token);
         res.status(200).send(token);
-
 
         // res.status(200).json(result);
 

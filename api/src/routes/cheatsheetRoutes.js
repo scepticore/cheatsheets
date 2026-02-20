@@ -120,6 +120,7 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
   )
 
   try {
+    const cheatsheetMeta = await getCheatsheetById(userId, id, req, res);
     const markdownData = await getCheatsheetMarkdown(id);
     const contentHtml = await marked.parse(markdownData?.body || "");
     const paginatedHtml = paginateMarkdown(contentHtml);
@@ -128,11 +129,18 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
     const styles = await fs.readFile(cssPath, "utf-8");
 
     const fullHtml = `
+    <!DOCTYPE html>
    <html>
    <head>
    <title>${id}</title>
     <meta name="viewport" content="width=device-width, initial-scale=0.2, maximum-scale=1.0, user-scalable=no" />
     <style>
+      * {
+      font-size: ${cheatsheetMeta.font_size}pt !important;
+      }
+      .page {
+        column-count: ${cheatsheetMeta.columns};
+      }
       ${styles}
       ${darculaTheme}
       pre {

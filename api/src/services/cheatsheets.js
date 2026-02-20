@@ -5,6 +5,7 @@ import {and, eq} from "drizzle-orm";
 import {cheatsheetsTable} from "../db/schema.js";
 import {MongoClient} from "mongodb";
 import {randomUUID} from "node:crypto";
+import {getMongoClient} from "../utils/mongo.js";
 
 console.log("Trying to open DB: ", process.env.DATABASE_URL);
 if (!process.env.DATABASE_URL) {
@@ -37,7 +38,7 @@ export async function getCheatsheets(userId, res) {
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
-    res.status(500).json({error: "An error occured"});
+    res.status(500).json({error: "An error occured", body: error});
   }
 }
 
@@ -58,6 +59,8 @@ export async function getCheatsheetById(userId, cheatsheetId, req, res) {
       description: cheatsheetsTable.description,
       filename: cheatsheetsTable.filename,
       public: cheatsheetsTable.public,
+      columns: cheatsheetsTable.columns,
+      font_size: cheatsheetsTable.font_size,
       created_at: cheatsheetsTable.created_at,
       updated_at: cheatsheetsTable.updated_at,
     }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId), eq(cheatsheetsTable.id, cheatsheetId)));
@@ -66,7 +69,7 @@ export async function getCheatsheetById(userId, cheatsheetId, req, res) {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({error: "An error occured"});
+    res.status(500).json({error: "An error occured", body: error});
   }
 }
 
@@ -76,15 +79,14 @@ export async function getCheatsheetById(userId, cheatsheetId, req, res) {
  * @returns {Promise<Document & {_id: InferIdType<Document>}>}
  */
 export async function getCheatsheetMarkdown(id) {
-  const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
+  // const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
   try {
-    await client.connect();
-    const doc = await client.db("cheatsheets").collection("cheatsheets").findOne({id: id});
+    const mongodb = await getMongoClient();
+    const doc = await mongodb.collection("cheatsheets").findOne({id: id});
     return doc; // Nur Daten zurückgeben
   } catch (error) {
     throw error; // Fehler nach oben "werfen"
   } finally {
-    await client.close();
   }
 }
 
@@ -100,9 +102,13 @@ export async function createCheatsheet(req, res) {
     const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e"
     const UUID = randomUUID();
     const body = {
-      "id": UUID,
-      "user_id": userId,
-      "title": `Draft ${UUID}`
+      id: UUID,
+      user_id: userId,
+      title: `Draft ${UUID}`,
+      columns: 5,
+      font_size: 10,
+      status: 1,
+      public: 0
     }
     const result = await db.insert(cheatsheetsTable).values(body).returning({uuid: cheatsheetsTable.id});
     const markdown = await createCheatsheetMarkdown(UUID, body, req, res);
@@ -123,17 +129,16 @@ export async function createCheatsheet(req, res) {
  * @returns {Promise<*|boolean>}
  */
 export async function createCheatsheetMarkdown(id, body, req, res) {
-  const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
+  // const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
   try {
     // const newUuid = result[0].uuid;
-    await client.connect();
-    await client.db("cheatsheets").collection("cheatsheets").insertOne({id: id, body: "", createdAt: new Date()});
+    const mongodb = await getMongoClient();
+    await mongodb.collection("cheatsheets").insertOne({id: id, body: "", createdAt: new Date()});
     return true;
   } catch (error) {
     console.error(error);
-    return error;
+    throw error;
   } finally {
-    await client.close();
   }
 }
 
@@ -148,6 +153,7 @@ export async function updateCheatsheet(id, req, res) {
   try {
     // @todo get real userId
     const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e";
+    console.log(req.body);
     req.body.updated_at = new Date().toISOString();
     const result = await db.update(cheatsheetsTable).set(req.body).where(and(eq(cheatsheetsTable.id, id), eq(cheatsheetsTable.user_id, userId)));
     res.status(200).json({result});
@@ -165,10 +171,12 @@ export async function updateCheatsheet(id, req, res) {
  * @returns {Promise<UpdateResult<Document>>}
  */
 export async function updateMarkdown(id, req, res) {
-  const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
+  // const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
   try {
-    await client.connect();
-    const doc = await client.db("cheatsheets").collection("cheatsheets").updateOne({"id": id}, { $set: req.body });
+    // await client.connect();
+    // const doc = await client.db("cheatsheets").collection("cheatsheets").updateOne({"id": id}, { $set: req.body });
+    const mongodb = await getMongoClient();
+    const doc = await mongodb.collection("cheatsheets").updateOne({"id": id}, { $set: req.body });
     res.send(doc);
     return doc;
   } catch (error) {
