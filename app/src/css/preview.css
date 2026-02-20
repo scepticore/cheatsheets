@@ -4,7 +4,7 @@
 }
 
 * {
-    font-size: 8pt;
+    /*font-size: 8pt;*/
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -20,7 +20,7 @@
     break-before: page;
     break-after: page;
     /*break-after: always;*/
-    column-count: 5;
+    /*column-count: 5;*/
     column-rule-color: #333;
     column-rule-style: solid;
     column-rule-width: 1px;
@@ -78,7 +78,8 @@ h3 {
 }
 
 h4 {
-    background-color: #ffaa00;
+    color: #fff;
+    background-color: #c246ff;
 }
 
 img {
@@ -114,6 +115,15 @@ p {
 
 ul, li, p, table {
     break-inside: avoid;
+}
+
+table {
+    text-align: left;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #000;
 }
 
 @media print {

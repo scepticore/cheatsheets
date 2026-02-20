@@ -236,7 +236,7 @@ function replaceTables(context) {
 
     for (const field of fields) {
       const tableHeaderRowCell = document.createElement("th");
-      tableHeaderRowCell.textContent = firstLetterUppercase(field);
+      tableHeaderRowCell.textContent = firstLetterUppercase(field).replace("_", " ");
       tableHeaderRow.appendChild(tableHeaderRowCell);
     }
 

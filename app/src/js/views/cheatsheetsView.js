@@ -4,6 +4,7 @@ import {cheatsheetsService} from "../services/cheatsheetsService";
 import {loadAce} from "../controller/editorHandler";
 import {handleFormUpdates} from "../controller/formHandler";
 import {createCheatsheet} from "../controller/createCheatsheet.js";
+import {downloadPdf} from "../controller/downloadPdf.js";
 
 export async function viewCheatsheetList() {
   const cheatsheets = await cheatsheetsService.getCheatsheets();
@@ -68,6 +69,22 @@ export async function viewCheatsheetForm(id = null) {
         "attr": {
           "checked": result.cheatsheet?.public === 1 ? "checked" : undefined,
         }
+      },
+      "columns": {
+        "type": "range",
+        "attr": {
+          "min": 1,
+          "max": 5,
+          "value": result.cheatsheet?.columns ? result.cheatsheet.columns : "",
+        }
+      },
+      "font_size": {
+        "type": "range",
+        "attr": {
+          "min": 5,
+          "max": 12,
+          "value": result.cheatsheet?.font_size ? result.cheatsheet.font_size : 10,
+        }
       }
     });
 
@@ -75,6 +92,7 @@ export async function viewCheatsheetForm(id = null) {
 
   loadAce(id);
   handleFormUpdates(id, form);
+  downloadPdf();
 }
 
 export function viewCheatsheetPreview() {

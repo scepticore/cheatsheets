@@ -234,6 +234,15 @@ button:hover,
     background-color: color-mix(in srgb, var(--primary-button-color) 80%, black);
 }
 
+input[type="submit"].disabled,
+button.disabled,
+.button.disabled {
+    background-color: color-mix(in srgb, var(--primary-button-color) 30%, black);
+    color: rgba(255,255,255,0.6);
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
 button.secondary, .button.secondary {
     background: none;
     border: 1px solid var(--primary-button-color);

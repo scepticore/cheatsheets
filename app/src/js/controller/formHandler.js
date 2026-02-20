@@ -20,17 +20,21 @@ export function handleFormUpdates(csUUID, form) {
       // @todo backup if internet connection fails
       // if no internetion connection, store value in window.sessionStorage
       // window.sessionStorage.setItem("markdown", value);
-    }, 500);
+    }, 1000);
   });
 
   // @todo make checkboxes work for autosave
   // Checkboxes
-  form.addEventListener("change", (e) => {
+  form.addEventListener("change", async (e) => {
     // console.log(e);
     const value = e.target.value;
     const field = e.target.id;
     console.log(field);
     console.log(value);
-    // const result = await cheatsheetService.updateCheatsheet(csUUID, form);
+    const objectString = `{"${field}": ${value}}`;
+    const result = await cheatsheetService.updateCheatsheet(csUUID, objectString);
+
+    const iframe = document.getElementById("cs_frame");
+    iframe.src = iframe.src;
   });
 }

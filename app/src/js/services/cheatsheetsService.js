@@ -81,4 +81,9 @@ export class cheatsheetsService {
   static async deleteCheatsheet(uuid) {
     // Run API-Call
   }
+
+  static async downloadPdf(uuid) {
+    const pdf = await requestService.fetchResponse(API_BASE+"generate-pdf/"+uuid, "pdf", "GET", null, null);
+    return pdf;
+  }
 }

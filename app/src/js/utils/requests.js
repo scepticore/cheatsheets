@@ -50,7 +50,7 @@ export class requestService {
             // 'Authorization': `Bearer ${token}`,
           },
           // body: body ? JSON.stringify(body) : null,
-          signal: AbortSignal.timeout(5000)
+          signal: AbortSignal.timeout(15000) // generating PDF takes a while, so set that to 15 seconds
         };
       }
 
@@ -68,14 +68,14 @@ export class requestService {
       return handled;
     } catch (error) {
       console.log(error);
-      return {
-        status: 503,
-        notification: {
-          type: "error",
-          title: `Service unavailable`,
-          body: "Please connect to VPN"
-        }
-      }
+      // return {
+      //   status: 503,
+      //   notification: {
+      //     type: "error",
+      //     title: `Service unavailable`,
+      //     body: "Please connect to VPN"
+      //   }
+      // }
     }
   };
 

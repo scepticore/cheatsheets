@@ -139,7 +139,7 @@ export class formGenerator {
   createLabel(field) {
     // Create label and add to fieldContainer
     const fieldLabel = document.createElement("label");
-    fieldLabel.textContent = field;
+    fieldLabel.textContent = field.replace("_", " ");
     fieldLabel.setAttribute("for", field);
     return fieldLabel;
   }
@@ -213,6 +213,22 @@ export class formGenerator {
     if (this.fields[field].attr?.maxLength) {
       this.lengthCounter(fieldElement, this.lengthIndicator);
     }
+    return fieldElement;
+  }
+
+  /**
+   * Creates Range-Select Inputs
+   * @param field
+   * @returns {HTMLInputElement}
+   */
+  createRange(field) {
+    const fieldElement = document.createElement("input");
+    // const outputElement = document.createElement("output");
+    fieldElement.type = "range";
+    fieldElement.id = field;
+    fieldElement.name = field;
+    fieldElement.value = this.fields[field].value || "";
+    this.addAttributes(fieldElement, field);
     return fieldElement;
   }
 
