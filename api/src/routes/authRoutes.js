@@ -1,33 +1,17 @@
 import express from "express";
-import {getUserByCredentials} from "../services/users.js";
+import {loginUser, registerUser} from "../services/auth.js";
 
 const router = express.Router();
 
-/**
- * Get info from DB
- */
-router.post("/authservice", async (req, res) => {
-    // get user credentials by id
-    const result = await getUserByCredentials(req, res);
-    res.status(200).json(result);
-});
 
 /**
  * Sign In
  */
-router.post("/signin", async (req, res) => {
-    // Get User by Username or Email
-    // Email in first prio
-    res.status(200).json(req.body);
-});
+router.post("/signin", loginUser);
 
 /**
  * Sign Up New Users
  */
-router.post("/signup", async (req, res) => {
-    //
-});
-
-
+router.post("/signup", registerUser);
 
 export default router;

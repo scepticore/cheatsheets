@@ -2,7 +2,6 @@ import "dotenv/config";
 import {drizzle} from "drizzle-orm/libsql";
 import {and, eq, or} from "drizzle-orm";
 import {usersTable} from "../db/schema.js";
-import * as jose from "jose";
 import {SignJWT} from "jose";
 import {createSecretKey} from "node:crypto";
 import {createClient} from "@libsql/client";

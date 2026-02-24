@@ -1,21 +1,9 @@
+import {db} from '../utils/db.js';
 import "dotenv/config";
-import {drizzle} from "drizzle-orm/libsql";
-import {createClient} from "@libsql/client";
+import {getMongoClient} from "../utils/mongo.js";
 import {and, eq} from "drizzle-orm";
 import {cheatsheetsTable} from "../db/schema.js";
-import {MongoClient} from "mongodb";
 import {randomUUID} from "node:crypto";
-import {getMongoClient} from "../utils/mongo.js";
-
-console.log("Trying to open DB: ", process.env.DATABASE_URL);
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL not defined!");
-}
-const client = createClient({
-  url: process.env.DATABASE_URL
-});
-
-const db = drizzle(client);
 
 /**
  * Get cheatsheet list
@@ -176,7 +164,7 @@ export async function updateMarkdown(id, req, res) {
     // await client.connect();
     // const doc = await client.db("cheatsheets").collection("cheatsheets").updateOne({"id": id}, { $set: req.body });
     const mongodb = await getMongoClient();
-    const doc = await mongodb.collection("cheatsheets").updateOne({"id": id}, { $set: req.body });
+    const doc = await mongodb.collection("cheatsheets").updateOne({"id": id}, {$set: req.body});
     res.send(doc);
     return doc;
   } catch (error) {
