@@ -10,8 +10,12 @@ import {
 import {showPreview} from "./js/views/previewView";
 import {formSignIn, formSignUp} from "./js/views/usersView";
 import {renderTemplate} from "./js/utils/templateEngine.js";
+import {isLoggedIn} from "./js/middleware/auth.js";
+import {getUserName} from "./js/controller/appHandler.js";
+import {authService} from "./js/services/authService.js";
 //
 checkDarkMode();
+getUserName();
 
 const router = new Router();
 
@@ -30,13 +34,9 @@ router.add("/dashboard", () => {
 });
 
 /* Cheatsheet Routes */
-router.add("/cheatsheets", () => {
+router.add("/cheatsheets", isLoggedIn, () => {
   return viewCheatsheetList();
 });
-
-// router.add("/cheatsheets/new", () => {
-//   return viewCheatsheetForm();
-// });
 
 router.add("/cheatsheets/:id", (params) => {
   return viewCheatsheetDetail(params.id);
@@ -48,6 +48,10 @@ router.add("/cheatsheets/:id/edit", (params) => {
 
 router.add("/cheatsheets/:id/delete", (params) => {
   mainframe.innerHTML = `<h1>Cheatsheet Delete #${params.id}</h1>`;
+});
+
+router.add("/community", () => {
+  mainframe.innerHTML = "<h1>Public cheatsheets by the community</h1>";
 });
 
 /* Examples routes */
@@ -81,6 +85,10 @@ router.add("/signin", () => {
 
 router.add("/signup", () => {
   return formSignUp();
+});
+
+router.add("/signout", () => {
+  return authService.signOut();
 });
 
 /* Admin Routes */
