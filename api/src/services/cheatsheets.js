@@ -18,11 +18,10 @@ export async function getCheatsheets(userId, res) {
       user_id: cheatsheetsTable.user_id,
       title: cheatsheetsTable.title,
       description: cheatsheetsTable.description,
-      filename: cheatsheetsTable.filename,
       public: cheatsheetsTable.public,
       created_at: cheatsheetsTable.created_at,
       updated_at: cheatsheetsTable.updated_at,
-    }).from(cheatsheetsTable).where(eq(cheatsheetsTable.user_id, userId));
+    }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId),eq(cheatsheetsTable.status, 1)));
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
@@ -31,6 +30,43 @@ export async function getCheatsheets(userId, res) {
 }
 
 /**
+ * Cheatsheet bin - where cheatsheets land, before deleted
+ * @param userId
+ * @param res
+ * @returns {Promise<void>}
+ */
+export async function getCheatsheetBin(userId, res) {
+  try {
+    const result = await db.select({
+      id: cheatsheetsTable.id,
+      title: cheatsheetsTable.title,
+      description: cheatsheetsTable.description,
+      filename: cheatsheetsTable.filename,
+      created_at: cheatsheetsTable.created_at,
+    }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId), eq(cheatsheetsTable.status, 0)));
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error});
+  }
+}
+
+/**
+ * Get bin size
+ * @param userId
+ * @param res
+ * @returns {Promise<void>}
+ */
+export async function getCheatsheetBinSize(userId, res) {
+  try {
+    const result = await db.$count(cheatsheetsTable, and(eq(cheatsheetsTable.user_id, userId), eq(cheatsheetsTable.status, 0)))
+    res.status(200).json(result);
+  } catch(error) {
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error});
+  }
+}
+/**
  * Get cheatsheet by ID
  * @param userId
  * @param cheatsheetId
@@ -38,7 +74,7 @@ export async function getCheatsheets(userId, res) {
  * @param res
  * @returns {Promise<*>}
  */
-export async function getCheatsheetById(userId, cheatsheetId, req, res) {
+export async function getCheatsheetById(cheatsheetId, req, res) {
   try {
     const result = await db.select({
       id: cheatsheetsTable.id,
@@ -51,7 +87,7 @@ export async function getCheatsheetById(userId, cheatsheetId, req, res) {
       font_size: cheatsheetsTable.font_size,
       created_at: cheatsheetsTable.created_at,
       updated_at: cheatsheetsTable.updated_at,
-    }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId), eq(cheatsheetsTable.id, cheatsheetId)));
+    }).from(cheatsheetsTable).where(eq(cheatsheetsTable.id, cheatsheetId));
     if (result) {
       return result[0];
     }
@@ -85,9 +121,9 @@ export async function getCheatsheetMarkdown(id) {
  * @returns {Promise<void>}
  */
 export async function createCheatsheet(req, res) {
-
   try {
-    const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e"
+    console.log(req.body);
+    const userId = req.body.userId;
     const UUID = randomUUID();
     const body = {
       id: UUID,
@@ -100,8 +136,8 @@ export async function createCheatsheet(req, res) {
     }
     const result = await db.insert(cheatsheetsTable).values(body).returning({uuid: cheatsheetsTable.id});
     const markdown = await createCheatsheetMarkdown(UUID, body, req, res);
-    console.log(markdown);
-    res.status(201).json({result});
+    // console.log(markdown);
+    res.status(201).json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({error});
@@ -117,9 +153,7 @@ export async function createCheatsheet(req, res) {
  * @returns {Promise<*|boolean>}
  */
 export async function createCheatsheetMarkdown(id, body, req, res) {
-  // const client = new MongoClient(process.env.MONGO_URL || "mongodb://mongodb:27017/cheatsheets");
   try {
-    // const newUuid = result[0].uuid;
     const mongodb = await getMongoClient();
     await mongodb.collection("cheatsheets").insertOne({id: id, body: "", createdAt: new Date()});
     return true;
@@ -143,7 +177,7 @@ export async function updateCheatsheet(id, req, res) {
     const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e";
     console.log(req.body);
     req.body.updated_at = new Date().toISOString();
-    const result = await db.update(cheatsheetsTable).set(req.body).where(and(eq(cheatsheetsTable.id, id), eq(cheatsheetsTable.user_id, userId)));
+    const result = await db.update(cheatsheetsTable).set(req.body).where(eq(cheatsheetsTable.id, id));
     res.status(200).json({result});
   } catch (error) {
     console.error(error);

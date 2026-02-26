@@ -10,7 +10,8 @@ export const usersTable = sqliteTable("users_table", {
   firstname: text(),
   email: text().notNull().unique(),
   username: text().notNull().unique(),
-  password: text().notNull()
+  password: text().notNull(),
+  role: text() || "user"
 });
 
 /**

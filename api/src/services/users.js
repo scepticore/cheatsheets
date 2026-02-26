@@ -31,7 +31,8 @@ export async function getUsers(res) {
             name: usersTable.name,
             firstname: usersTable.firstname,
             email: usersTable.email,
-            username: usersTable.username
+            username: usersTable.username,
+            role: usersTable.role,
         }).from(usersTable);
         res.status(200).json(result);
     } catch (error) {
@@ -62,85 +63,23 @@ export async function getUserById(id, req, res) {
 }
 
 /**
- * Get user by credentials, either email or username and password
- * @param req
- * @param res
- */
-export async function getUserByCredentials(req, res) {
-    try {
-        const result = await db.select({
-            id: usersTable.id,
-            username: usersTable.username,
-            email: usersTable.email,
-            password: usersTable.password
-        }).from(usersTable).where(
-            and(
-                or(
-                    req.body.email ? eq(usersTable.email, req.body.email) : eq(usersTable.username, req.body.username),
-                )
-                , eq(usersTable.password, req.body.password)
-            )
-        );
-        console.log(result);
-        if (result.length === 0) {
-            res.status(401).json({error: "Invalid credentials"});
-        }
-
-        const user = result[0];
-
-        const secretKey = createSecretKey("secret", "utf-8");
-
-        const token = await new SignJWT({
-            username: req.body.username
-        })
-            .setProtectedHeader({
-                alg: "HS256",
-            })
-            .setIssuedAt()
-            .setIssuer("Me")
-            .setAudience("Audience")
-            .setExpirationTime(86400)
-            .sign(secretKey);
-        console.log(token);
-        res.status(200).send(token);
-
-        // res.status(200).json(result);
-
-    } catch (error) {
-        console.log(error);
-        // @todo edit to send some error message which could be handled by frontend
-        res.status(500).send(error);
-    }
-}
-
-/**
- *
+ * Get user by email, to check wether email is already taken or not
  * @param req
  * @param res
  * @returns {Promise<void>}
  */
-export async function createUser(req, res) {
-    // const { name, email, password } = req.body;
-    // console.log(req);
-    try {
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-        const uuid = randomUUID();
+export async function getUserByEmail(req, res) {
 
-        const newUser = {
-            "email": req.body.email,
-            "username": req.body.username,
-            "password": hashedPassword,
-            id: uuid
-        }
-        console.log(newUser);
-        const result = await db.insert(usersTable).values(newUser);
-        console.log(result);
-        res.status(201).json({result});
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({error});
-    }
+}
+
+/**
+ * Get user by username, to check wether username is already taken or not
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
+export async function getUserByUsername(req, res) {
+
 }
 
 /**

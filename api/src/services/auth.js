@@ -2,9 +2,11 @@ import "dotenv/config";
 import { db } from "../utils/db.js";
 import {usersTable} from "../db/schema.js";
 import {eq} from "drizzle-orm";
-import { SignJWT } from "jose";
+import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcrypt";
 
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+const refreshSecret = new TextEncoder().encode(process.env.JWT_REFRESH_SECRET);
 
 /**
  * Create new user
@@ -48,8 +50,8 @@ export async function loginUser(req, res) {
     if (!process.env.JWT_SECRET) {
       throw new Error("Missing JWT secret");
     }
-
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    console.log(process.env.JWT_REFRESH_SECRET);
+    console.log(refreshSecret);
 
     const user = await db.select().from(usersTable).where(eq(usersTable.username, username)).get();
 
@@ -57,14 +59,54 @@ export async function loginUser(req, res) {
       return res.status(401).json({error: "Invalid credentials"});
     }
 
-    const token = await new SignJWT({ userId: user.id, role: 'user'})
+    const token = await new SignJWT({ userId: user.id, role: user.role || 'user', username: user.username })
       .setProtectedHeader({alg: 'HS256'})
       .setIssuedAt()
-      .setExpirationTime('2h')
-      .sign(secret)
+      .setExpirationTime('15m')
+      .sign(secret);
 
-    res.json({token, username: user.username});
+    const refreshToken = await new SignJWT({ userId: user.id })
+      .setProtectedHeader({alg: 'HS256'})
+      .setIssuedAt()
+      .setExpirationTime('7d')
+      .sign(refreshSecret);
+
+    return res.json({
+      token,
+      refreshToken,
+      username: user.username,
+      userId: user.id,
+      role: user.role || "user"
+    });
   } catch (error) {
     console.error(error);
+  }
+}
+
+/**
+ * Takes refresh token and returns a new access token
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
+export async function refreshToken(req, res) {
+  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+  const refreshSecret = new TextEncoder().encode(process.env.JWT_REFRESH_SECRET);
+
+  const { refreshToken } = req.body;
+  if (!refreshToken) return res.status(401);
+
+  try {
+    const { payload } = await jwtVerify(refreshToken, refreshSecret);
+
+    const newAccessToken = await new SignJWT({ userId: payload.userId, role: payload.role, username: payload.username })
+      .setProtectedHeader({alg: 'HS256'})
+      .setExpirationTime('15m')
+      .sign(secret);
+
+    res.json({ token: newAccessToken });
+  } catch (error) {
+    console.error(error);
+    res.status(403);
   }
 }

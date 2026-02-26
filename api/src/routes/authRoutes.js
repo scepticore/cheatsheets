@@ -1,5 +1,5 @@
 import express from "express";
-import {loginUser, registerUser} from "../services/auth.js";
+import {loginUser, registerUser, refreshToken} from "../services/auth.js";
 
 const router = express.Router();
 
@@ -13,5 +13,10 @@ router.post("/signin", loginUser);
  * Sign Up New Users
  */
 router.post("/signup", registerUser);
+
+/**
+ * Refresh Token
+ */
+router.post("/refresh", refreshToken);
 
 export default router;

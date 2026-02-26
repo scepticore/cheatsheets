@@ -5,7 +5,7 @@ import {
   getCheatsheetById,
   updateCheatsheet,
   deleteCheatsheet,
-  getCheatsheetMarkdown, updateMarkdown
+  getCheatsheetMarkdown, updateMarkdown, getCheatsheetBin, getCheatsheetBinSize
 } from "../services/cheatsheets.js";
 import {Marked} from "marked";
 import {markedHighlight} from "marked-highlight";
@@ -14,20 +14,19 @@ import hljs from "highlight.js";
 import fs from "node:fs/promises";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+import {authenticateToken} from "../middleware/auth.js";
 
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const router = express.Router();
-const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e";
 
 
 /**
  * Cheatsheet Route, shows own cheatsheets
  */
-router.get("/cheatsheets", async (req, res) => {
+router.get("/cheatsheets", authenticateToken, async (req, res) => {
   try {
-    console.log(req.query);
     const user_id = req.query.user_id;
     if (!user_id) {
       res.status(400).json({error: "user_id missing"});
@@ -35,57 +34,90 @@ router.get("/cheatsheets", async (req, res) => {
     const users = await getCheatsheets(user_id, res);
     res.json(users);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({error: "An error occured"})
   }
 });
 
 /**
+ * Get cheatsheet bin
+ */
+router.get("/cheatsheets/bin", authenticateToken, async (req, res) => {
+  try {
+    const user_id = req.query.user_id;
+    if (!user_id) {
+      res.status(400).json({error: "user_id missing"});
+    }
+
+    const cheatsheets = await getCheatsheetBin(user_id, res);
+    // res.json(cheatsheets);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error})
+  }
+});
+
+router.get("/cheatsheets/bin/size", authenticateToken, async (req, res) => {
+  try {
+    const user_id = req.query.user_id;
+    if (!user_id) {
+      res.status(400).json({error: "user_id missing"});
+    }
+
+    const binSize = await getCheatsheetBinSize(user_id, res);
+    res.json(binSize);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error})
+  }
+})
+
+/**
  * Create new cheatsheet
  */
-router.post("/cheatsheets/create", async (req, res) => {
+router.post("/cheatsheets/create", authenticateToken, async (req, res) => {
   try {
     const result = await createCheatsheet(req, res);
     res.status(201).json(result);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({error: "An error occured"})
-  } finally {
-    // Create MongoDB object
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error})
   }
 });
 
 /**
  * View single cheatsheet by ID
  */
-router.get("/cheatsheet/:id", async (req, res) => {
+router.get("/cheatsheet/:id", authenticateToken, async (req, res) => {
   try {
+    // @todo add userId
     const cheatsheetId = req.params.id;
-    const cheatsheet = await getCheatsheetById(userId, cheatsheetId, req, res);
+    const cheatsheet = await getCheatsheetById(cheatsheetId, req, res);
     res.json(cheatsheet);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({error: "An error occured"})
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error})
   }
 })
 
 /**
  * Get cheatsheet markdown from MongoDB
  */
-router.get("/cheatsheet/:id/markdown", async (req, res) => {
+router.get("/cheatsheet/:id/markdown", authenticateToken, async (req, res) => {
   try {
     const cheatsheedId = req.params.id;
     const markdown = await getCheatsheetMarkdown(cheatsheedId);
     res.json(markdown);
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error})
   }
 });
 
 /**
  * Update markdown in MongoDB
  */
-router.put("/cheatsheet/:id/markdown/update", async (req, res) => {
+router.put("/cheatsheet/:id/markdown/update", authenticateToken, async (req, res) => {
   try {
     const cheatsheetId = req.params.id;
     const result = await updateMarkdown(cheatsheetId, req, res);
@@ -120,7 +152,8 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
   )
 
   try {
-    const cheatsheetMeta = await getCheatsheetById(userId, id, req, res);
+    // @todo add userId for cheatsheetMeta
+    const cheatsheetMeta = await getCheatsheetById(id, req, res);
     const markdownData = await getCheatsheetMarkdown(id);
     const contentHtml = await marked.parse(markdownData?.body || "");
     const paginatedHtml = paginateMarkdown(contentHtml);
@@ -164,7 +197,7 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
 /**
  * Update cheatsheet SQLite
  */
-router.put("/cheatsheet/:id/update", async (req, res) => {
+router.put("/cheatsheet/:id/update", authenticateToken, async (req, res) => {
   try {
     const users = await updateCheatsheet(req.params.id, req, res);
     res.json(users);
@@ -177,7 +210,7 @@ router.put("/cheatsheet/:id/update", async (req, res) => {
 /**
  * Delete cheatsheet
  */
-router.delete("/cheatsheet/:id/delete", async (req, res) => {
+router.delete("/cheatsheet/:id/delete", authenticateToken, async (req, res) => {
   try {
     const result = await deleteCheatsheet(req.params.id, req, res);
     res.json(result);
