@@ -172,6 +172,7 @@ export class formGenerator {
     fieldElement.id = field;
     fieldElement.name = field;
     fieldElement.type = "checkbox";
+    console.log(this.fields[field].checked);
     fieldElement.checked = this.fields[field].checked;
     return fieldElement;
   }

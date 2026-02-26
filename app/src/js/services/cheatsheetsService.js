@@ -9,7 +9,14 @@ export class cheatsheetsService {
    */
   static async getCheatsheets() {
     // Run API-Call with current user id
-    return requestService.fetchResponse(API_BASE+"cheatsheets?user_id=700a71fb-9f0e-4bf4-9f86-41c66ada062e", "cheatsheet", "GET", null, null);
+    const userId = window.sessionStorage.getItem('userId');
+
+    return requestService.fetch(API_BASE+"cheatsheets?user_id="+userId, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      }
+    });
   }
 
   /**
@@ -18,10 +25,21 @@ export class cheatsheetsService {
    * @returns {Promise<{cheatsheet: *, markdown: *}>}
    */
   static async getCheatsheetById(id) {
-    // Run API-Call
-    const cheatsheet = await requestService.fetchResponse(API_BASE+"cheatsheet/"+id, "cheatsheet", "GET", null, null);
-    const markdown = await requestService.fetchResponse(API_BASE+"cheatsheet/"+id+"/markdown", "cheatsheet", "GET", null, null);
-    return {cheatsheet: cheatsheet.data, markdown: markdown.data};
+    const cheatsheet = await requestService.fetch(API_BASE+"cheatsheet/"+id, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    const markdown = await requestService.fetch(API_BASE+"cheatsheet/"+id+"/markdown", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    return {cheatsheet: cheatsheet, markdown: markdown};
   }
 
   /**
@@ -30,8 +48,12 @@ export class cheatsheetsService {
    * @returns {Promise<*>}
    */
   static async getCheatsheetMarkdown(id) {
-    const result = await requestService.fetchResponse(API_BASE+"cheatsheet/"+id+"/markdown", "cheatsheet", "GET", null, null);
-    console.log(result);
+    const result = await requestService.fetch(API_BASE+"cheatsheet/"+id+"/markdown", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
     return result.data;
   }
 
@@ -39,26 +61,61 @@ export class cheatsheetsService {
    * Create new Cheatsheet by calling API
    * @returns {Promise<void>}
    */
-  static async createCheatsheet() {
-    const result = await requestService.fetchResponse(API_BASE+"cheatsheets/create", "cheatsheets", "POST", null, null);
-    if( result.status === 200) {
-      const uuid = result.data.result[0].uuid;
-      window.location.href = `/cheatsheets/${uuid}/edit`;
-    } else {
-      // Error message?
-    }
+  static async createCheatsheet(userId) {
+    const body = {'userId': userId};
+    const result = await requestService.fetch(API_BASE+"cheatsheets/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+    const uuid = result[0]?.uuid ? result[0].uuid : null;
+    window.location.href = `/cheatsheets/${uuid}/edit`;
   }
 
   /**
    * Update Cheatsheet (SQLite)
-   * @param uuid
-   * @param value
+   * @param uuid {uuid}
+   * @param value {object}
    * @returns {Promise<void>}
    */
   static async updateCheatsheet(uuid, value) {
-    const newValue = JSON.parse(value);
-    const result = await requestService.fetchResponse(API_BASE+"cheatsheet/"+uuid+"/update", "cheatsheet", "PUT", null, newValue);
-    return result.data;
+    const token = sessionStorage.getItem("token");
+    let options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(value),
+    }
+
+    const result = await fetch(API_BASE+"cheatsheet/"+uuid+"/update", options);
+    if (!result.ok) {
+      console.error("Update failed");
+    }
+    if(result.status === 401) {
+      const refreshToken = sessionStorage.getItem('refreshToken');
+
+      const refreshRes = await fetch(API_BASE+"auth/refresh", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({refreshToken}),
+      })
+
+      if (refreshRes.ok) {
+        const { token } = await refreshRes.json();
+        sessionStorage.setItem('token', token);
+        options.headers["Authorization"] = "Bearer " + token;
+        return fetch(API_BASE+"cheatsheet/"+uuid+"/update", options);
+      } else {
+        window.router.navigate("/login");
+      }
+    }
+    console.log(result);
   }
 
   /**
@@ -69,7 +126,14 @@ export class cheatsheetsService {
    */
   static async updateCheatsheetMarkdown(uuid, value) {
     const newValue = JSON.parse(value);
-    const result = await requestService.fetchResponse(API_BASE+"cheatsheet/"+uuid+"/markdown/update", "cheatsheet", "PUT", null, newValue);
+    const result = await fetch(API_BASE+"cheatsheet/"+uuid+"/markdown/update", {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        "authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+      },
+      body: JSON.stringify(newValue),
+    });
     return result.data;
   }
 

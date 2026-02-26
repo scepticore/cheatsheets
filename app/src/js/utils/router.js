@@ -21,11 +21,22 @@ export class Router {
   /**
    * Registriert eine Route
    * @param {string} path - z.B. "/dashboard" oder "/notes/:id"
+   * @param {string} middleware - Middleware
    * @param {function} callback - Funktion, die ausgeführt wird
    */
-  add(path, callback) {
+  add(path, ...args) {
     // Normalisierung: Slashes am Anfang sicherstellen
     const normalizedPath = path.startsWith('/') ? path : '/' + path;
+
+    let middleware = null;
+    let callback = null;
+
+    if (args.length === 2) {
+      middleware = args[0];
+      callback = args[1];
+    } else {
+      callback = args[0];
+    }
 
     // Erstellt Regex für Parameter wie :id
     const regexPath = normalizedPath.replace(/:(\w+)/g, '(?<$1>[\\w-]+)');
@@ -33,6 +44,7 @@ export class Router {
 
     this.routes.push({
       path: normalizedPath,
+      middleware: middleware,
       callback: callback,
       regex: pathRegex,
       paramNames: Array.from(normalizedPath.matchAll(/:(\w+)/g)).map(m => m[1])
@@ -41,7 +53,7 @@ export class Router {
     return this; // Erlaubt Chaining
   }
 
-  checkRoute() {
+  async checkRoute() {
     const currentPath = window.location.pathname;
 
     for (const route of this.routes) {
@@ -49,6 +61,14 @@ export class Router {
 
       if (match) {
         const params = match.groups ? { ...match.groups } : {};
+
+        if (route.middleware) {
+          const result = await route.middleware(params);
+          if(result === false) {
+            console.warn("Access denied by middleware");
+            return
+          }
+        }
         route.callback(params);
         return;
       }

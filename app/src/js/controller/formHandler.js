@@ -11,11 +11,13 @@ export function handleFormUpdates(csUUID, form) {
   form.addEventListener("selectionchange", (e) => {
     clearTimeout(timer);
     timer = setTimeout(async () => {
-      const value = JSON.stringify(e.target.value);
+      const value = e.target.value;
       const field = e.target.id;
-      const objectString = `{"${field}": ${value}}`;
+      const updateObject = {
+        [field]: value
+      };
 
-      const result = await cheatsheetService.updateCheatsheet(csUUID, objectString);
+      await cheatsheetService.updateCheatsheet(csUUID, updateObject);
 
       // @todo backup if internet connection fails
       // if no internetion connection, store value in window.sessionStorage
@@ -24,17 +26,32 @@ export function handleFormUpdates(csUUID, form) {
   });
 
   // @todo make checkboxes work for autosave
-  // Checkboxes
-  form.addEventListener("change", async (e) => {
-    // console.log(e);
-    const value = e.target.value;
-    const field = e.target.id;
-    console.log(field);
-    console.log(value);
-    const objectString = `{"${field}": ${value}}`;
-    const result = await cheatsheetService.updateCheatsheet(csUUID, objectString);
+  // Ranges
+  const ranges = document.querySelectorAll("input[type=range]");
+  ranges.forEach(range => {
+    range.addEventListener("change", async (e) => {
+      const value = e.target.value;
+      const field = e.target.id;
+      const updateObject = {
+        [field]: value
+      }
+      await cheatsheetService.updateCheatsheet(csUUID, updateObject);
 
-    const iframe = document.getElementById("cs_frame");
-    iframe.src = iframe.src;
+      const iframe = document.getElementById("cs_frame");
+      iframe.src = iframe.src;
+    });
+  });
+
+  // Public Checkbox
+  const checkbox = document.getElementById("public");
+  checkbox.addEventListener("change", async (e) => {
+    const value = e.target.checked ? 1 : 0;
+    const field = e.target.id;
+    const updateObject = {
+      [field]: value
+    }
+
+    console.log(updateObject);
+    await cheatsheetService.updateCheatsheet(csUUID, updateObject);
   });
 }

@@ -8,6 +8,6 @@ export function createCheatsheet() {
   const button = document.getElementById("createNewCheatsheet");
   button.addEventListener("click", async (e) => {
     e.preventDefault();
-    await cheatsheetsService.createCheatsheet();
+    await cheatsheetsService.createCheatsheet(window.sessionStorage.getItem("userId"));
   });
 }

@@ -2,6 +2,7 @@ import {renderTemplate} from "../utils/templateEngine";
 import {formGenerator} from "../utils/formBuilder";
 import {usersService} from "../services/usersService";
 import {authService} from "../services/authService.js";
+import {signInForm} from "../controller/authHandler.js";
 
 export async function showUsers() {
   const users = await usersService.getUserList();
@@ -14,29 +15,8 @@ export async function showUser(id) {
 }
 
 export async function formSignIn() {
-  const form = new formGenerator("Sign In", {
-      "callback": "window.authService.signIn()"
-    },
-    {
-      "username": {
-        "type": "text",
-        "attr": {
-          "required": true
-        }
-      },
-      "password": {
-        "type": "password",
-        "attr": {
-          "required": true
-        }
-      },
-      "rememberme": {
-        "type": "checkbox"
-      }
-    }
-  );
-
-  return renderTemplate("users/signin.html", {form});
+  await renderTemplate("users/signin.html");
+  signInForm();
 }
 
 export async function formSignUp() {

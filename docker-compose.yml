@@ -24,6 +24,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - PORT=${API_PORT}
       - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
 
   # PDF-Generator: Nutzt den Code aus ./app
 #  pdf-gen:

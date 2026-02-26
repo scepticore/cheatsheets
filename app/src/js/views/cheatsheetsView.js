@@ -8,7 +8,7 @@ import {downloadPdf} from "../controller/downloadPdf.js";
 
 export async function viewCheatsheetList() {
   const cheatsheets = await cheatsheetsService.getCheatsheets();
-  await renderTemplate("cheatsheets/index.html", {cheatsheets: cheatsheets.data});
+  await renderTemplate("cheatsheets/index.html", {cheatsheets: cheatsheets});
 
   // Listen for new cheatsheet button
   createCheatsheet();
@@ -66,9 +66,7 @@ export async function viewCheatsheetForm(id = null) {
       },
       "public": {
         "type": "checkbox",
-        "attr": {
-          "checked": result.cheatsheet?.public === 1 ? "checked" : undefined,
-        }
+        "checked": result.cheatsheet?.public,
       },
       "columns": {
         "type": "range",

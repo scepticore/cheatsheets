@@ -1,3 +1,5 @@
+import {API_BASE} from "../constants.js";
+
 /**
  * Service to handle all API requests.
  * Uses fetch to communicate with the API.
@@ -14,6 +16,69 @@ export class requestService {
   }
 
   /**
+   * Do fetch with automatically chosen token
+   * @param url
+   * @param options
+   * @returns {Promise<any>}
+   */
+  static async fetch(url, options = {}) {
+    let token = null;
+
+    if (localStorage.getItem("token")) {
+      token = localStorage.getItem("token");
+    } else if (sessionStorage.getItem("token")) {
+      token = sessionStorage.getItem("token");
+    }
+
+    if(token) {
+      options.headers.Authorization = `Bearer ${token}`;
+    }
+
+    const response = await fetch(url, options);
+    let json = {};
+
+    switch(response.status) {
+      case 200:
+        return response.json();
+      case 201:
+        return response.json();
+      case 401 && 403:
+        const newResponse = await this.refreshToken(url, options);
+        return newResponse.json();
+      case 404:
+        return response.json();
+      default:
+        return;
+    }
+  }
+
+  /**
+   * Refresh authToken if needed
+   * @param url
+   * @param options
+   * @returns {Promise<Response>}
+   */
+  static async refreshToken(url, options = {}) {
+    const refreshToken = sessionStorage.getItem('refreshToken');
+    const refreshRes = await fetch(API_BASE+"auth/refresh", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({refreshToken}),
+    })
+
+    if (refreshRes.ok) {
+      const { token } = await refreshRes.json();
+      sessionStorage.setItem('token', token);
+      options.headers["Authorization"] = "Bearer " + token;
+      return fetch(url, options);
+    } else {
+      window.router.navigate("/login");
+    }
+  }
+
+  /**
    * Connect and get data from REST API
    * @param {string} apiBaseURL - Base URL of the API endpoint
    * @param {string} type - Type of data to fetch
@@ -23,40 +88,53 @@ export class requestService {
    * @returns {Promise<object>} - Processed response object or array of objects
    */
   static async fetchResponse(apiBaseURL, type, method, headers, body) {
-    let token = "";
-    if (window.sessionStorage.getItem("token")) {
-      token = window.sessionStorage.getItem("token");
-    } else if (window.localStorage.getItem("token")) {
-      token = window.localStorage.getItem("token");
-    }
     try {
-      let config = {};
+      let token = "";
+      if (window.sessionStorage.getItem("token")) {
+        token = window.sessionStorage.getItem("token");
+      } else if (window.localStorage.getItem("token")) {
+        token = window.localStorage.getItem("token");
+      }
 
-      if (method === "POST" || method === "PUT") {
+      let config = {};
+      if (!token) {
         config = {
-          method: method || 'POST',
-          headers: headers || {
-            'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${token}`,
-          },
-          body: body ? JSON.stringify(body) : null,
-          signal: AbortSignal.timeout(5000)
-        };
+          method: "POST",
+          body: body ? body : null,
+        }
       } else {
-        config = {
-          method: method || 'GET',
-          headers: headers || {
-            'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${token}`,
-          },
-          // body: body ? JSON.stringify(body) : null,
-          signal: AbortSignal.timeout(15000) // generating PDF takes a while, so set that to 15 seconds
-        };
+        if (method === "POST" || method === "PUT") {
+          config = {
+            method: method || 'POST',
+            headers: headers || {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: body ? JSON.stringify(body) : null,
+            signal: AbortSignal.timeout(5000)
+          };
+        } else {
+          config = {
+            method: method || 'GET',
+            headers: headers || {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            signal: AbortSignal.timeout(15000) // generating PDF takes a while, so set that to 15 seconds
+          };
+        }
       }
 
       const response = await fetch(apiBaseURL, config);
-      const handled = await this.handleResponse(response, type);
+      if (!response.ok) {
+        console.error("Error");
+        return;
+      }
 
+      const data = await response.json();
+
+      const handled = await this.handleResponse(data, type);
+      console.log(handled);
       if (handled.status === 200 || handled.status === 201) {
         const object = await this.returnResponse(handled, type);
         return {
@@ -68,18 +146,16 @@ export class requestService {
       return handled;
     } catch (error) {
       console.log(error);
-      // return {
-      //   status: 503,
-      //   notification: {
-      //     type: "error",
-      //     title: `Service unavailable`,
-      //     body: "Please connect to VPN"
-      //   }
-      // }
     }
   };
 
   // Handle server response by
+  /**
+   * Handles response by status
+   * @param response
+   * @param type
+   * @returns {Promise<{status: number, notification: {type: string, title: string, body: *}, data: null}|{status: number, notification: {type: string, title: string, body: *}, data: null}|{status: number, notification: {type: string, title: string, body: string}}>}
+   */
   static async handleResponse(response, type) {
     // Read body ONCE
     let rawBody;

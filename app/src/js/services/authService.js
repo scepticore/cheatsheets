@@ -4,18 +4,36 @@ import {API_BASE} from "../constants.js";
 
 export class authService {
   static async signIn(formData) {
-    // Encrypt password
-    const password = formData.password;
-    const username = formData.username;
+    const body = JSON.stringify(formData);
+    console.log(body);
+    const response = await fetch(API_BASE+"auth/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: body,
+    });
 
-    // Send login request to API
-    // Body: { "username": username, "password": password }
-    // const result = await requestService.fetchResponse(API_BASE+"/signin");
+    if (!response.ok) {
+      const errorBody = await response.json();
+      console.error("Login failed");
+      return;
+    }
+
+    const data = await response.json();
+    // @todo add autologin
+    window.sessionStorage.setItem("token", data.token);
+    window.sessionStorage.setItem("refreshToken", data.refreshToken);
+    window.sessionStorage.setItem("username", data.username);
+    window.sessionStorage.setItem("userId", data.userId);
+    window.sessionStorage.setItem("role", data.role);
+
+    window.location.href = "/cheatsheets";
   }
 
   static async signUp(formData) {
     console.log(formData);
-    let error = {};
+    let error = null;
 
     // check if username already exists
     const usernameResult = await usersService.getUserByUsername(formData.username);
@@ -49,10 +67,23 @@ export class authService {
     }
 
     console.log(userData);
-    const result = await requestService.fetchResponse(API_BASE + "users/create", "user", "POST", null, userData)
-    // Send data to API
-    console.log(result);
-    //
+    const response = await fetch(API_BASE + "auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    console.log(response);
+
+    const data = await response.json();
+    console.log(data);
+
+  }
+
+  static signOut() {
+    sessionStorage.clear();
+    window.location.href = "/signin";
   }
 }
 
