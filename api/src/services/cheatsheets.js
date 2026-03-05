@@ -22,7 +22,7 @@ export async function getCheatsheets(userId, res) {
       created_at: cheatsheetsTable.created_at,
       updated_at: cheatsheetsTable.updated_at,
     }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId),eq(cheatsheetsTable.status, 1)));
-    res.status(200).json(result);
+    return result;
   } catch (error) {
     console.log(error);
     res.status(500).json({error: "An error occured", body: error});
@@ -44,7 +44,7 @@ export async function getCheatsheetBin(userId, res) {
       filename: cheatsheetsTable.filename,
       created_at: cheatsheetsTable.created_at,
     }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId), eq(cheatsheetsTable.status, 0)));
-    res.status(200).json(result);
+    return result;
   } catch (error) {
     console.error(error);
     res.status(500).json({error: "An error occured", body: error});

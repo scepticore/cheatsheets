@@ -9,6 +9,7 @@ import {
 } from "../services/cheatsheets.js";
 import {Marked} from "marked";
 import {markedHighlight} from "marked-highlight";
+import markedKatex from "marked-katex-extension";
 import hljs from "highlight.js";
 
 import fs from "node:fs/promises";
@@ -31,8 +32,8 @@ router.get("/cheatsheets", authenticateToken, async (req, res) => {
     if (!user_id) {
       res.status(400).json({error: "user_id missing"});
     }
-    const users = await getCheatsheets(user_id, res);
-    res.json(users);
+    const data = await getCheatsheets(user_id, res);
+    res.status(200).json(data);
   } catch (error) {
     console.error(error);
     res.status(500).json({error: "An error occured"})
@@ -49,14 +50,17 @@ router.get("/cheatsheets/bin", authenticateToken, async (req, res) => {
       res.status(400).json({error: "user_id missing"});
     }
 
-    const cheatsheets = await getCheatsheetBin(user_id, res);
-    // res.json(cheatsheets);
+    const data = await getCheatsheetBin(user_id, res);
+    res.status(200).json(data);
   } catch (error) {
     console.error(error);
     res.status(500).json({error: "An error occured", body: error})
   }
 });
 
+/**
+ * Get cheatsheet bin size
+ */
 router.get("/cheatsheets/bin/size", authenticateToken, async (req, res) => {
   try {
     const user_id = req.query.user_id;
@@ -65,12 +69,12 @@ router.get("/cheatsheets/bin/size", authenticateToken, async (req, res) => {
     }
 
     const binSize = await getCheatsheetBinSize(user_id, res);
-    res.json(binSize);
+    res.status(200).json(binSize);
   } catch (error) {
     console.error(error);
     res.status(500).json({error: "An error occured", body: error})
   }
-})
+});
 
 /**
  * Create new cheatsheet
@@ -93,7 +97,7 @@ router.get("/cheatsheet/:id", authenticateToken, async (req, res) => {
     // @todo add userId
     const cheatsheetId = req.params.id;
     const cheatsheet = await getCheatsheetById(cheatsheetId, req, res);
-    res.json(cheatsheet);
+    res.status(200).json(cheatsheet);
   } catch (error) {
     console.error(error);
     res.status(500).json({error: "An error occured", body: error})
@@ -107,7 +111,7 @@ router.get("/cheatsheet/:id/markdown", authenticateToken, async (req, res) => {
   try {
     const cheatsheedId = req.params.id;
     const markdown = await getCheatsheetMarkdown(cheatsheedId);
-    res.json(markdown);
+    res.status(200).json(markdown);
   } catch (error) {
     console.error(error);
     res.status(500).json({error: "An error occured", body: error})
@@ -121,6 +125,7 @@ router.put("/cheatsheet/:id/markdown/update", authenticateToken, async (req, res
   try {
     const cheatsheetId = req.params.id;
     const result = await updateMarkdown(cheatsheetId, req, res);
+    res.status(result.status);
   } catch (error) {
     console.log(error);
   }
@@ -128,6 +133,7 @@ router.put("/cheatsheet/:id/markdown/update", authenticateToken, async (req, res
 
 /**
  * Get PDF-Ready HTML-View
+ * @todo move to services
  */
 router.get("/cheatsheet/:id/pdf", async (req, res) => {
   const {id} = req.params;
@@ -150,6 +156,13 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
       }
     })
   )
+
+  const options = {
+    nonStandard: true,
+    output: 'html'
+  };
+
+  marked.use(markedKatex(options));
 
   try {
     // @todo add userId for cheatsheetMeta
@@ -183,6 +196,7 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
         word-wrap: break-word;
       }
       </style>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     </head>
    <body>${paginatedHtml}</body>
    </html>
