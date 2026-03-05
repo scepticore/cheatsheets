@@ -43,7 +43,8 @@ Optimized for A4 prints.
 
 # Guides
 - [MD Syntax](https://www.markdownguide.org/basic-syntax/)
-
+- [KaTeX Docs](https://katex.org/docs/api)
+- [Overleaf Math Guide](https://www.overleaf.com/learn/latex/Mathematical_expressions)
 # Dev notes
 - [Multi-Column Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Multicol_layout)
 - [JWT Express](https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs)
