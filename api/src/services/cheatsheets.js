@@ -1,5 +1,4 @@
 import {db} from '../utils/db.js';
-import "dotenv/config";
 import {getMongoClient} from "../utils/mongo.js";
 import {and, eq} from "drizzle-orm";
 import {cheatsheetsTable} from "../db/schema.js";

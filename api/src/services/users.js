@@ -1,4 +1,3 @@
-import "dotenv/config";
 import {drizzle} from "drizzle-orm/libsql";
 import {and, eq, or} from "drizzle-orm";
 import {usersTable} from "../db/schema.js";

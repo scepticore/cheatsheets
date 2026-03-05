@@ -44,12 +44,12 @@ services:
       - "traefik.http.routers.cheatsheet.entrypoints=websecure"
       - "traefik.http.routers.cheatsheet.tls.certresolver=le"
       - "traefik.http.services.cheatsheet.loadbalancer.server.port=5173"
-    networks:
-      - web
+#    networks:
+#      - web
 
 volumes:
   mongo_data:
 
-networks:
-  web:
-    external: true
+#networks:
+#  web:
+#    external: true
