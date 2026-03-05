@@ -22,11 +22,11 @@ export class authService {
 
     const data = await response.json();
     // @todo add autologin
-    window.sessionStorage.setItem("token", data.token);
-    window.sessionStorage.setItem("refreshToken", data.refreshToken);
-    window.sessionStorage.setItem("username", data.username);
-    window.sessionStorage.setItem("userId", data.userId);
-    window.sessionStorage.setItem("role", data.role);
+    sessionStorage.setItem("token", data.token);
+    sessionStorage.setItem("refreshToken", data.refreshToken);
+    sessionStorage.setItem("username", data.username);
+    sessionStorage.setItem("userId", data.userId);
+    sessionStorage.setItem("role", data.role);
 
     window.location.href = "/cheatsheets";
   }
