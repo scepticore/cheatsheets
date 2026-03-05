@@ -20,8 +20,7 @@ services:
       - ./api/output:/usr/src/app/output
       - ./app/src/css:/usr/src/app/src/shared_css:ro
     env_file:
-      - path: ./.env
-        required: true
+      - .env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.cheatsheet-api.rule=Host(`api.urben.dev`)"
