@@ -8,7 +8,7 @@ import pdfRoutes from "./routes/pdfRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3030;
-const ORIGIN = process.env.VITE_HOST || "http://localhost:5173";
+const ORIGIN = process.env.VITE_HOST;
 // const mongoUri = process.env.MONGO_URL;
 
 /* @todo put port in .env */
