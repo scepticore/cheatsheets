@@ -22,6 +22,12 @@ services:
     env_file:
       - path: ./.env
         required: true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cheatsheet-api.rule=Host(`api.urben.dev`)"
+      - "traefik.http.routers.cheatsheet-api.entrypoints=websecure"
+      - "traefik.http.routers.cheatsheet-api.tls.certresolver=le"
+      - "traefik.http.services.cheatsheet-api.loadbalancer.server.port=3030"
 
   # Frontend: Vite
   frontend:
