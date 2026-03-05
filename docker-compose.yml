@@ -38,6 +38,18 @@ services:
     command: npm run dev -- --host 0.0.0.0
     depends_on:
       - api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cheatsheet.rule=Host(`cheatsheet.urben.dev`)"
+      - "traefik.http.routers.cheatsheet.entrypoints=websecure"
+      - "traefik.http.routers.cheatsheet.tls.certresolver=le"
+      - "traefik.http.services.cheatsheet.loadbalancer.server.port=5173"
+    networks:
+      - web
 
 volumes:
   mongo_data:
+
+networks:
+  web:
+    external: true
