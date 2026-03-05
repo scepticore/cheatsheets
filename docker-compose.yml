@@ -23,10 +23,13 @@ services:
       - .env
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=web"
       - "traefik.http.routers.cheatsheet-api.rule=Host(`api.urben.dev`)"
       - "traefik.http.routers.cheatsheet-api.entrypoints=websecure"
       - "traefik.http.routers.cheatsheet-api.tls.certresolver=le"
       - "traefik.http.services.cheatsheet-api.loadbalancer.server.port=3030"
+    networks:
+      - web
 
   # Frontend: Vite
   frontend:
