@@ -19,27 +19,9 @@ services:
       - /usr/src/app/node_modules
       - ./api/output:/usr/src/app/output
       - ./app/src/css:/usr/src/app/src/shared_css:ro
-    environment:
-      - MONGO_URL=${MONGO_URL}
-      - DATABASE_URL=${DATABASE_URL}
-      - PORT=${API_PORT}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
-
-  # PDF-Generator: Nutzt den Code aus ./app
-#  pdf-gen:
-#    build: ./app
-#    container_name: cheatsheet_pdf
-#    shm_size: '2gb'
-#    ports:
-#      - "${PDF_PORT}:${PDF_PORT}"
-#    volumes:
-#      - ./app:/usr/src/app
-#      - /usr/src/app/node_modules
-#    command: node server.js
-#    environment:
-#      - NODE_ENV=development
-#      - API_URL=http://api:${API_PORT}
+    env_file:
+      - path: ./.env
+        required: true
 
   # Frontend: Vite
   frontend:
@@ -50,8 +32,9 @@ services:
     volumes:
       - ./app:/usr/src/app
       - /usr/src/app/node_modules
-    environment:
-      - VITE_API_URL=${VITE_API_URL}
+    env_file:
+      - path: ./.env
+        required: true
     command: npm run dev -- --host 0.0.0.0
     depends_on:
       - api

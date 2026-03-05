@@ -1,3 +1,4 @@
+import {HOST} from "../constants.js";
 import puppeteer from 'puppeteer';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -13,7 +14,7 @@ export function generatePdf(pdf) {
 
     // Deine lokale URL aufrufen
     // 'networkidle0' wartet, bis keine Netzwerkaktivitäten mehr stattfinden (Bilder geladen)
-    await page.goto('http://localhost:5173/preview.html', {
+    await page.goto(`${HOST}/preview.html`, {
       waitUntil: 'networkidle0',
     });
 

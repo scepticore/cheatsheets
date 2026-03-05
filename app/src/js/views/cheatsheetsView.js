@@ -5,6 +5,7 @@ import {loadAce} from "../controller/editorHandler";
 import {handleFormUpdates} from "../controller/formHandler";
 import {createCheatsheet} from "../controller/createCheatsheet.js";
 import {downloadPdf} from "../controller/downloadPdf.js";
+import {API_BASE, HOST} from "../constants.js";
 
 export async function viewCheatsheetList() {
   const cheatsheets = await cheatsheetsService.getCheatsheets();
@@ -20,8 +21,9 @@ export async function viewCheatsheetList() {
  * @returns {Promise<void>}
  */
 export function viewCheatsheetDetail(id) {
-  const result = {};
+  let result = {};
   result.id = id;
+  result.url = `${API_BASE}/cheatsheet/{{ result.id }}/pdf`;
   return renderTemplate("cheatsheets/detail.html", {result});
 }
 
@@ -38,6 +40,7 @@ export async function viewCheatsheetForm(id = null) {
 
   if(id) {
     result = await cheatsheetsService.getCheatsheetById(id);
+    result.url = `${API_BASE}/cheatsheet/${id}/pdf`;
     markdown = result.markdown ? result.markdown.body : "";
     title = "Edit cheatsheet";
     callback = "window.cheatsheetsService.updateCheatsheet()";
@@ -86,7 +89,7 @@ export async function viewCheatsheetForm(id = null) {
       }
     });
 
-  await renderTemplate("cheatsheets/form.html", {title, markdown, form, cheatsheet: result.cheatsheet}, true);
+  await renderTemplate("cheatsheets/form.html", {title, markdown, form, cheatsheet: result}, true);
 
   loadAce(id);
   handleFormUpdates(id, form);

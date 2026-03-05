@@ -1,6 +1,6 @@
+import {HOST} from '../constants'
 import {removeSFromString, firstLetterUppercase} from "../utils/utils.js";
 const MAINFRAME = document.getElementById("mainframe");
-const BASE_URL = "http://localhost:5173/";
 
 /**
  * Rendering HTML templates
@@ -13,13 +13,13 @@ export async function renderTemplate(templateName, context = null, style = false
   if (style) {
     await addTemplateCSS(templateName);
   }
-  const templatePath = `${BASE_URL}src/templates/${templateName}`;
+  const templatePath = `${HOST}/src/templates/${templateName}`;
   try {
     let response = await fetch(templatePath);
     let template;
 
     if (response.status === 404) {
-      response = await fetch(`${BASE_URL}src/templates/utils/error.html`);
+      response = await fetch(`${HOST}/src/templates/utils/error.html`);
       template = await response.text();
 
       const error = {
@@ -351,7 +351,7 @@ function resolvePath(obj, path) {
 async function addTemplateCSS(templatePath) {
   const parts = templatePath.split("/");
   const folderName = parts[0];
-  const cssPath = `${BASE_URL}src/css/${folderName}.css`;
+  const cssPath = `${HOST}/src/css/${folderName}.css`;
 
   try {
     const result = await fetch(cssPath);

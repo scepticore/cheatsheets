@@ -11,7 +11,7 @@ export class cheatsheetsService {
     // Run API-Call with current user id
     const userId = window.sessionStorage.getItem('userId');
 
-    return requestService.fetch(API_BASE+"cheatsheets?user_id="+userId, {
+    return requestService.fetch(API_BASE+"/cheatsheets?user_id="+userId, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -25,14 +25,14 @@ export class cheatsheetsService {
    * @returns {Promise<{cheatsheet: *, markdown: *}>}
    */
   static async getCheatsheetById(id) {
-    const cheatsheet = await requestService.fetch(API_BASE+"cheatsheet/"+id, {
+    const cheatsheet = await requestService.fetch(API_BASE+"/cheatsheet/"+id, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
     });
 
-    const markdown = await requestService.fetch(API_BASE+"cheatsheet/"+id+"/markdown", {
+    const markdown = await requestService.fetch(API_BASE+"/cheatsheet/"+id+"/markdown", {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -48,7 +48,7 @@ export class cheatsheetsService {
    * @returns {Promise<*>}
    */
   static async getCheatsheetMarkdown(id) {
-    const result = await requestService.fetch(API_BASE+"cheatsheet/"+id+"/markdown", {
+    const result = await requestService.fetch(API_BASE+"/cheatsheet/"+id+"/markdown", {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -63,7 +63,7 @@ export class cheatsheetsService {
    */
   static async createCheatsheet(userId) {
     const body = {'userId': userId};
-    const result = await requestService.fetch(API_BASE+"cheatsheets/create", {
+    const result = await requestService.fetch(API_BASE+"/cheatsheets/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -91,14 +91,14 @@ export class cheatsheetsService {
       body: JSON.stringify(value),
     }
 
-    const result = await fetch(API_BASE+"cheatsheet/"+uuid+"/update", options);
+    const result = await fetch(API_BASE+"/cheatsheet/"+uuid+"/update", options);
     if (!result.ok) {
       console.error("Update failed");
     }
     if(result.status === 401) {
       const refreshToken = sessionStorage.getItem('refreshToken');
 
-      const refreshRes = await fetch(API_BASE+"auth/refresh", {
+      const refreshRes = await fetch(API_BASE+"/auth/refresh", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +110,7 @@ export class cheatsheetsService {
         const { token } = await refreshRes.json();
         sessionStorage.setItem('token', token);
         options.headers["Authorization"] = "Bearer " + token;
-        return fetch(API_BASE+"cheatsheet/"+uuid+"/update", options);
+        return fetch(API_BASE+"/cheatsheet/"+uuid+"/update", options);
       } else {
         window.router.navigate("/login");
       }
@@ -126,7 +126,7 @@ export class cheatsheetsService {
    */
   static async updateCheatsheetMarkdown(uuid, value) {
     const newValue = JSON.parse(value);
-    const result = await fetch(API_BASE+"cheatsheet/"+uuid+"/markdown/update", {
+    const result = await fetch(API_BASE+"/cheatsheet/"+uuid+"/markdown/update", {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -147,7 +147,7 @@ export class cheatsheetsService {
   }
 
   static async downloadPdf(uuid) {
-    const pdf = await requestService.fetchResponse(API_BASE+"generate-pdf/"+uuid, "pdf", "GET", null, null);
+    const pdf = await requestService.fetchResponse(API_BASE+"/generate-pdf/"+uuid, "pdf", "GET", null, null);
     return pdf;
   }
 }

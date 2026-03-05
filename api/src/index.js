@@ -8,11 +8,12 @@ import pdfRoutes from "./routes/pdfRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3030;
+const ORIGIN = process.env.HOST || "http://localhost:5173";
 // const mongoUri = process.env.MONGO_URL;
 
 /* @todo put port in .env */
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ORIGIN,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['content-type', 'Authorization']
 }));

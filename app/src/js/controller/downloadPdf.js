@@ -1,3 +1,4 @@
+import {HOST} from "../constants.js";
 import {cheatsheetsService} from "../services/cheatsheetsService.js";
 
 export function downloadPdf() {
@@ -21,7 +22,7 @@ export function downloadPdf() {
       if (response && response.data && response.data.path) {
         const pdfPath = response.data.path;
         const link = document.createElement("a");
-        link.href = `http://localhost:3030${pdfPath}`;
+        link.href = `${HOST}/${pdfPath}`;
         // link.setAttribute('download', `cheatsheet_${csID}.pdf`);
         document.body.appendChild(link);
         link.click();
