@@ -60,7 +60,7 @@ export class requestService {
    */
   static async refreshToken(url, options = {}) {
     const refreshToken = sessionStorage.getItem('refreshToken');
-    const refreshRes = await fetch(API_BASE+"auth/refresh", {
+    const refreshRes = await fetch(`${API_BASE}/auth/refresh`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

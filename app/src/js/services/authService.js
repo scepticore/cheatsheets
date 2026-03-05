@@ -1,12 +1,12 @@
 import {usersService} from "./usersService.js";
 import {requestService} from "../utils/requests.js";
-import {API_BASE} from "../constants.js";
+import {API_BASE, HOST} from "../constants.js";
 
 export class authService {
   static async signIn(formData) {
     const body = JSON.stringify(formData);
     console.log(body);
-    const response = await fetch(API_BASE+"auth/signin", {
+    const response = await fetch(`${API_BASE}/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export class authService {
     }
 
     console.log(userData);
-    const response = await fetch(API_BASE + "auth/signup", {
+    const response = await fetch(`${API_BASE}/auth/signup"`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export class authService {
 
   static signOut() {
     sessionStorage.clear();
-    window.location.href = "/signin";
+    window.location.href = `${HOST}/signin`;
   }
 }
 
