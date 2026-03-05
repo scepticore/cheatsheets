@@ -11,6 +11,7 @@ const ORIGIN = process.env.VITE_HOST;
 
 app.use(cors({
     origin: ORIGIN,
+    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['content-type', 'Authorization']
 }));
