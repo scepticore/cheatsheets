@@ -317,7 +317,7 @@ footer {
 
 table {
     width: 100%;
-    border-collapse: separate; /* Geändert für abgerundete Ecken */
+    border-collapse: separate;
     border-spacing: 0;
     margin-top: 24px;
     font-size: 0.9rem;
@@ -344,14 +344,12 @@ table th {
     letter-spacing: 1px;
 }
 
-/* Entfernt die untere Linie bei der letzten Zeile */
 table tr:last-child td {
     border-bottom: none;
 }
 
-/* Zebrastreifen & Hover */
 table tr:nth-child(even) td {
-    background-color: rgba(0, 0, 0, 0.01); /* Sehr subtil */
+    background-color: rgba(0, 0, 0, 0.01);
 }
 
 table tr:hover td {
@@ -359,14 +357,12 @@ table tr:hover td {
     transition: background-color 0.2s ease;
 }
 
-/* Spezielle Formatierung für Buttons oder Icons in Tabellen-Zellen */
 table td .button {
     padding: 4px 8px;
     font-size: 0.8rem;
     margin: 0;
 }
 
-/* Dark-Mode spezifische Anpassung falls nötig */
 :root.dark-mode table tr:nth-child(even) td {
     background-color: rgba(255, 255, 255, 0.02);
 }
