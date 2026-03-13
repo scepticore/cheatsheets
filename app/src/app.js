@@ -1,11 +1,10 @@
 import {Router} from "./js/utils/router.js";
-
 import {checkDarkMode} from "./js/controller/darkmodeHandler";
-import {showDashboard} from "./js/views/dashboardView";
+import {showStart, showDashboard} from "./js/views/dashboardView";
 import {
   viewCheatsheetForm,
   viewCheatsheetDetail,
-  viewCheatsheetList, viewCheatsheetPreview
+  viewCheatsheetList, viewCheatsheetPreview, viewPublicCheatsheets
 } from "./js/views/cheatsheetsView";
 import {showPreview} from "./js/views/previewView";
 import {formSignIn, formSignUp} from "./js/views/usersView";
@@ -26,10 +25,10 @@ router.add("/preview/:id", async(params) => {
 });
 
 router.add("/", async () => {
-  return showDashboard();
+  return showStart();
 });
 
-router.add("/dashboard", () => {
+router.add("/dashboard", isLoggedIn, async () => {
   return showDashboard();
 });
 
@@ -43,7 +42,7 @@ router.add("/cheatsheets/:id", (params) => {
 });
 
 router.add("/cheatsheets/:id/edit", (params) => {
-  return viewCheatsheetForm(params.id);
+  return viewCheatsheetForm(params.id, sessionStorage.getItem("userId"));
 });
 
 router.add("/cheatsheets/:id/delete", (params) => {
@@ -51,7 +50,7 @@ router.add("/cheatsheets/:id/delete", (params) => {
 });
 
 router.add("/community", () => {
-  mainframe.innerHTML = "<h1>Public cheatsheets by the community</h1>";
+  return viewPublicCheatsheets()
 });
 
 /* Examples routes */

@@ -23,6 +23,7 @@ export function downloadPdf() {
         const pdfPath = response.data.path;
         const link = document.createElement("a");
         link.href = `${HOST}/${pdfPath}`;
+        console.log(link.href);
         // link.setAttribute('download', `cheatsheet_${csID}.pdf`);
         document.body.appendChild(link);
         link.click();
@@ -33,7 +34,7 @@ export function downloadPdf() {
     } finally {
       renderButton.classList.remove("disabled");
       renderButton.disabled = false;
-      renderButton.innerHTML = "Download PDF";
+      renderButton.innerHTML = `<i class="bi bi-file-pdf"></i>Download PDF`;
     }
   });
 }

@@ -3,6 +3,11 @@
  * @return {void} - returns nothing, changes document class list "dark-mode"
  */
 export function checkDarkMode(){
+  const toggle = document.getElementById('dark_mode_toggle');
+  toggle.addEventListener('change', () => {
+    document.documentElement.setAttribute('data-theme', toggle.checked ? 'dark' : 'light');
+  });
+
   const darkModeToggle = document.getElementById("dark_mode_toggle");
   window.addEventListener("DOMContentLoaded", () => {
 
