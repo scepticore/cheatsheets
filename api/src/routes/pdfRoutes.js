@@ -59,7 +59,7 @@ router.get("/generate-pdf/:id", async (req, res) => {
       console.warn("Inhalt wurde nicht rechtzeitig geladen - PDF könnte leer sein.");
     }
 
-    // await page.screenshot({ path: path.join(__dirname, 'output', 'debug_screenshot.png') });
+    await page.screenshot({ path: path.join(outputDir, `${req.params.id}.png`) });
     await page.pdf({
       path: outputPath,
       format: 'A4',

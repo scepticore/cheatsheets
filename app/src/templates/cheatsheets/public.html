@@ -10,7 +10,7 @@
   <article class="card">
     <div class="card-media">
       <a href="/cheatsheets/{{ cheatsheet.id }}">
-        <img src="https://placehold.co/600x400" alt="{{ cheatsheet.title }}" />
+        <img src="{{ cheatsheet.image }}" alt="{{ cheatsheet.title }}" />
       </a>
     </div>
     <div class="card-content">
@@ -18,7 +18,13 @@
         <a href="/cheatsheets/{{ cheatsheet.id }}">{{ cheatsheet.title }}</a>
       </h2>
       <p>{{ cheatsheet.description }}</p>
+
+      <div class="button_bar">
+        <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i></a>
+        <a href="#" class="button secondary"><i class="bi bi-cloud-download-fill"></i></a>
+      </div>
     </div>
+
   </article>
   {{ endfor }}
 </div>

@@ -9,23 +9,22 @@
   </p>
 </div>
 
-
-<!--{{ table cheatsheets actions fields(title, description, updated_at) }}-->
 <div class="grid">
   {{ for cheatsheet in cheatsheets }}
   <article class="card">
     <div class="card-media">
-      <img src="https://placehold.co/600x400" alt="{{ cheatsheet.title }}" />
+      <img src="{{ cheatsheet.image }}" alt="{{ cheatsheet.title }}" />
     </div>
 
     <div class="card-content">
-      <h2>{{ cheatsheet.title }}</h2>
+      <h2><a href="/cheatsheets/{{ cheatsheet.id }}">{{ cheatsheet.title }}</a></h2>
       <p class="description">{{ cheatsheet.description }}</p>
 
       <div class="button_bar">
         <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i></a>
         <a href="/cheatsheets/{{ cheatsheet.id }}/edit" class="button secondary"><i class="bi bi-pencil-fill"></i></a>
         <a href="#" class="button secondary"><i class="bi bi-trash-fill"></i></a>
+        <a href="{{ cheatsheet.file }}" target="_blank" class="button secondary" title="File opens in new tab"><i class="bi bi-cloud-download-fill"></i></a>
       </div>
     </div>
   </article>

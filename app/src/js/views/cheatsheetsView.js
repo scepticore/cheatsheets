@@ -5,10 +5,14 @@ import {loadAce} from "../controller/editorHandler";
 import {handleFormUpdates} from "../controller/formHandler";
 import {createCheatsheet} from "../controller/createCheatsheet.js";
 import {downloadPdf} from "../controller/downloadPdf.js";
-import {API_BASE, HOST} from "../constants.js";
+import {OUTPUT_DIR, API_BASE, HOST} from "../constants.js";
 
 export async function viewCheatsheetList() {
-  const cheatsheets = await cheatsheetsService.getCheatsheets();
+  let cheatsheets = await cheatsheetsService.getCheatsheets();
+  cheatsheets.map((cheatsheet) => {
+    cheatsheet.image = `${OUTPUT_DIR}/${cheatsheet.id}.png`;
+    cheatsheet.file = `${OUTPUT_DIR}${cheatsheet.id}.pdf`;
+  })
   await renderTemplate("cheatsheets/index.html", {cheatsheets: cheatsheets});
 
   // Listen for new cheatsheet button
@@ -17,6 +21,10 @@ export async function viewCheatsheetList() {
 
 export async function viewPublicCheatsheets() {
   const cheatsheets = await cheatsheetsService.getPublicCheatsheets();
+  cheatsheets.map((cheatsheet) => {
+    cheatsheet.image = `${OUTPUT_DIR}/${cheatsheet.id}.png`;
+    cheatsheet.file = `${OUTPUT_DIR}${cheatsheet.id}.pdf`;
+  })
   await renderTemplate("cheatsheets/public.html", {cheatsheets: cheatsheets});
 }
 
@@ -51,6 +59,8 @@ export async function viewCheatsheetForm(id = null, userId = null) {
       return renderTemplate("utils/forbidden.html");
     }
     result.url = `${API_BASE}/cheatsheet/${id}/pdf`;
+    result.image = `${API_BASE}/output/${id}.png`;
+    result.file = `${API_BASE}/output/${id}.pdf`;
     markdown = result.markdown ? result.markdown.body : "";
     title = "Edit cheatsheet";
     callback = "window.cheatsheetsService.updateCheatsheet()";
