@@ -1,33 +1,40 @@
-<div class="cards button_bar">
-  <h1>Your personal cheatsheets</h1>
-  <!-- href="/cheatsheets/new/" -->
-  <p>
-    <!-- @todo show amount of cheatsheets in bin -->
-    <!--    <a href="#" class="button secondary" title="Bin">Bin (0)</a>-->
-    <button id="createNewCheatsheet" class="button" title="Create new cheatsheet"><i class="bi bi-file-earmark-plus-fill"></i>
-    </button>
-  </p>
-</div>
-
-<div class="grid">
-  {{ for cheatsheet in cheatsheets }}
-  <article class="card">
-    <div class="card-media">
-      <img src="{{ cheatsheet.image }}" alt="{{ cheatsheet.title }}" />
+<div class="block">
+  <div class="block_content">
+    <div class="cards button_bar">
+      <h1>Your personal cheatsheets</h1>
+      <!-- href="/cheatsheets/new/" -->
+      <p>
+        <!-- @todo show amount of cheatsheets in bin -->
+        <!--    <a href="#" class="button secondary" title="Bin">Bin (0)</a>-->
+        <button id="createNewCheatsheet" class="button" title="Create new cheatsheet"><i
+            class="bi bi-file-earmark-plus-fill"></i>
+        </button>
+      </p>
     </div>
 
-    <div class="card-content">
-      <h2><a href="/cheatsheets/{{ cheatsheet.id }}">{{ cheatsheet.title }}</a></h2>
-      <p class="description">{{ cheatsheet.description }}</p>
+    <div class="grid">
+      {{ for cheatsheet in cheatsheets }}
+      <article class="card">
+        <div class="card-media">
+          <img src="{{ cheatsheet.image }}" alt="{{ cheatsheet.title }}"/>
+        </div>
 
-      <div class="button_bar">
-        <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i></a>
-        <a href="/cheatsheets/{{ cheatsheet.id }}/edit" class="button secondary"><i class="bi bi-pencil-fill"></i></a>
-        <a href="#" class="button secondary"><i class="bi bi-trash-fill"></i></a>
-        <a href="{{ cheatsheet.file }}" target="_blank" class="button secondary" title="File opens in new tab"><i class="bi bi-cloud-download-fill"></i></a>
-      </div>
+        <div class="card-content">
+          <h2><a href="/cheatsheets/{{ cheatsheet.id }}">{{ cheatsheet.title }}</a></h2>
+          <p class="description">{{ cheatsheet.description }}</p>
+
+          <div class="button_bar">
+            <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i></a>
+            <a href="/cheatsheets/{{ cheatsheet.id }}/edit" class="button secondary"><i
+                class="bi bi-pencil-fill"></i></a>
+            <a href="#" class="button secondary"><i class="bi bi-trash-fill"></i></a>
+            <a href="{{ cheatsheet.file }}" target="_blank" class="button secondary" title="File opens in new tab"><i
+                class="bi bi-cloud-download-fill"></i></a>
+          </div>
+        </div>
+      </article>
+      {{ endfor }}
     </div>
-  </article>
-  {{ endfor }}
-</div>
 
+  </div>
+</div>

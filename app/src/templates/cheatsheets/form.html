@@ -1,24 +1,25 @@
-<div class="button_bar">
-  <h1>{{ title }}</h1>
-  <p>
-<!--    <a href="#" class="button secondary">Layout</a>-->
-<!--    <a href="#" class="button secondary" id="downloadmarkdown">Download .md</a>-->
-    <button class="button" data-csid="{{ cheatsheet.cheatsheet.id }}" id="downloadPdf"><i class="bi bi-file-pdf"></i>Download PDF</button></p>
-</div>
+<div class="block">
+  <div class="block_content">
+    <div class="button_bar">
+      <h1>{{ title }}</h1>
+      <p>
+        <!--    <a href="#" class="button secondary">Layout</a>-->
+        <!--    <a href="#" class="button secondary" id="downloadmarkdown">Download .md</a>-->
+        <button class="button" data-csid="{{ cheatsheet.cheatsheet.id }}" id="downloadPdf"><i class="bi bi-file-pdf"></i>Download PDF</button></p>
+    </div>
 
-<div id="cheatsheet_meta">
-  {{ form form }}
-</div>
+    <div id="cheatsheet_meta">
+      {{ form form }}
+    </div>
 
-<div id="edit_cheatsheet">
-  <div id="editor_wrapper">
-<div id="editor">{{ markdown }}</div>
-  </div>
-  <div id="cs_preview">
-    <iframe id="cs_frame" src="{{ cheatsheet.url }}" style="width: 100%; height: 100%;">
-    </iframe>
-<!--    <object data="/output/{{ cheatsheet.user_id }}/{{ cheatsheet.filename }}" type="application/pdf">-->
-<!--      <div>No PDF viewer available</div>-->
-<!--    </object>-->
+    <div id="edit_cheatsheet">
+      <div id="editor_wrapper">
+        <div id="editor">{{ markdown }}</div>
+      </div>
+      <div id="cs_preview">
+        <iframe id="cs_frame" src="{{ cheatsheet.url }}" style="width: 100%; height: 100%;">
+        </iframe>
+      </div>
+    </div>
   </div>
 </div>
