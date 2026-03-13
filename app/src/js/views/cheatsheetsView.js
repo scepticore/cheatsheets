@@ -33,10 +33,11 @@ export async function viewPublicCheatsheets() {
  * @param id
  * @returns {Promise<void>}
  */
-export function viewCheatsheetDetail(id) {
-  let result = {};
-  result.id = id;
-  result.url = `${API_BASE}/cheatsheet/{{ result.id }}/pdf`;
+export async function viewCheatsheetDetail(id) {
+  let result = await cheatsheetsService.getCheatsheetById(id);
+  result.title = result.cheatsheet.title;
+  result.url = `${API_BASE}/cheatsheet/${id}/pdf`;
+  result.file = `${OUTPUT_DIR}${result.cheatsheet.id}.pdf`;
   return renderTemplate("cheatsheets/detail.html", {result});
 }
 
