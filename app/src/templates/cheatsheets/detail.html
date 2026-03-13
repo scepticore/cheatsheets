@@ -1,3 +1,10 @@
-<h1>{{ result.title }}</h1>
+<div class="cards button_bar">
+  <h1>{{ result.title }}</h1>
+  <p>
+    <a class="button" href="{{ result.file }}" target="_blank" title="Opens in new tab"><i class="bi bi-file-pdf"></i>Download
+      PDF
+    </a>
+  </p>
+</div>
 <iframe id="cs_frame" src="{{ result.url }}" style="width: 100%; height: 100%;">
 </iframe>
