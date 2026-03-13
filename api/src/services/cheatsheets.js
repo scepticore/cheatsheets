@@ -1,6 +1,6 @@
 import {db} from '../utils/db.js';
 import {getMongoClient} from "../utils/mongo.js";
-import {and, eq} from "drizzle-orm";
+import {and, eq, desc} from "drizzle-orm";
 import {cheatsheetsTable} from "../db/schema.js";
 import {randomUUID} from "node:crypto";
 
@@ -21,6 +21,37 @@ export async function getCheatsheets(userId, res) {
       created_at: cheatsheetsTable.created_at,
       updated_at: cheatsheetsTable.updated_at,
     }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId),eq(cheatsheetsTable.status, 1)));
+    return result;
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({error: "An error occured", body: error});
+  }
+}
+
+export async function getLatestCheatsheets(userid, res) {
+  try {
+    const result = await db.select({
+      id: cheatsheetsTable.id,
+      title: cheatsheetsTable.title,
+    }).from(cheatsheetsTable).orderBy(desc(cheatsheetsTable.updated_at)).limit(3).where(and(eq(cheatsheetsTable.user_id, userid), eq(cheatsheetsTable.status, 1)));
+    return result;
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({error: "An error occured", body: e});
+  }
+}
+
+export async function getPublicCheatSheets(res) {
+  try {
+    const result = await db.select({
+      id: cheatsheetsTable.id,
+      user_id: cheatsheetsTable.user_id,
+      title: cheatsheetsTable.title,
+      description: cheatsheetsTable.description,
+      public: cheatsheetsTable.public,
+      created_at: cheatsheetsTable.created_at,
+      updated_at: cheatsheetsTable.updated_at,
+    }).from(cheatsheetsTable).where(eq(cheatsheetsTable.public, 1));
     return result;
   } catch (error) {
     console.log(error);

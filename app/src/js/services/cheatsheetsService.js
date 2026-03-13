@@ -19,6 +19,29 @@ export class cheatsheetsService {
     });
   }
 
+  static async getLatestCheatsheets() {
+    const userId = window.sessionStorage.getItem('userId');
+    return requestService.fetch(API_BASE+"/cheatsheets/latest?user_id="+userId, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      }
+    });
+  }
+
+  /**
+   * Get public cheatsheets
+   * @returns {Promise<*>}
+   */
+  static async getPublicCheatsheets() {
+    return requestService.fetch(API_BASE+"/cheatsheets/public", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      }
+    });
+  }
+
   /**
    * Get cheatsheet by UUID from API
    * @param id

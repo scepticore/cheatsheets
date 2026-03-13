@@ -5,7 +5,8 @@ import {
   getCheatsheetById,
   updateCheatsheet,
   deleteCheatsheet,
-  getCheatsheetMarkdown, updateMarkdown, getCheatsheetBin, getCheatsheetBinSize
+  getCheatsheetMarkdown, updateMarkdown, getCheatsheetBin, getCheatsheetBinSize, getPublicCheatSheets,
+  getLatestCheatsheets
 } from "../services/cheatsheets.js";
 import {Marked} from "marked";
 import {markedHighlight} from "marked-highlight";
@@ -37,6 +38,31 @@ router.get("/cheatsheets", authenticateToken, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({error: "An error occured"})
+  }
+});
+
+router.get("/cheatsheets/latest", authenticateToken, async (req, res) => {
+  try {
+    const user_id = req.query.user_id;
+    if (!user_id) {
+      res.status(400).json({error: "user_id missing"});
+    }
+
+    const data = await getLatestCheatsheets(user_id, res);
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error});
+  }
+});
+
+router.get("/cheatsheets/public", async(req, res) => {
+  try {
+    const result = await getPublicCheatSheets();
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error});
   }
 });
 

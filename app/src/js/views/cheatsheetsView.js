@@ -15,6 +15,11 @@ export async function viewCheatsheetList() {
   createCheatsheet();
 }
 
+export async function viewPublicCheatsheets() {
+  const cheatsheets = await cheatsheetsService.getPublicCheatsheets();
+  await renderTemplate("cheatsheets/public.html", {cheatsheets: cheatsheets});
+}
+
 /**
  * View single cheatsheet, currently loads HTML-Page from API
  * @param id
@@ -30,9 +35,10 @@ export function viewCheatsheetDetail(id) {
 /**
  * View Cheatsheet Form (same for edit and new cheatsheet)
  * @param id
+ * @param userId
  * @returns {Promise<void>}
  */
-export async function viewCheatsheetForm(id = null) {
+export async function viewCheatsheetForm(id = null, userId = null) {
   let result = {};
   let markdown = "";
   let title = "Create new cheatsheet";
@@ -40,6 +46,10 @@ export async function viewCheatsheetForm(id = null) {
 
   if(id) {
     result = await cheatsheetsService.getCheatsheetById(id);
+    if (userId && result.cheatsheet.user_id !== userId ) {
+      console.error("Access denied");
+      return renderTemplate("utils/forbidden.html");
+    }
     result.url = `${API_BASE}/cheatsheet/${id}/pdf`;
     markdown = result.markdown ? result.markdown.body : "";
     title = "Edit cheatsheet";
