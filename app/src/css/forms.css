@@ -42,10 +42,10 @@ form {
 }
 
 .form_container {
-    background-color: var(--primary-card-bg-color);
-    padding: 16px 32px;
+    /*background-color: var(--primary-card-bg-color);*/
+    /*padding: 16px 32px;*/
     border-radius: 12px;
-    box-shadow: var(--box-shadow-default);
+    /*box-shadow: var(--box-shadow-default);*/
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     margin-bottom: 16px;
 }

@@ -1,13 +1,25 @@
-<form id="signin_form">
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" class="form-control" id="username" placeholder="Enter username">
-  </div>
+<div class="auth-container">
+  <form id="signin_form" class="auth-form">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <div class="input-wrapper">
+        <input type="text" id="username" placeholder="Enter username" required>
+      </div>
+    </div>
 
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" placeholder="Enter password">
-  </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-wrapper">
+        <input type="password" id="password" placeholder="Enter password" required>
+      </div>
+    </div>
 
-  <button>Login</button>
-</form>
+    <button type="submit" class="button primary login-btn">
+      Sign In <i class="bi bi-arrow-right"></i>
+    </button>
+
+    <p class="auth-footer">
+      Don't have an account? <a href="/signup">Sign up</a>
+    </p>
+  </form>
+</div>

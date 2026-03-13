@@ -1,0 +1,182 @@
+/* login */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 200px); /* Zentriert es auf der Seite */
+    padding: 20px;
+}
+
+.auth-form {
+    background: var(--primary-card-bg-color);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: var(--box-shadow-hover);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border-color);
+}
+
+.auth-form h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-color);
+}
+
+/* Input Styling */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 15px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 12px 12px 45px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    background: var(--primary-card-bg-color);
+}
+
+/* Button & Footer */
+.login-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.auth-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* signup */
+.form_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 150px);
+    padding: 20px;
+}
+
+.form_container form {
+    background: var(--primary-card-bg-color);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--box-shadow-hover);
+    width: 100%;
+    max-width: 450px;
+    border: 1px solid var(--border-color);
+}
+
+#form_title h1 {
+    margin: 0 0 25px 0;
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.form_group {
+    margin-bottom: 15px;
+}
+
+.form_group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: capitalize;
+}
+
+.form_group input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.form_group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form_container .button_bar {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Der "Save" Button ist prominenter */
+    gap: 12px;
+    margin-top: 25px;
+}
+
+#confirm_button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#confirm_button:hover {
+    background-color: var(--primary-hover);
+}
+
+#cancel_button {
+    cursor: pointer;
+    font-weight: 600;
+}

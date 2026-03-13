@@ -1,25 +1,6 @@
-<div class="title_bar">
-  <h1>Dashboard</h1>
-</div>
+<h1>Cheatsheets</h1>
 
 <div class="grid">
-  {{ if latestCheatsheets }}
-  <article class="card">
-    <div class="card-content">
-      <h2><i class="bi bi-clock-history"></i> Your latest cheatsheets</h2>
-      <nav>
-        <ul style="flex-direction: column; gap: 0.5rem; align-items: flex-start;">
-          {{ for cheatsheet in latestCheatsheets }}
-          <li>
-            <a href="/cheatsheets/{{ cheatsheet.id }}/edit"><i class="bi bi-file-earmark-text"></i> {{ cheatsheet.title }}</a>
-          </li>
-          {{ endfor }}
-        </ul>
-      </nav>
-    </div>
-  </article>
-  {{ endif }}
-
   <article class="card">
     <div class="card-content">
       <h2><i class="bi bi-megaphone"></i> Cheatsheet News</h2>

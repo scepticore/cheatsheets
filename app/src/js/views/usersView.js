@@ -15,7 +15,7 @@ export async function showUser(id) {
 }
 
 export async function formSignIn() {
-  await renderTemplate("users/signin.html");
+  await renderTemplate("users/signin.html", {}, true);
   signInForm();
 }
 
@@ -53,7 +53,7 @@ export async function formSignUp() {
     }
   );
 
-  return renderTemplate("users/signup.html", {form});
+  return renderTemplate("users/signup.html", {form}, true);
 }
 
 export async function showUserForm(userId) {
@@ -127,5 +127,5 @@ export async function showUserForm(userId) {
       }
     });
 
-  return renderTemplate("users/form.html", {example: form});
+  return renderTemplate("users/form.html", {example: form}, true);
 }
