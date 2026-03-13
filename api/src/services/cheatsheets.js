@@ -28,6 +28,12 @@ export async function getCheatsheets(userId, res) {
   }
 }
 
+/**
+ * Get latest cheatsheets by userid for dashboard
+ * @param userid
+ * @param res
+ * @returns {Promise<*>}
+ */
 export async function getLatestCheatsheets(userid, res) {
   try {
     const result = await db.select({
@@ -41,17 +47,26 @@ export async function getLatestCheatsheets(userid, res) {
   }
 }
 
-export async function getPublicCheatSheets(res) {
+export async function getPublicCheatSheets(limit, res) {
   try {
-    const result = await db.select({
-      id: cheatsheetsTable.id,
-      user_id: cheatsheetsTable.user_id,
-      title: cheatsheetsTable.title,
-      description: cheatsheetsTable.description,
-      public: cheatsheetsTable.public,
-      created_at: cheatsheetsTable.created_at,
-      updated_at: cheatsheetsTable.updated_at,
-    }).from(cheatsheetsTable).where(eq(cheatsheetsTable.public, 1));
+    let result = {};
+
+    if(limit) {
+      result = await db.select({
+        id: cheatsheetsTable.id,
+        user_id: cheatsheetsTable.user_id,
+        title: cheatsheetsTable.title,
+        description: cheatsheetsTable.description,
+      }).from(cheatsheetsTable).orderBy(desc(cheatsheetsTable.updated_at)).limit(parseInt(limit)).where(eq(cheatsheetsTable.public, 1));
+    } else {
+      result = await db.select({
+        id: cheatsheetsTable.id,
+        user_id: cheatsheetsTable.user_id,
+        title: cheatsheetsTable.title,
+        description: cheatsheetsTable.description,
+      }).from(cheatsheetsTable).where(eq(cheatsheetsTable.public, 1));
+    }
+
     return result;
   } catch (error) {
     console.log(error);

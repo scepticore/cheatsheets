@@ -58,7 +58,7 @@ router.get("/cheatsheets/latest", authenticateToken, async (req, res) => {
 
 router.get("/cheatsheets/public", async(req, res) => {
   try {
-    const result = await getPublicCheatSheets();
+    const result = await getPublicCheatSheets(req.query.limit);
     res.status(200).json(result);
   } catch (error) {
     console.error(error);

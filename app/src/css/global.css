@@ -133,11 +133,14 @@ nav ul a:hover {
 /* Main Content & Layout
 /************************************/
 main#mainframe {
-    max-width: 1200px;
     width: 100%;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin: 0 auto;
+    padding: 0;
     flex: 1;
+}
+
+.cards {
+    margin-bottom: 1rem;
 }
 
 .cards.button_bar, .title_bar {
@@ -155,6 +158,7 @@ main#mainframe {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
     margin-bottom: 2rem;
+    padding: 0;
 }
 
 .card {
@@ -215,6 +219,25 @@ main#mainframe {
 }
 
 /*************************************/
+/* Block
+/************************************/
+.block {
+    width: 100%;
+    padding: 2rem;
+}
+
+.block.dark {
+    background: var(--secondary-bg-color);
+}
+
+.block_content {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+/*************************************/
 /* Buttons
 /************************************/
 .button, button, input[type="submit"] {
@@ -235,6 +258,7 @@ main#mainframe {
 
 .button:hover, button:hover {
     background-color: var(--primary-hover);
+    color: white;
     filter: brightness(1.1);
 }
 

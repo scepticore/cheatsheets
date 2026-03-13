@@ -1,30 +1,30 @@
-<div class="cards button_bar">
-  <h1>Public cheatsheets by the community</h1>
-  <p>
-    <button id="createNewCheatsheet" class="button" title="Create new cheatsheet"><i class="bi bi-file-earmark-plus-fill"></i>
-    </button>
-  </p>
-</div>
-<div class="grid">
-  {{ for cheatsheet in cheatsheets }}
-  <article class="card">
-    <div class="card-media">
-      <a href="/cheatsheets/{{ cheatsheet.id }}">
-        <img src="{{ cheatsheet.image }}" alt="{{ cheatsheet.title }}" />
-      </a>
+<div class="block">
+  <div class="block_content">
+    <div class="cards button_bar">
+      <h1>Public cheatsheets by the community</h1>
     </div>
-    <div class="card-content">
-      <h2>
-        <a href="/cheatsheets/{{ cheatsheet.id }}">{{ cheatsheet.title }}</a>
-      </h2>
-      <p>{{ cheatsheet.description }}</p>
+    <div class="grid">
+      {{ for cheatsheet in cheatsheets }}
+      <article class="card">
+        <div class="card-media">
+          <a href="/cheatsheets/{{ cheatsheet.id }}">
+            <img src="{{ cheatsheet.image }}" alt="{{ cheatsheet.title }}" />
+          </a>
+        </div>
+        <div class="card-content">
+          <h2>
+            <a href="/cheatsheets/{{ cheatsheet.id }}">{{ cheatsheet.title }}</a>
+          </h2>
+          <p>{{ cheatsheet.description }}</p>
 
-      <div class="button_bar">
-        <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i></a>
-        <a href="{{ cheatsheet.file }}" target="_blank" title="File opens in a new tab" class="button secondary"><i class="bi bi-cloud-download-fill"></i></a>
-      </div>
+          <div class="button_bar">
+            <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i></a>
+            <a href="{{ cheatsheet.file }}" target="_blank" title="File opens in a new tab" class="button secondary"><i class="bi bi-cloud-download-fill"></i></a>
+          </div>
+        </div>
+
+      </article>
+      {{ endfor }}
     </div>
-
-  </article>
-  {{ endfor }}
+  </div>
 </div>

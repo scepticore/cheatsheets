@@ -1,8 +1,15 @@
 import {renderTemplate} from "../utils/templateEngine";
 import {cheatsheetsService} from "../services/cheatsheetsService.js";
+import {OUTPUT_DIR} from "../constants.js";
 
 export async function showStart() {
-  await renderTemplate("dashboard/start.html");
+  const cheatsheets = await cheatsheetsService.getPublicCheatsheets(3);
+  cheatsheets.map((cheatsheet) => {
+    cheatsheet.image = `${OUTPUT_DIR}/${cheatsheet.id}.png`;
+    cheatsheet.file = `${OUTPUT_DIR}${cheatsheet.id}.pdf`;
+  })
+
+  await renderTemplate("dashboard/start.html", {cheatsheets});
 }
 
 export async function showDashboard() {

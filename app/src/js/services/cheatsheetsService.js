@@ -33,8 +33,8 @@ export class cheatsheetsService {
    * Get public cheatsheets
    * @returns {Promise<*>}
    */
-  static async getPublicCheatsheets() {
-    return requestService.fetch(API_BASE+"/cheatsheets/public", {
+  static async getPublicCheatsheets(limit = null) {
+    return requestService.fetch(API_BASE+"/cheatsheets/public?limit="+limit, {
       method: "GET",
       headers: {
         "content-type": "application/json",

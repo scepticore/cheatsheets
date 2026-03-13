@@ -1,106 +1,148 @@
-<h1>Cheatsheets</h1>
-
-<div class="grid">
-  <article class="card">
-    <div class="card-content">
-      <h2><i class="bi bi-megaphone"></i> Update #2</h2>
-      <p class="description"><i class="bi bi-calendar3"></i> 13.03.2026</p>
-      <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-check-circle-fill" style="color: var(--success-color);"></i>
-          Design Update
-        </li>
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-check-circle-fill" style="color: var(--success-color);"></i>
-          Dashboard Update
-        </li>
-      </ul>
+<div class="block">
+  <div class="block_content">
+    <div class="cards">
+      <h1>Latest public cheatsheets by the community</h1>
+      <p>Easily create cheatsheets, ready for your next exam.</p>
     </div>
-  </article>
+    <div class="grid">
+      {{ for cheatsheet in cheatsheets }}
+      <article class="card">
+        <div class="card-media">
+          <a href="/cheatsheets/{{ cheatsheet.id }}">
+            <img src="{{ cheatsheet.image }}" alt="{{ cheatsheet.title }}"/>
+          </a>
+        </div>
+        <div class="card-content">
+          <h2>
+            <a href="/cheatsheets/{{ cheatsheet.id }}">{{ cheatsheet.title }}</a>
+          </h2>
+          <p>{{ cheatsheet.description }}</p>
 
-  <article class="card">
-    <div class="card-content">
-      <h2><i class="bi bi-megaphone"></i> Update #1</h2>
-      <p class="description"><i class="bi bi-calendar3"></i> 02.02.2026</p>
-      <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-check-circle-fill" style="color: var(--success-color);"></i>
-          Autosave on cheatsheets
-        </li>
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-check-circle-fill" style="color: var(--success-color);"></i>
-          Create new cheatsheets
-        </li>
-      </ul>
+          <div class="button_bar">
+            <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i></a>
+            <a href="{{ cheatsheet.file }}" target="_blank" title="File opens in a new tab" class="button secondary"><i
+                class="bi bi-cloud-download-fill"></i></a>
+          </div>
+        </div>
+
+      </article>
+      {{ endfor }}
     </div>
-  </article>
+    <p><a href="/community" title="See all public cheatsheets" class="button">View more</a></p>
+  </div>
 </div>
 
-<h2>Miscellaneous</h2>
-<div class="grid">
-  <article class="card">
-    <div class="card-content">
-      <h2><i class="bi bi-card-checklist"></i> Planned features</h2>
-      <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i> Tags
-        </li>
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          Search function
-        </li>
+<div class="block dark">
+  <div class="block_content">
+    <h2>News</h2>
 
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          Automatic preview image
-        </li>
+    <div class="grid">
+      <article class="card">
+        <div class="card-content">
+          <h2><i class="bi bi-megaphone"></i> Update #2</h2>
+          <p class="description"><i class="bi bi-calendar3"></i> 13.03.2026</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-check-circle-fill" style="color: var(--success-color);"></i>
+              Design Update
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-check-circle-fill" style="color: var(--success-color);"></i>
+              Dashboard Update
+            </li>
+          </ul>
+        </div>
+      </article>
 
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          Group-Mode
-        </li>
-
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          Password reset
-        </li>
-
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          Public user profile
-        </li>
-
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          Public cheatsheets by user
-        </li>
-
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          Edit own profile
-        </li>
-
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          View-Counter
-        </li>
-      </ul>
+      <article class="card">
+        <div class="card-content">
+          <h2><i class="bi bi-megaphone"></i> Update #1</h2>
+          <p class="description"><i class="bi bi-calendar3"></i> 02.02.2026</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-check-circle-fill" style="color: var(--success-color);"></i>
+              Autosave on cheatsheets
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-check-circle-fill" style="color: var(--success-color);"></i>
+              Create new cheatsheets
+            </li>
+          </ul>
+        </div>
+      </article>
     </div>
-  </article>
+  </div>
+</div>
 
-  <article class="card">
-    <div class="card-content">
-      <h2><i class="bi bi-card-checklist"></i> ToDo-List</h2>
-      <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          Help-Page / Tutorial
-        </li>
-        <li style="display: flex; align-items: center; gap: 10px;">
-          <i class="bi bi-circle"></i>
-          Settings Menu
-        </li>
-      </ul>
+<div class="block">
+  <div class="block_content">
+    <h2>Miscellaneous</h2>
+    <div class="grid">
+      <article class="card">
+        <div class="card-content">
+          <h2><i class="bi bi-card-checklist"></i> Planned features</h2>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i> Tags
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              Search function
+            </li>
+
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              Automatic preview image
+            </li>
+
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              Group-Mode
+            </li>
+
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              Password reset
+            </li>
+
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              Public user profile
+            </li>
+
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              Public cheatsheets by user
+            </li>
+
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              Edit own profile
+            </li>
+
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              View-Counter
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-content">
+          <h2><i class="bi bi-card-checklist"></i> ToDo-List</h2>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              Help-Page / Tutorial
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px;">
+              <i class="bi bi-circle"></i>
+              Settings Menu
+            </li>
+          </ul>
+        </div>
+      </article>
     </div>
-  </article>
+  </div>
 </div>
