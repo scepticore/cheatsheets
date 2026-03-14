@@ -41,7 +41,7 @@ router.add("/cheatsheets/:id", (params) => {
   return viewCheatsheetDetail(params.id);
 });
 
-router.add("/cheatsheets/:id/edit", (params) => {
+router.add("/cheatsheets/:id/edit", isLoggedIn, (params) => {
   return viewCheatsheetForm(params.id, sessionStorage.getItem("userId"));
 });
 

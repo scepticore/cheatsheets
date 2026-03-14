@@ -41,6 +41,9 @@ router.get("/cheatsheets", authenticateToken, async (req, res) => {
   }
 });
 
+/**
+ * Get latest cheatsheets by user
+ */
 router.get("/cheatsheets/latest", authenticateToken, async (req, res) => {
   try {
     const user_id = req.query.user_id;
@@ -118,7 +121,7 @@ router.post("/cheatsheets/create", authenticateToken, async (req, res) => {
 /**
  * View single cheatsheet by ID
  */
-router.get("/cheatsheet/:id", authenticateToken, async (req, res) => {
+router.get("/cheatsheet/:id", async (req, res) => {
   try {
     // @todo add userId
     const cheatsheetId = req.params.id;
