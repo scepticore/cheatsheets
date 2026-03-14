@@ -1,5 +1,4 @@
 import {HOST} from '../constants.js'
-console.log(HOST);
 import {removeSFromString, firstLetterUppercase} from "../utils/utils.js";
 const MAINFRAME = document.getElementById("mainframe");
 
