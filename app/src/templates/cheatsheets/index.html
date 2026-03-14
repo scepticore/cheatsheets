@@ -24,12 +24,12 @@
           <p class="description">{{ cheatsheet.description }}</p>
 
           <div class="button_bar">
-            <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i></a>
+            <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i> View</a>
             <a href="/cheatsheets/{{ cheatsheet.id }}/edit" class="button secondary"><i
-                class="bi bi-pencil-fill"></i></a>
-            <a href="#" class="button secondary"><i class="bi bi-trash-fill"></i></a>
+                class="bi bi-pencil-fill"></i> Edit</a>
+<!--            <a href="#" class="button secondary"><i class="bi bi-trash-fill"></i> Delete</a>-->
             <a href="{{ cheatsheet.file }}" target="_blank" class="button secondary" title="File opens in new tab"><i
-                class="bi bi-cloud-download-fill"></i></a>
+                class="bi bi-cloud-download-fill"></i> Download</a>
           </div>
         </div>
       </article>
