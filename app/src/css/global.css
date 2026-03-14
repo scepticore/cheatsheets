@@ -76,6 +76,14 @@ a:hover {
     color: var(--primary-hover);
 }
 
+p {
+    margin-bottom: 1rem;
+}
+
+header p {
+    margin: 0;
+}
+
 /*************************************/
 /* Header & Navigation
 /************************************/
@@ -230,6 +238,20 @@ main#mainframe {
 
 .block.dark {
     background: var(--secondary-bg-color);
+}
+
+.block.starter .block_content,
+.block.grid .block_content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+}
+
+.block.starter .block_content img {
+    width: 100%;
+}
+
+.block.starter .block_child {
+    align-content: center;
 }
 
 .block_content {
