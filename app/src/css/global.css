@@ -243,7 +243,14 @@ main#mainframe {
 .block.starter .block_content,
 .block.grid .block_content {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+@media (min-width: 600px) {
+    .block.starter .block_content {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .block.starter .block_content img {
