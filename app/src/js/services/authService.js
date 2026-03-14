@@ -4,7 +4,10 @@ import {API_BASE, HOST} from "../constants.js";
 
 export class authService {
   static async signIn(formData) {
-    const body = JSON.stringify(formData);
+    const body = JSON.stringify({
+      username: formData.username,
+      password: encodeURI(formData.password)
+    });
     console.log(body);
     const response = await fetch(`${API_BASE}/auth/signin`, {
       method: "POST",
@@ -32,7 +35,6 @@ export class authService {
   }
 
   static async signUp(formData) {
-    console.log(formData);
     let error = null;
 
     // check if username already exists
@@ -55,7 +57,7 @@ export class authService {
 
     // If any error exists, return them
     if (error) {
-      console.log(error);
+      console.error(error);
       return error;
     }
 
@@ -65,20 +67,20 @@ export class authService {
       email: formData.email,
       password: formData.password,
     }
-
     console.log(userData);
-    const response = await fetch(`${API_BASE}/auth/signup"`, {
+
+    const response = await fetch(`${API_BASE}/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
     });
-    console.log(response);
 
+    if(response.ok && response.status === 201 ) {
+      window.location.href = `${HOST}/signin`;
+    }
     const data = await response.json();
-    console.log(data);
-
   }
 
   static signOut() {
