@@ -18,6 +18,7 @@
 
     /* Functional Colors */
     --success-color: #10b981;
+    --success-text-color: #f8fafc;
     --error-color: #ef4444;
     --table-background-color-alt: #fafafa;
     --table-hover-color: #f2f5f7;
@@ -266,6 +267,11 @@ main#mainframe {
 .button.secondary {
     background-color: var(--secondary-bg-color);
     color: var(--text-color);
+}
+
+.button.success {
+    background-color: var(--success-color);
+    color: var(--success-text-color);
 }
 
 .card .button_bar {

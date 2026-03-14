@@ -195,7 +195,13 @@ export class cheatsheetsService {
   }
 
   static async downloadPdf(uuid) {
-    const pdf = await requestService.fetchResponse(API_BASE+"/generate-pdf/"+uuid, "pdf", "GET", null, null);
+    const pdf = await requestService.fetch(API_BASE+"/generate-pdf/"+uuid, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        "authorization": `Bearer ${window.sessionStorage.getItem('token')}`
+      }
+    });
     return pdf;
   }
 }
