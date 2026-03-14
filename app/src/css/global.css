@@ -171,6 +171,16 @@ main#mainframe {
     padding: 0;
 }
 
+@media (min-width: 600px) {
+    .grid.w3 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .grid.w2 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
 .card {
     background: var(--primary-card-bg-color);
     border-radius: 16px;
