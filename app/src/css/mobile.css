@@ -7,6 +7,10 @@
         position: fixed;
     }
 
+    #user_button {
+        display: none;
+    }
+
     .cards {
         flex-direction: column;
     }
@@ -22,6 +26,7 @@
         transition: right 0.4s;
         font-size: 2em;
         z-index: 8;
+        align-items: center;
     }
 
     nav.hidden {
@@ -36,6 +41,10 @@
 
     nav ul li {
         border-bottom: 1px solid #CCC;
+    }
+
+    nav ul li.hidden {
+        display: block;
     }
 
     nav ul li:last-child {
@@ -63,8 +72,8 @@
         order: 1;
     }
 
-    section#mainframe {
-        margin-top: 84px;
+    #mainframe {
+        margin-top: 70px;
     }
 
     /* Tables */

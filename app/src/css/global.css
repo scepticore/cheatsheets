@@ -91,7 +91,8 @@ header p {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2rem;
+    padding: 0 1rem;
+    width: 100%;
     height: 70px;
     background: var(--header-bg);
     border-bottom: 1px solid var(--border-color);
@@ -108,10 +109,43 @@ header p {
     letter-spacing: -0.5px;
 }
 
+/*************************************/
+/* Navigation
+/************************************/
+
+
+nav ul li {
+    margin: 0 12px;
+}
+
+nav ul li.hidden {
+    display: none;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--nav-text-color);
+    padding: 10px 8px;
+    display: block;
+}
+
+nav ul li a:hover {
+    color: var(--primary-hover);
+}
+
+.toggle_menu {
+    display: none;
+}
+
+#toggle_nav,
+.sad_face {
+    filter: var(--invert-svg);
+}
+
 nav ul {
     display: flex;
     list-style: none;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 nav ul a {
@@ -144,7 +178,6 @@ nav ul a:hover {
 /************************************/
 main#mainframe {
     width: 100%;
-    margin: 0 auto;
     padding: 0;
     flex: 1;
 }
@@ -260,6 +293,10 @@ main#mainframe {
 @media (min-width: 600px) {
     .block.starter .block_content {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .header_bar {
+        padding: 0 2rem;
     }
 }
 

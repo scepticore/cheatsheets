@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Exam ready Cheatsheets</title>
   <link rel="stylesheet" href="src/css/global.css"/>
+  <link rel="stylesheet" href="src/css/mobile.css"/>
   <link rel="stylesheet" href="src/css/forms.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ace-builds@1.43.5/css/ace.min.css">
 </head>
@@ -14,12 +15,13 @@
     <p><a href="/" title="Go to homepage" class="logo">Cheatsheet</a></p>
   </header>
 
-  <nav id="main_nav">
+  <div class="toggle_menu"><img id="toggle_nav" src="src/img/burger-menu-svgrepo-com.svg" alt="Menu Icon" /></div>
+  <nav id="main_nav" class="hidden">
     <ul>
       <li><a href="/cheatsheets" title="My cheatsheets"><i class="bi bi-folder-fill"></i> Cheatsheets</a></li>
       <li><a href="/community" title="Community"><i class="bi bi-people-fill"></i> Public</a></li>
       <li><a href="/help" title="Help"><i class="bi bi-question-circle-fill"></i> Help</a></li>
-
+      <li class="hidden"><a href="/signin"><i class="bi bi-box-arrow-in-right"></i> Sign in</a></li>
     </ul>
   </nav>
 

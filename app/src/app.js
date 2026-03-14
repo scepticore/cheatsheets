@@ -14,6 +14,7 @@ import {isLoggedIn} from "./js/middleware/auth.js";
 import {getUserName} from "./js/controller/appHandler.js";
 import {authService} from "./js/services/authService.js";
 import {restoreHandler} from "./js/controller/restoreHandler.js";
+import {toggleNav} from "./js/controller/toggleMobileNav.js";
 
 // AppController
 checkDarkMode();
@@ -111,3 +112,4 @@ router.add("/cheatsheet_pdf", () => {
 
 // Controllers
 getUserName();
+toggleNav();
