@@ -1,0 +1,32 @@
+<div class="block">
+  <div class="block_content">
+    <div class="cards button_bar">
+      <h1>Deleted cheatsheets</h1>
+      <button class="button"><i class="bi bi-trash"></i>Empty bin</button>
+    </div>
+    <div class="grid">
+      {{ for cheatsheet in cheatsheets }}
+      <article class="card">
+        <div class="card-media">
+          <a href="/cheatsheets/{{ cheatsheet.id }}">
+            <img src="{{ cheatsheet.image }}" alt="{{ cheatsheet.title }}"/>
+          </a>
+        </div>
+        <div class="card-content">
+          <h2>
+            <a href="/cheatsheets/{{ cheatsheet.id }}">{{ cheatsheet.title }}</a>
+          </h2>
+          <p>{{ cheatsheet.description }}</p>
+
+          <div class="button_bar">
+            <button class="button primary restore_cheatsheet" data-csid="{{ cheatsheet.id }}" title="Restore cheatsheet"><i class="bi bi-arrow-counterclockwise"></i> Restore</button>
+<!--            <button title="Deletes permanently" class="button secondary"><i-->
+<!--                class="bi bi-cloud-download-fill"></i> Delete</button>-->
+          </div>
+        </div>
+
+      </article>
+      {{ endfor }}
+    </div>
+  </div>
+</div>

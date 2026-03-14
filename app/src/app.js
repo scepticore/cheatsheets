@@ -1,10 +1,11 @@
 import {Router} from "./js/utils/router.js";
 import {checkDarkMode} from "./js/controller/darkmodeHandler";
+import {deleteHandler} from "./js/controller/deleteHandler";
 import {showStart, showDashboard} from "./js/views/dashboardView";
 import {
   viewCheatsheetForm,
   viewCheatsheetDetail,
-  viewCheatsheetList, viewCheatsheetPreview, viewPublicCheatsheets
+  viewCheatsheetList, viewCheatsheetPreview, viewPublicCheatsheets, viewCheatsheetBin
 } from "./js/views/cheatsheetsView";
 import {showPreview} from "./js/views/previewView";
 import {formSignIn, formSignUp} from "./js/views/usersView";
@@ -12,9 +13,10 @@ import {renderTemplate} from "./js/utils/templateEngine.js";
 import {isLoggedIn} from "./js/middleware/auth.js";
 import {getUserName} from "./js/controller/appHandler.js";
 import {authService} from "./js/services/authService.js";
-//
+import {restoreHandler} from "./js/controller/restoreHandler.js";
+
+// AppController
 checkDarkMode();
-getUserName();
 
 const router = new Router();
 
@@ -33,8 +35,14 @@ router.add("/dashboard", isLoggedIn, async () => {
 });
 
 /* Cheatsheet Routes */
-router.add("/cheatsheets", isLoggedIn, () => {
-  return viewCheatsheetList();
+router.add("/cheatsheets", isLoggedIn, async () => {
+  await viewCheatsheetList();
+  await deleteHandler();
+});
+
+router.add("/cheatsheets/bin", isLoggedIn, async () => {
+  await viewCheatsheetBin();
+  await restoreHandler();
 });
 
 router.add("/cheatsheets/:id", (params) => {
@@ -45,12 +53,13 @@ router.add("/cheatsheets/:id/edit", isLoggedIn, (params) => {
   return viewCheatsheetForm(params.id, sessionStorage.getItem("userId"));
 });
 
-router.add("/cheatsheets/:id/delete", (params) => {
+router.add("/cheatsheets/:id/delete", isLoggedIn, (params) => {
   mainframe.innerHTML = `<h1>Cheatsheet Delete #${params.id}</h1>`;
 });
 
+/* Public cheatsheets */
 router.add("/community", () => {
-  return viewPublicCheatsheets()
+  return viewPublicCheatsheets();
 });
 
 /* Examples routes */
@@ -99,3 +108,6 @@ router.add("/admin/users", () => {
 router.add("/cheatsheet_pdf", () => {
   return viewCheatsheetPreview();
 });
+
+// Controllers
+getUserName();

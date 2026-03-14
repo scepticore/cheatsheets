@@ -57,7 +57,7 @@ export async function getPublicCheatSheets(limit, res) {
         user_id: cheatsheetsTable.user_id,
         title: cheatsheetsTable.title,
         description: cheatsheetsTable.description,
-      }).from(cheatsheetsTable).orderBy(desc(cheatsheetsTable.updated_at)).limit(parseInt(limit)).where(eq(cheatsheetsTable.public, 1));
+      }).from(cheatsheetsTable).orderBy(desc(cheatsheetsTable.updated_at)).limit(parseInt(limit)).where(and(eq(cheatsheetsTable.public, 1), eq(cheatsheetsTable.status, 1)));
     } else {
       result = await db.select({
         id: cheatsheetsTable.id,

@@ -7,18 +7,27 @@ import {createCheatsheet} from "../controller/createCheatsheet.js";
 import {downloadPdf} from "../controller/downloadPdf.js";
 import {OUTPUT_DIR, API_BASE, HOST} from "../constants.js";
 
+/**
+ * View own cheatsheets
+ * @returns {Promise<void>}
+ */
 export async function viewCheatsheetList() {
   let cheatsheets = await cheatsheetsService.getCheatsheets();
   cheatsheets.map((cheatsheet) => {
     cheatsheet.image = `${OUTPUT_DIR}/${cheatsheet.id}.png`;
     cheatsheet.file = `${OUTPUT_DIR}${cheatsheet.id}.pdf`;
   })
-  await renderTemplate("cheatsheets/index.html", {cheatsheets: cheatsheets});
+  const bin = await cheatsheetsService.getBinSize();
+  await renderTemplate("cheatsheets/index.html", {cheatsheets: cheatsheets, bin: bin});
 
   // Listen for new cheatsheet button
   createCheatsheet();
 }
 
+/**
+ * Public cheatsheets
+ * @returns {Promise<void>}
+ */
 export async function viewPublicCheatsheets() {
   const cheatsheets = await cheatsheetsService.getPublicCheatsheets();
   cheatsheets.map((cheatsheet) => {
@@ -26,6 +35,18 @@ export async function viewPublicCheatsheets() {
     cheatsheet.file = `${OUTPUT_DIR}${cheatsheet.id}.pdf`;
   })
   await renderTemplate("cheatsheets/public.html", {cheatsheets: cheatsheets});
+}
+
+/**
+ * View own cheatsheet bin
+ * @returns {Promise<void>}
+ */
+export async function viewCheatsheetBin() {
+  const cheatsheets = await cheatsheetsService.getDeletedCheatsheets();
+  cheatsheets.map((cheatsheet) => {
+    cheatsheet.image = `${OUTPUT_DIR}/${cheatsheet.id}.png`;
+  });
+  await renderTemplate("cheatsheets/bin.html", {cheatsheets});
 }
 
 /**

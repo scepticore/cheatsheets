@@ -19,6 +19,10 @@ export class cheatsheetsService {
     });
   }
 
+  /**
+   * Get latest cheatsheets by user
+   * @returns {Promise<*>}
+   */
   static async getLatestCheatsheets() {
     const userId = window.sessionStorage.getItem('userId');
     return requestService.fetch(API_BASE+"/cheatsheets/latest?user_id="+userId, {
@@ -27,6 +31,26 @@ export class cheatsheetsService {
         "content-type": "application/json",
       }
     });
+  }
+
+  static async getDeletedCheatsheets() {
+    const userId = window.sessionStorage.getItem('userId');
+    return requestService.fetch(API_BASE+"/cheatsheets/bin?user_id="+userId, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      }
+    })
+  }
+
+  static async getBinSize() {
+    const userId = window.sessionStorage.getItem('userId');
+    return requestService.fetch(API_BASE+"/cheatsheets/bin/size?user_id="+userId, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      }
+    })
   }
 
   /**
@@ -55,6 +79,7 @@ export class cheatsheetsService {
       }
     });
 
+    // @todo make use of getCheatsheetMarkdown
     const markdown = await requestService.fetch(API_BASE+"/cheatsheet/"+id+"/markdown", {
       method: "GET",
       headers: {

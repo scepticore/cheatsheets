@@ -5,9 +5,9 @@
       <!-- href="/cheatsheets/new/" -->
       <p>
         <!-- @todo show amount of cheatsheets in bin -->
-        <!--    <a href="#" class="button secondary" title="Bin">Bin (0)</a>-->
+        <a href="/cheatsheets/bin" class="button secondary" title="Bin"><i class="bi bi-trash"></i> Bin ({{ bin }})</a>
         <button id="createNewCheatsheet" class="button" title="Create new cheatsheet"><i
-            class="bi bi-file-earmark-plus-fill"></i>
+            class="bi bi-file-earmark-plus-fill"></i> Add
         </button>
       </p>
     </div>
@@ -27,7 +27,7 @@
             <a href="/cheatsheets/{{ cheatsheet.id }}" class="button primary"><i class="bi bi-eye-fill"></i> View</a>
             <a href="/cheatsheets/{{ cheatsheet.id }}/edit" class="button secondary"><i
                 class="bi bi-pencil-fill"></i> Edit</a>
-<!--            <a href="#" class="button secondary"><i class="bi bi-trash-fill"></i> Delete</a>-->
+                        <button class="button secondary delete_cheatsheet" data-csid="{{ cheatsheet.id }}"><i class="bi bi-trash-fill"></i> Delete</button>
             <a href="{{ cheatsheet.file }}" target="_blank" class="button secondary" title="File opens in new tab"><i
                 class="bi bi-cloud-download-fill"></i> Download</a>
           </div>
