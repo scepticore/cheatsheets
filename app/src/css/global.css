@@ -150,7 +150,6 @@ nav ul {
 
 nav ul a {
     color: var(--text-muted);
-    font-weight: 600;
     display: flex;
     align-items: center;
     gap: 8px;
