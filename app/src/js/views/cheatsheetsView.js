@@ -31,7 +31,7 @@ export async function viewCheatsheetList() {
 export async function viewPublicCheatsheets() {
   const cheatsheets = await cheatsheetsService.getPublicCheatsheets();
   cheatsheets.map((cheatsheet) => {
-    cheatsheet.image = `${OUTPUT_DIR}/${cheatsheet.id}.png`;
+    cheatsheet.image = `${OUTPUT_DIR}${cheatsheet.id}.png`;
     cheatsheet.file = `${OUTPUT_DIR}${cheatsheet.id}.pdf`;
   })
   await renderTemplate("cheatsheets/public.html", {cheatsheets: cheatsheets});
