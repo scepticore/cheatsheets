@@ -21,10 +21,14 @@ const __dirname = path.dirname(__filename);
 
 
 app.use(cors({
-    origin: ORIGIN,
+    origin: [
+        process.env.VITE_HOST,
+        "https://cheatsheet.urben.dev",
+        "https://api.urben.dev"
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['content-type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
