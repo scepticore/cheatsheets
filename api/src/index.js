@@ -32,9 +32,8 @@ console.log("Static files served from:", absoluteOutputPath);
 
 app.use("/output", express.static(absoluteOutputPath, {
     setHeaders: (res) => {
-        // Fix gegen das Blocking im Browser (CORP)
         res.set("Cross-Origin-Resource-Policy", "cross-origin");
-        // Sicherstellen, dass die CSP vom Proxy nicht das Bild blockiert
+        res.set("Access-Control-Allow-Origin", "*");
         res.set("Content-Security-Policy", "default-src 'self'; img-src 'self' data: blob:;");
     }
 }));
