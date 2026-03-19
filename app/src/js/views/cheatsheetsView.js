@@ -14,7 +14,7 @@ import {OUTPUT_DIR, API_BASE, HOST} from "../constants.js";
 export async function viewCheatsheetList() {
   let cheatsheets = await cheatsheetsService.getCheatsheets();
   cheatsheets.map((cheatsheet) => {
-    cheatsheet.image = `${OUTPUT_DIR}/${cheatsheet.id}.png`;
+    cheatsheet.image = `${OUTPUT_DIR}${cheatsheet.id}.png`;
     cheatsheet.file = `${OUTPUT_DIR}${cheatsheet.id}.pdf`;
   })
   const bin = await cheatsheetsService.getBinSize();
