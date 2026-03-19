@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from 'cors';
 
+import fs from 'fs';
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -25,22 +26,25 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['content-type', 'Authorization']
 }));
+app.use(express.json());
 
-const absoluteOutputPath = path.join(__dirname, "..", "output");
+const STATIC_PATH = "/usr/src/app/output";
 
-console.log("Static files served from:", absoluteOutputPath);
+if (!fs.existsSync(STATIC_PATH)) {
+    console.error(`!!! WARNUNG: Pfad ${STATIC_PATH} wurde nicht gefunden!`);
+} else {
+    console.log(`✅ Statische Dateien werden aus ${STATIC_PATH} serviert.`);
+}
 
-app.use("/output", express.static(path.join(__dirname, "..", "output"), {
-    setHeaders: (res, path) => {
-        if (path.endsWith('.png')) {
-            res.set("Content-Type", "image/png");
-        }
+app.use("/output", express.static(STATIC_PATH, {
+    setHeaders: (res) => {
         res.set("Cross-Origin-Resource-Policy", "cross-origin");
-        res.set("Access-Control-Allow-Origin", "*");
+        res.set("Access-Control-Allow-Origin", ORIGIN);
+        res.set("Content-Security-Policy", "default-src 'self'; img-src 'self' data: blob:;");
     }
 }));
 
-app.use(express.json());
+
 app.use("/api", [userRoutes, cheatsheetRoutes, pdfRoutes]);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
