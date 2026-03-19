@@ -11,3 +11,11 @@ export function getUserName() {
     mainNav.innerHTML += `<li><a href="/signout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>`
   }
 }
+
+export function getUserRole() {
+  const userRole = sessionStorage.getItem("role");
+  if(userRole === "admin" ) {
+    const mainNav = document.getElementById("main_nav").children[0];
+    mainNav.innerHTML += `<li><a href="/admin"><i class="bi bi-wrench"></i> Admin</a></li>`
+  }
+}

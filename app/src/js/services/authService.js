@@ -77,6 +77,8 @@ export class authService {
       body: JSON.stringify(userData),
     });
 
+    console.log(response);
+
     if(response.ok && response.status === 201 ) {
       window.location.href = `${HOST}/signin`;
     }
@@ -86,6 +88,17 @@ export class authService {
   static signOut() {
     sessionStorage.clear();
     window.location.href = `${HOST}/signin`;
+  }
+
+  static async isAdmin(userId) {
+    const response = await requestService.fetch(`${API_BASE}/user/${userId}/role`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    return response[0].role === "admin";
   }
 }
 

@@ -10,11 +10,12 @@ import {
 import {showPreview} from "./js/views/previewView";
 import {formSignIn, formSignUp} from "./js/views/usersView";
 import {renderTemplate} from "./js/utils/templateEngine.js";
-import {isLoggedIn} from "./js/middleware/auth.js";
-import {getUserName} from "./js/controller/appHandler.js";
+import {isAdmin, isLoggedIn} from "./js/middleware/auth.js";
+import {getUserName, getUserRole} from "./js/controller/appHandler.js";
 import {authService} from "./js/services/authService.js";
 import {restoreHandler} from "./js/controller/restoreHandler.js";
 import {toggleNav} from "./js/controller/toggleMobileNav.js";
+import {showAdminDashboard} from "./js/views/adminView.js";
 
 // AppController
 checkDarkMode();
@@ -23,7 +24,7 @@ const router = new Router();
 
 const mainframe = document.getElementById("mainframe");
 
-router.add("/preview/:id", async(params) => {
+router.add("/preview/:id", async (params) => {
   return showPreview(params.id);
 });
 
@@ -101,6 +102,10 @@ router.add("/signout", () => {
 });
 
 /* Admin Routes */
+router.add("/admin", async () => {
+    return showAdminDashboard();
+});
+
 router.add("/admin/users", () => {
   mainframe.innerHTML = "<h1>Users</h1>";
 });
@@ -112,4 +117,5 @@ router.add("/cheatsheet_pdf", () => {
 
 // Controllers
 getUserName();
+getUserRole();
 toggleNav();

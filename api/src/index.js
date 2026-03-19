@@ -5,6 +5,7 @@ import userRoutes from "./routes/userRoutes.js";
 import cheatsheetRoutes from "./routes/cheatsheetRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import pdfRoutes from "./routes/pdfRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3030;
@@ -20,6 +21,7 @@ app.use(cors({
 app.use(express.json());
 app.use("/api", [userRoutes, cheatsheetRoutes, pdfRoutes]);
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/output", express.static("output"));
 
 // @todo split and make app.use("/users") as well as app.use("/cheatsheets") etc.

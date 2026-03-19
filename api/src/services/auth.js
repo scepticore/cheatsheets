@@ -29,7 +29,11 @@ export async function registerUser(req, res) {
       email,
       password: hashedPassword
     });
-    res.status(201).json({message: "User created"});
+
+    // @todo login user
+    const result = await loginUser(req, res);
+    console.log(result);
+    return res.status(200).json(result);
   } catch (error) {
     console.error(error.cause);
     res.status(400).json({error: "User not created"});
@@ -57,6 +61,9 @@ export async function loginUser(req, res) {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({error: "Invalid credentials"});
     }
+    console.log(user);
+
+    const lastLogin = await db.update(usersTable).set({last_login: new Date().toISOString()}).where(eq(usersTable.id, user.id));
 
     const token = await new SignJWT({ userId: user.id, role: user.role || 'user', username: user.username })
       .setProtectedHeader({alg: 'HS256'})
@@ -70,7 +77,7 @@ export async function loginUser(req, res) {
       .setExpirationTime('7d')
       .sign(refreshSecret);
 
-    return res.json({
+    return res.status(200).json({
       token,
       refreshToken,
       username: user.username,

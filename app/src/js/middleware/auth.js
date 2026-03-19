@@ -1,15 +1,18 @@
-export function isAdmin() {
-  // @todo get token
-  // const token = window.sessionStorage.getItem("token");
+import {authService} from "../services/authService.js";
+import {renderTemplate} from "../utils/templateEngine.js";
 
-  // @todo also verify role with token!
-  if (window.sessionStorage.getItem("role") === "admin" ) {
-
+export async function isAdmin() {
+  const isAdmin = await authService.isAdmin(sessionStorage.getItem("userId"));
+  console.log(isAdmin);
+  if (isAdmin) {
+    return true;
+  } else {
+    return renderTemplate("/utils/forbidden.html");
   }
 }
 
 export function isLoggedIn() {
-  if (window.sessionStorage.getItem("token")) {
+  if (window.sessionStorage.getItem("token") && sessionStorage.getItem("userId")) {
     return true;
   } else {
     window.location.href = "/signin";

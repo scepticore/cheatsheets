@@ -105,15 +105,14 @@ export async function getCheatsheetBin(userId, res) {
 export async function getCheatsheetBinSize(userId, res) {
   try {
     const result = await db.$count(cheatsheetsTable, and(eq(cheatsheetsTable.user_id, userId), eq(cheatsheetsTable.status, 0)))
-    res.status(200).json(result);
+    return result;
   } catch(error) {
     console.error(error);
-    res.status(500).json({error: "An error occured", body: error});
+    return error;
   }
 }
 /**
  * Get cheatsheet by ID
- * @param userId
  * @param cheatsheetId
  * @param req
  * @param res

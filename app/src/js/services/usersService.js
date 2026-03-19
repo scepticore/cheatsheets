@@ -6,8 +6,19 @@ export class usersService {
    * Get User List from SQlite DB
    * @returns {Promise<[{id: number, firstname: string, lastname: string, birthdate: string, profession: string},{id: number, firstname: string, lastname: string, birthdate: string, profession: string}]>}
    */
-  async getUserList() {
-    //
+  static async getUserList() {
+    try {
+      const response = await requestService.fetch(`${API_BASE}/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      return response;
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   /**

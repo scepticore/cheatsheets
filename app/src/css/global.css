@@ -325,28 +325,42 @@ main#mainframe {
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
-    border: none;
     transition: all 0.2s;
     gap: 8px;
     font-size: 0.9rem;
     background-color: var(--primary-color);
     color: white;
+    border: 1px solid var(--primary-color);
 }
 
 .button:hover, button:hover {
-    background-color: var(--primary-hover);
-    color: white;
-    filter: brightness(1.1);
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    /*filter: brightness(1.1);*/
 }
 
 .button.secondary {
     background-color: var(--secondary-bg-color);
     color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.button.secondary:hover {
+    background-color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    color: white;
 }
 
 .button.success {
     background-color: var(--success-color);
     color: var(--success-text-color);
+    border: 1px solid var(--success-color);
+}
+
+.button.success:hover {
+    background-color: white;
+    color: var(--success-color);
 }
 
 .card .button_bar {

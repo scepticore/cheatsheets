@@ -1,5 +1,6 @@
 import express from "express";
-import {getUserById, getUsers, updateUser, deleteUser} from "../services/users.js";
+import {getUserById, getUserRoleById, getUsers, updateUser, deleteUser} from "../services/users.js";
+import {authenticateToken} from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ const router = express.Router();
 router.get("/users", async (req, res) => {
   try {
     const users = await getUsers(res);
-    res.json(users);
+    res.status(200).json({users});
   } catch (error) {
     console.log(error);
     res.status(500).json({error: "An error occured"})
@@ -21,13 +22,26 @@ router.get("/users", async (req, res) => {
  */
 router.get("/user/:id", async (req, res) => {
   try {
-    const users = await getUserById(parseInt(req.params.id), req, res);
-    res.json(users);
+    const user = await getUserById(req.params.id, req, res);
+    res.status(200).json(user);
   } catch (error) {
     console.log(error);
     res.status(500).json({error: "An error occured"})
   }
 })
+
+/**
+ * Get user role
+ */
+router.get("/user/:id/role", authenticateToken, async (req, res) => {
+  try {
+    const role = await getUserRoleById(req.params.id, req, res);
+    res.status(200).json(role);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error: "An error occured", body: error})
+  }
+});
 
 /**
  * Get User by email

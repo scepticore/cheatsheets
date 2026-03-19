@@ -3,7 +3,7 @@ import { jwtVerify } from "jose";
 export async function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  console.log(token);
+  // console.log(token);
   if (!token) {
     console.error("Token missing");
     return res.status(401).json({ error: "Token not found" });

@@ -27,11 +27,27 @@ export async function getUsers(res) {
     try {
         const result = await db.select({
             id: usersTable.id,
+            username: usersTable.username,
+            role: usersTable.role,
+        }).from(usersTable);
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error: "An error occured"});
+    }
+}
+
+export async function getUsersAdmin(res) {
+    try {
+        const result = await db.select({
+            id: usersTable.id,
             name: usersTable.name,
             firstname: usersTable.firstname,
             email: usersTable.email,
             username: usersTable.username,
             role: usersTable.role,
+            registered_at: usersTable.registered_at,
+            last_login: usersTable.last_login
         }).from(usersTable);
         res.status(200).json(result);
     } catch (error) {
@@ -54,7 +70,20 @@ export async function getUserById(id, req, res) {
             name: usersTable.name,
             email: usersTable.email
         }).from(usersTable).where(eq(usersTable.id, id));
-        res.status(200).json(result);
+        return result;
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error});
+    }
+}
+
+export async function getUserRoleById(id, req, res) {
+    try {
+        console.log(`given user id: ${id}`);
+        const result = await db.select({
+            role: usersTable.role
+        }).from(usersTable).where(eq(usersTable.id, id));
+        return result;
     } catch (error) {
         console.log(error);
         res.status(500).json({error});
