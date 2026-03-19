@@ -28,19 +28,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
-const STATIC_PATH = "/usr/src/app/output";
-
-if (!fs.existsSync(STATIC_PATH)) {
-    console.error(`!!! WARNUNG: Pfad ${STATIC_PATH} wurde nicht gefunden!`);
-} else {
-    console.log(`✅ Statische Dateien werden aus ${STATIC_PATH} serviert.`);
-}
+const STATIC_PATH = path.join(process.cwd(), "output");
 
 app.use("/output", express.static(STATIC_PATH, {
     setHeaders: (res) => {
         res.set("Cross-Origin-Resource-Policy", "cross-origin");
-        res.set("Access-Control-Allow-Origin", ORIGIN);
-        res.set("Content-Security-Policy", "default-src 'self'; img-src 'self' data: blob:;");
+        res.set("Access-Control-Allow-Origin", "*"); // Zum Testen auf Stern setzen
     }
 }));
 

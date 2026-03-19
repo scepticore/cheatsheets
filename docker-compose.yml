@@ -19,7 +19,6 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
-      - ./api/output:/usr/src/app/output
       - ./app/src/css:/usr/src/app/src/shared_css:ro
     env_file:
       - .env
