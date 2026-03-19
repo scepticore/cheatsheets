@@ -30,11 +30,13 @@ const absoluteOutputPath = path.join(__dirname, "..", "output");
 
 console.log("Static files served from:", absoluteOutputPath);
 
-app.use("/output", express.static(absoluteOutputPath, {
-    setHeaders: (res) => {
+app.use("/output", express.static(path.join(__dirname, "..", "output"), {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.png')) {
+            res.set("Content-Type", "image/png");
+        }
         res.set("Cross-Origin-Resource-Policy", "cross-origin");
         res.set("Access-Control-Allow-Origin", "*");
-        res.set("Content-Security-Policy", "default-src 'self'; img-src 'self' data: blob:;");
     }
 }));
 
