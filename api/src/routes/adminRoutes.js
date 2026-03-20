@@ -73,5 +73,9 @@ router.get("/users/:id", isAdmin, authenticateToken, async (req, res) => {
   }
 });
 
+router.get("/get-ip", (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.ip;
+  res.json({ip});
+});
 
 export default router;
