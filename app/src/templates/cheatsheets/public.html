@@ -1,11 +1,19 @@
 <div class="block">
   <div class="block_content">
-    <div class="cards button_bar">
+    <div class="cards">
       <h1>Public cheatsheets by the community</h1>
+    </div>
+    <div>
+      <search>
+        <form>
+          <input type="text" id="search_public" placeholder="Search by title..." class="search_input" />
+        </form>
+      </search>
+
     </div>
     <div class="grid">
       {{ for cheatsheet in cheatsheets }}
-      <article class="card">
+      <article class="card cheatsheet" data-title="{{ cheatsheet.title }}">
         <div class="card-media">
           <a href="/cheatsheets/{{ cheatsheet.id }}">
             <img src="{{ cheatsheet.image }}" alt="{{ cheatsheet.title }}"/>

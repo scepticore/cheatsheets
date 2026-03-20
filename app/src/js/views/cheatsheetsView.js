@@ -6,6 +6,7 @@ import {handleFormUpdates} from "../controller/formHandler";
 import {createCheatsheet} from "../controller/createCheatsheet.js";
 import {downloadPdf} from "../controller/downloadPdf.js";
 import {OUTPUT_DIR, API_BASE, HOST} from "../constants.js";
+import {publicSearchHandler} from "../controller/searchHandler.js";
 
 /**
  * View own cheatsheets
@@ -35,6 +36,7 @@ export async function viewPublicCheatsheets() {
     cheatsheet.file = `${OUTPUT_DIR}${cheatsheet.id}.pdf`;
   })
   await renderTemplate("cheatsheets/public.html", {cheatsheets: cheatsheets});
+  publicSearchHandler();
 }
 
 /**
