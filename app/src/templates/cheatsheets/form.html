@@ -1,16 +1,53 @@
 <div class="block">
   <div class="block_content">
     <div class="button_bar">
-      <h1>{{ title }}</h1>
+      <h1>Edit cheatsheet</h1>
       <p>
         <!--    <a href="#" class="button secondary">Layout</a>-->
         <!--    <a href="#" class="button secondary" id="downloadmarkdown">Download .md</a>-->
-        <a href="#" class="button" data-csid="{{ cheatsheet.cheatsheet.id }}" id="downloadPdf"><i class="bi bi-file-pdf"></i>Render PDF</a></p>
+        <a href="#" class="button" data-csid="{{ cheatsheet.id }}" id="downloadPdf"><i
+            class="bi bi-file-pdf"></i>Render PDF</a></p>
     </div>
+    <form id="cheatsheet_edit">
+      <input type="hidden" id="callback" name="callback" value="window.cheatsheetsService.updateCheatsheet()">
+      <div class="grid w2">
+        <article class="card">
+          <div class="card-content">
+            <h2>General Information</h2>
+            <div class="form_group">
+              <span id="length_indicator_title" class="length_indicator">{{ cheatsheet.titleLength }} / 100</span>
+              <label for="title">title</label>
+              <input id="title" name="title" type="text" placeholder="title" maxlength="100" required="false"
+                     class="first_class second_class" value="{{ cheatsheet.title }}">
+            </div>
 
-    <div id="cheatsheet_meta">
-      {{ form form }}
-    </div>
+            <div class="form_group">
+              <span id="length_indicator_description" class="length_indicator">{{ cheatsheet.descriptionLength }} / 300</span>
+              <label for="description">description</label>
+              <textarea id="description" name="description" placeholder="description" maxlength="300">{{ cheatsheet.description }}</textarea>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-content">
+            <h2>Layout settings</h2>
+            <div class="form_group form_checkbox">
+              <input id="public" name="public" type="checkbox" {{ cheatsheet.checked }}>
+              <label for="public">public</label>
+            </div>
+            <div class="form_group">
+              <label for="columns">columns</label>
+              <input id="columns" name="columns" type="range" placeholder="columns" min="1" max="5" value="{{ cheatsheet.columns }}">
+            </div>
+            <div class="form_group">
+              <label for="font_size">font size</label>
+              <input id="font_size" name="font_size" type="range" placeholder="font_size" min="5" max="12" value="{{ cheatsheet.font_size }}">
+            </div>
+          </div>
+        </article>
+      </div>
+    </form>
 
     <div id="edit_cheatsheet">
       <div id="editor_wrapper">

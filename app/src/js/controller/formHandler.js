@@ -25,7 +25,6 @@ export function handleFormUpdates(csUUID, form) {
     }, 1000);
   });
 
-  // @todo make checkboxes work for autosave
   // Ranges
   const ranges = document.querySelectorAll("input[type=range]");
   ranges.forEach(range => {
@@ -53,5 +52,30 @@ export function handleFormUpdates(csUUID, form) {
 
     console.log(updateObject);
     await cheatsheetService.updateCheatsheet(csUUID, updateObject);
+  });
+
+  const inputs = document.querySelectorAll("input[id=title], textarea[id=description]");
+  inputs.forEach(input => {
+    const lengthIndicator = document.getElementById(`length_indicator_${input.id}`);
+    lengthCounter(input, lengthIndicator);
+  });
+
+}
+
+/**
+ * Indicates length of user input, if maxLength is set
+ * @param {object} fieldElement - Element that changes its value
+ * @param {object} lengthIndicator - Span Element to display the current length and max length
+ */
+function lengthCounter(fieldElement, lengthIndicator) {
+  fieldElement.addEventListener("input", (e) => {
+    lengthIndicator.textContent = `${e.target.value.length} / ${fieldElement.getAttribute("maxlength")}`;
+    if (Number(e.target.value.length) === Number(fieldElement.getAttribute("maxlength"))) {
+      lengthIndicator.classList.add("max_reached");
+    } else {
+      if (lengthIndicator.classList.contains("max_reached")) {
+        lengthIndicator.classList.remove("max_reached");
+      }
+    }
   });
 }

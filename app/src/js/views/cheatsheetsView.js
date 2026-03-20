@@ -70,9 +70,8 @@ export async function viewCheatsheetDetail(id) {
  */
 export async function viewCheatsheetForm(id = null, userId = null) {
   let result = {};
+  let cheatsheet = {};
   let markdown = "";
-  let title = "Create new cheatsheet";
-  let callback = "window.cheatsheetsService.createCheatsheet()";
 
   if(id) {
     result = await cheatsheetsService.getCheatsheetById(id);
@@ -80,60 +79,20 @@ export async function viewCheatsheetForm(id = null, userId = null) {
       console.error("Access denied");
       return renderTemplate("utils/forbidden.html");
     }
-    result.url = `${API_BASE}/cheatsheet/${id}/pdf`;
-    result.image = `${API_BASE}/output/${id}.png`;
-    result.file = `${API_BASE}/output/${id}.pdf`;
+    cheatsheet = result.cheatsheet;
+    cheatsheet.url = `${API_BASE}/cheatsheet/${id}/pdf`;
+    cheatsheet.image = `${API_BASE}/output/${id}.png`;
+    cheatsheet.file = `${API_BASE}/output/${id}.pdf`;
+    cheatsheet.checked = result.cheatsheet?.public ? `checked="true"` : "";
     markdown = result.markdown ? result.markdown.body : "";
-    title = "Edit cheatsheet";
-    callback = "window.cheatsheetsService.updateCheatsheet()";
+    cheatsheet.titleLength = result.cheatsheet.title.length;
+    cheatsheet.descriptionLength = result.cheatsheet.description.length;
   }
 
-  const form = new formGenerator(null,
-    {
-      "callback":  callback
-    },
-    {
-      "title": {
-        "type": "text",
-        "attr": {
-          "maxLength": 100,
-          "required": false,
-          "class": "first_class second_class",
-          "value": result.cheatsheet ? result.cheatsheet.title : "",
-        },
-      },
-      "description": {
-        "type": "textarea",
-        "content": result.cheatsheet ? result.cheatsheet.description : "",
-        "attr": {
-          "maxLength": 500
-        }
-      },
-      "public": {
-        "type": "checkbox",
-        "checked": result.cheatsheet?.public,
-      },
-      "columns": {
-        "type": "range",
-        "attr": {
-          "min": 1,
-          "max": 5,
-          "value": result.cheatsheet?.columns ? result.cheatsheet.columns : "",
-        }
-      },
-      "font_size": {
-        "type": "range",
-        "attr": {
-          "min": 5,
-          "max": 12,
-          "value": result.cheatsheet?.font_size ? result.cheatsheet.font_size : 10,
-        }
-      }
-    });
-
-  await renderTemplate("cheatsheets/form.html", {title, markdown, form, cheatsheet: result}, true);
+  await renderTemplate("cheatsheets/form.html", {markdown, cheatsheet}, true);
 
   loadAce(id);
+  const form = document.getElementById("cheatsheet_edit");
   handleFormUpdates(id, form);
   downloadPdf();
 }
