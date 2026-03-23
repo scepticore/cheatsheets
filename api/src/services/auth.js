@@ -57,7 +57,7 @@ export async function loginUser(req, res) {
     const user = await db.select({
       username: usersTable.username,
       password: usersTable.password,
-      userId: usersTable.id,
+      id: usersTable.id,
       email: usersTable.email,
     }).from(usersTable).where(eq(usersTable.username, username)).get();
 
