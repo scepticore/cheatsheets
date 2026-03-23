@@ -1,5 +1,5 @@
 import { db } from "../utils/db.js";
-import {usersTable} from "../db/schema.js";
+import {usersTable, loginAttemptsTable} from "../db/schema.js";
 import {eq} from "drizzle-orm";
 import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcrypt";
@@ -29,11 +29,9 @@ export async function registerUser(req, res) {
       email,
       password: hashedPassword
     });
+    return res.status(201).json({body: "User registered successfully"});
+    // @todo autologin user
 
-    // @todo login user
-    const result = await loginUser(req, res);
-    console.log(result);
-    return res.status(200).json(result);
   } catch (error) {
     console.error(error.cause);
     res.status(400).json({error: "User not created"});
@@ -59,9 +57,9 @@ export async function loginUser(req, res) {
     const user = await db.select().from(usersTable).where(eq(usersTable.username, username)).get();
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
+      await failedLoginAttempt(req, res);
       return res.status(401).json({error: "Invalid credentials"});
     }
-    console.log(user);
 
     const lastLogin = await db.update(usersTable).set({last_login: new Date().toISOString()}).where(eq(usersTable.id, user.id));
 
@@ -115,4 +113,20 @@ export async function refreshToken(req, res) {
     console.error(error);
     res.status(403);
   }
+}
+
+/**
+ * Store failed login attempts in database
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ */
+async function failedLoginAttempt(req, res) {
+  const ip = req.headers["x-forwarded-for"] || req.ip;
+  const response = await db.insert(loginAttemptsTable).values({
+    user_name: req.body.username,
+    date: new Date().toISOString(),
+    ip_addr: ip
+  });
+  return response;
 }

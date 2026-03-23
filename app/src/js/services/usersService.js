@@ -54,7 +54,13 @@ export class usersService {
    * @returns {Promise<boolean>}
    */
   static async getUserByUsername(username) {
-    return true;
+    return requestService.fetch(`${API_BASE}/username`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({"username": username})
+    });
   }
 
   /**
@@ -63,7 +69,13 @@ export class usersService {
    * @returns {Promise<boolean>}
    */
   static async getUserByEmail(email) {
-    return true;
+    return requestService.fetch(`${API_BASE}/email`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({"email": email})
+    });
   }
 }
 

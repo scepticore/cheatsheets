@@ -2,7 +2,7 @@ import {renderTemplate} from "../utils/templateEngine";
 import {formGenerator} from "../utils/formBuilder";
 import {usersService} from "../services/usersService";
 import {authService} from "../services/authService.js";
-import {signInForm} from "../controller/authHandler.js";
+import {signInForm, signUpForm} from "../controller/authHandler.js";
 
 export async function showUsers() {
   const users = await usersService.getUserList();
@@ -17,43 +17,19 @@ export async function showUser(id) {
 export async function formSignIn() {
   await renderTemplate("users/signin.html", {}, true);
   signInForm();
+
+  const params = new URLSearchParams(document.location.search);
+  const message = params.get("message");
+  if (message) {
+    const messageContainer = document.getElementById("message");
+    messageContainer.innerHTML = message;
+    messageContainer.classList.add("success");
+  }
 }
 
 export async function formSignUp() {
-  const form = new formGenerator("Sign Up", {
-      "callback": "window.authService.signUp()"
-    },
-    {
-      "username": {
-        "type": "text",
-        "attr": {
-          "required": true
-        }
-      },
-      "email": {
-        "type": "email",
-        "attr": {
-          "required": true
-        }
-      },
-      "password": {
-        "type": "password",
-        "attr": {
-          "required": true,
-          "minlength": 8
-        }
-      },
-      "password_confirmation": {
-        "type": "password",
-        "attr": {
-          "required": true,
-          "minlength": 8
-        }
-      }
-    }
-  );
-
-  return renderTemplate("users/signup.html", {form}, true);
+  await renderTemplate("users/signup.html", {}, true);
+  signUpForm();
 }
 
 export async function showUserForm(userId) {

@@ -13,7 +13,9 @@ export const usersTable = sqliteTable("users_table", {
   password: text().notNull(),
   role: text().default("user"),
   registered_at: text().notNull().$defaultFn(()=> new Date().toISOString()),
-  last_login: text()
+  last_login: text(),
+  description: text(),
+  status: integer().default(1),
 });
 
 /**
@@ -30,8 +32,15 @@ export const cheatsheetsTable = sqliteTable("cheatsheet_table", {
   status: integer().default(1),
   public: integer({ mode: 'boolean'}),
   created_at: text().notNull().$defaultFn(()=> new Date().toISOString()),
-  updated_at: text()
+  updated_at: text(),
+  tags: text()
 });
+
+export const cheatsheetViewsTable = sqliteTable("cheatsheet_views", {
+  cheatsheet_id: text().notNull(),
+  viewer_id: text().default(""),
+  view_date: text().notNull().$defaultFn(() => new Date().toISOString()),
+})
 
 export const newsTable = sqliteTable("news_table", {
   id: text().primaryKey(),
@@ -44,3 +53,9 @@ export const newsTable = sqliteTable("news_table", {
   updated_at: text(),
   updated_by: text()
 });
+
+export const loginAttemptsTable = sqliteTable("login_attempts_table", {
+  user_name: text().notNull(),
+  date: text().notNull().$defaultFn(() => new Date().toISOString()),
+  ip_addr: text(),
+})

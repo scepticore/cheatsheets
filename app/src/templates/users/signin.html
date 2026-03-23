@@ -1,5 +1,6 @@
 <div class="auth-container">
   <form id="signin_form" class="auth-form">
+    <span id="message">{{ message }}</span>
     <div class="form-group">
       <label for="username">Username</label>
       <div class="input-wrapper">
@@ -19,7 +20,7 @@
     <button type="submit" class="button primary login-btn">
       Sign In <i class="bi bi-arrow-right"></i>
     </button>
-
+    <p id="error-message" class="error-message">&nbsp;</p>
     <p class="auth-footer">
       Don't have an account? <a href="/signup">Sign up for free</a>
     </p>

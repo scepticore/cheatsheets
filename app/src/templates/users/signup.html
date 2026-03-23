@@ -1,1 +1,47 @@
-{{ form form }}
+<div class="auth-container">
+  <form id="signup_form" class="auth-form">
+    <input type="hidden" id="callback" name="callback" value="window.authService.signUp()">
+    <div id="form_title">
+      <h1>Sign Up</h1>
+    </div>
+    <div class="form-group">
+      <label for="username">username</label>
+      <div class="input-wrapper">
+        <i class="bi bi-person"></i>
+        <input id="username" name="username" type="text" placeholder="username" required="true">
+      </div>
+      <p id="error_username" class="error"></p>
+    </div>
+    <div class="form-group">
+      <label for="email">email</label>
+      <div class="input-wrapper">
+        <i class="bi bi-envelope"></i>
+        <input id="email" name="email" type="email" placeholder="email" required="true">
+      </div>
+      <p id="error_email" class="error"></p>
+    </div>
+    <div class="form-group">
+      <label for="password">password</label>
+      <div class="input-wrapper">
+        <i class="bi bi-key"></i>
+        <input id="password" name="password" type="password" placeholder="password" required="true" minlength="8">
+      </div>
+      <p id="error_password" class="error"></p>
+    </div>
+    <div class="form-group">
+      <label for="password_confirm">password confirmation</label>
+      <div class="input-wrapper">
+        <i class="bi bi-key"></i>
+        <input id="password_confirm" name="password_confirmation" type="password" placeholder="Password confirmation" required="true" minlength="8">
+      </div>
+      <p id="error_password_confirm" class="error"></p>
+    </div>
+    <button type="submit" id="signup_submit" class="button primary signup-btn">
+      Sign Up <i class="bi bi-arrow-right"></i>
+    </button>
+    <p id="error-message" class="error-message">&nbsp;</p>
+    <p class="auth-footer">
+      Already have an account? <a href="/signin">Sign in</a>
+    </p>
+  </form>
+</div>

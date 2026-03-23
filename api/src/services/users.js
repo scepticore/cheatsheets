@@ -29,8 +29,9 @@ export async function getUsers(res) {
             id: usersTable.id,
             username: usersTable.username,
             role: usersTable.role,
+            last_login: usersTable.last_login,
         }).from(usersTable);
-        res.status(200).json(result);
+        return result;
     } catch (error) {
         console.log(error);
         res.status(500).json({error: "An error occured"});
@@ -97,7 +98,13 @@ export async function getUserRoleById(id, req, res) {
  * @returns {Promise<void>}
  */
 export async function getUserByEmail(req, res) {
-
+    try {
+        const result = await db.$count(usersTable, eq(usersTable.email, req.body.email));
+        return result === 1;
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error});
+    }
 }
 
 /**
@@ -107,7 +114,13 @@ export async function getUserByEmail(req, res) {
  * @returns {Promise<void>}
  */
 export async function getUserByUsername(req, res) {
-
+    try {
+        const result = await db.$count(usersTable, eq(usersTable.username, req.body.username));
+        return result === 1;
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error});
+    }
 }
 
 /**
