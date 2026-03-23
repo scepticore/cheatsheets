@@ -59,6 +59,7 @@ export async function loginUser(req, res) {
       password: usersTable.password,
       id: usersTable.id,
       email: usersTable.email,
+      role: usersTable.role,
     }).from(usersTable).where(eq(usersTable.username, username)).get();
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
