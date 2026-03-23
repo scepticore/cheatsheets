@@ -54,7 +54,12 @@ export async function loginUser(req, res) {
     console.log(process.env.JWT_REFRESH_SECRET);
     console.log(refreshSecret);
 
-    const user = await db.select().from(usersTable).where(eq(usersTable.username, username)).get();
+    const user = await db.select({
+      username: usersTable.username,
+      password: usersTable.password,
+      userId: usersTable.id,
+      email: usersTable.email,
+    }).from(usersTable).where(eq(usersTable.username, username)).get();
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       await failedLoginAttempt(req, res);
