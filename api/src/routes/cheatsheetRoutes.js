@@ -227,7 +227,49 @@ router.get("/cheatsheet/:id/pdf", async (req, res) => {
       </style>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     </head>
-   <body>${paginatedHtml}</body>
+    <body>
+      ${paginatedHtml}
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const search = params.get("search");
+  if (!search) {
+    window.parent.postMessage({ type: "SCROLL_DONE" }, "*");
+    return;
+  }
+
+  const terms = decodeURIComponent(search).toLowerCase().split(" ");
+
+  function findMatch() {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let node;
+
+    while (node = walker.nextNode()) {
+      const text = node.textContent.toLowerCase();
+      if (terms.every(t => text.includes(t))) {
+        const el = node.parentElement;
+
+        el.scrollIntoView({
+          behavior: "instant",
+          block: "center"
+        });
+
+        el.style.background = "yellow";
+        return true;
+      }
+    }
+    return false;
+  }
+
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      findMatch();
+      window.parent.postMessage({ type: "SCROLL_DONE" }, "*");
+    }, 100);
+  });
+})();
+</script>
+    </body>
    </html>
    `
     res.send(fullHtml);
@@ -269,7 +311,6 @@ router.delete("/cheatsheet/:id/delete", authenticateToken, async (req, res) => {
  * @returns {string}
  */
 function paginateMarkdown(htmlString) {
-  // 1. Wir splitten bei JEDER Überschrift (h1-h6)
   const sections = htmlString.split(/(?=<h[1-6]>)/g);
 
   let result = "";
@@ -277,21 +318,17 @@ function paginateMarkdown(htmlString) {
 
   sections.forEach(section => {
     if (section.trim() === "") return;
-
-    // Wenn eine H1 kommt, müssen wir ggf. die vorherige Seite schließen
     if (section.startsWith("<h1>")) {
       if (isInsidePage) {
-        result += `</div>`; // Schließt die vorherige <div class="page">
+        result += `</div>`;
       }
       result += `<div class="page">`;
       isInsidePage = true;
     }
 
-    // Jede Sektion (egal welche H-Ebene) wird in einen Paragraph gepackt
     result += `<div class="paragraph">${section}</div>`;
   });
 
-  // Am Ende den letzten Page-Container schließen
   if (isInsidePage) {
     result += `</div>`;
   }

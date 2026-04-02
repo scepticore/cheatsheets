@@ -1,4 +1,5 @@
 import {cheatsheetsService} from "../services/cheatsheetsService.js";
+import {API_BASE} from "../constants.js";
 /**
  * Loading ACE editor
  */
@@ -11,17 +12,56 @@ export function loadAce(uuid) {
   editor.session.on("change", function(delta) {
     clearTimeout(timer);
     timer = setTimeout(async () => {
-      const value = JSON.stringify(editor.getValue());
-      const objectString = `{"body": ${value}}`;
+      const value = editor.getValue();
+      const objectString = `{"body": ${JSON.stringify(value)}}`;
+      const currentMarkdown = await cheatsheetsService.getCheatsheetMarkdown(uuid);
+      const snippet = getNewText(currentMarkdown.body, value);
+      await cheatsheetsService.updateCheatsheetMarkdown(uuid, objectString);
 
-      // store value in database with API call
-      const result = await cheatsheetsService.updateCheatsheetMarkdown(uuid, objectString);
-      // @todo backup if internet connection fails
-      // if no internetion connection, store value in window.sessionStorage
-      // window.sessionStorage.setItem("markdown", value);
+      setTimeout(() => {
+        const iframe = document.getElementById("cs_frame");
+        const overlay = document.getElementById("iframe-overlay");
+        overlay.classList.remove("hidden");
 
-      const iframe = document.getElementById("cs_frame");
-      iframe.src = iframe.src;
-    }, 500);
+        window.addEventListener("message", (e) => {
+          if (e.data?.type === "SCROLL_DONE") {
+            const overlay = document.getElementById("iframe-overlay");
+            overlay.classList.add("hidden");
+          }
+        });
+        if (snippet) {
+          const words = snippet
+            .replace(/[^a-zA-Z0-9À-ž]/g, ' ')
+            .trim()
+            .split(/\s+/)
+            .filter(w => w.length > 2);
+
+          if (words.length >= 2) {
+            const searchTerms = `${words[0]} ${words[2]}`;
+            console.log(searchTerms);
+            const timestamp = new Date().getTime();
+            const encoded = encodeURIComponent(searchTerms);
+            const targetUrl = `${API_BASE}/cheatsheet/${uuid}/pdf?t=${timestamp}&search=${encoded}`;
+            iframe.contentWindow.location.replace(targetUrl);
+
+            setTimeout(() => {
+              iframe.contentWindow.focus();
+              editor.focus();
+            });
+          }
+        }
+      }, 150);
+    }, 1000);
   });
+}
+
+function getNewText(currentMarkdown, newMarkdown) {
+  if(!currentMarkdown) return newMarkdown.substring(0, 50);
+  let i = 0;
+  while (i < currentMarkdown.length && i < newMarkdown.length && currentMarkdown[i] === newMarkdown[i]) {
+    i++;
+  }
+
+  const diff = newMarkdown.substring(i, i + 100).trim();
+  return diff.split(' ').slice(0, 5).join(' ');
 }

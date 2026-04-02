@@ -102,7 +102,7 @@ export class cheatsheetsService {
         "Content-Type": "application/json"
       }
     });
-    return result.data;
+    return result;
   }
 
   /**
@@ -163,7 +163,6 @@ export class cheatsheetsService {
         window.router.navigate("/login");
       }
     }
-    console.log(result);
   }
 
   /**
