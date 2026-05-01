@@ -38,7 +38,6 @@ export function loadAce(uuid) {
 
           if (words.length >= 2) {
             const searchTerms = `${words[0]} ${words[2]}`;
-            console.log(searchTerms);
             const timestamp = new Date().getTime();
             const encoded = encodeURIComponent(searchTerms);
             const targetUrl = `${API_BASE}/cheatsheet/${uuid}/pdf?t=${timestamp}&search=${encoded}`;
@@ -50,7 +49,7 @@ export function loadAce(uuid) {
             });
           }
         }
-      }, 150);
+      }, 1000);
     }, 1000);
   });
 }
