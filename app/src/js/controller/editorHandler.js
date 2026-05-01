@@ -37,7 +37,7 @@ export function loadAce(uuid) {
             .filter(w => w.length > 2);
 
           if (words.length >= 1) {
-            const searchTerms = `${words[0]} ${words[2]}`;
+            const searchTerms = `${words[0]} ${words[1]}`;
             const timestamp = new Date().getTime();
             const encoded = encodeURIComponent(searchTerms);
             const targetUrl = `${API_BASE}/cheatsheet/${uuid}/pdf?t=${timestamp}&search=${encoded}`;
