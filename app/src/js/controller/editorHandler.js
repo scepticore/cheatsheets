@@ -36,7 +36,7 @@ export function loadAce(uuid) {
             .split(/\s+/)
             .filter(w => w.length > 2);
 
-          if (words.length >= 2) {
+          if (words.length >= 1) {
             const searchTerms = `${words[0]} ${words[2]}`;
             const timestamp = new Date().getTime();
             const encoded = encodeURIComponent(searchTerms);
