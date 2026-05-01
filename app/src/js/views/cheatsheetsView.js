@@ -88,7 +88,7 @@ export async function viewCheatsheetForm(id = null, userId = null) {
     cheatsheet.checked = result.cheatsheet?.public ? `checked="true"` : "";
     markdown = result.markdown ? result.markdown.body : "";
     cheatsheet.titleLength = result.cheatsheet.title.length;
-    cheatsheet.descriptionLength = result.cheatsheet.description.length;
+    cheatsheet.descriptionLength = result.cheatsheet.description ? result.cheatsheet.description?.length : 0;
   }
 
   await renderTemplate("cheatsheets/form.html", {markdown, cheatsheet}, true);

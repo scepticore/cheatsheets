@@ -154,7 +154,7 @@ router.put("/cheatsheet/:id/markdown/update", authenticateToken, async (req, res
   try {
     const cheatsheetId = req.params.id;
     const result = await updateMarkdown(cheatsheetId, req, res);
-    res.status(result.status);
+    res.status(result.modifiedCount);
   } catch (error) {
     console.log(error);
   }
