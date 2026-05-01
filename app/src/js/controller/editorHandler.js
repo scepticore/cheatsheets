@@ -29,7 +29,8 @@ export function loadAce(uuid) {
             overlay.classList.add("hidden");
           }
         });
-        if (snippet) {
+        let targetUrl = "";
+        if (snippet && snippet.length >= 1) {
           const words = snippet
             .replace(/[^a-zA-Z0-9À-ž]/g, ' ')
             .trim()
@@ -40,15 +41,18 @@ export function loadAce(uuid) {
             const searchTerms = `${words[0]} ${words[1]}`;
             const timestamp = new Date().getTime();
             const encoded = encodeURIComponent(searchTerms);
-            const targetUrl = `${API_BASE}/cheatsheet/${uuid}/pdf?t=${timestamp}&search=${encoded}`;
-            iframe.contentWindow.location.replace(targetUrl);
-
-            setTimeout(() => {
-              iframe.contentWindow.focus();
-              editor.focus();
-            });
+            targetUrl = `${API_BASE}/cheatsheet/${uuid}/pdf?t=${timestamp}&search=${encoded}`;
           }
+        } else {
+          targetUrl = `${API_BASE}/cheatsheet/${uuid}/pdf`;
         }
+
+        iframe.contentWindow.location.replace(targetUrl);
+
+        setTimeout(() => {
+          iframe.contentWindow.focus();
+          editor.focus();
+        });
       }, 1000);
     }, 1000);
   });
