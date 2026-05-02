@@ -12,7 +12,8 @@ import {randomUUID} from "node:crypto";
  */
 export async function getCheatsheets(userId, res) {
   try {
-    const result = await db.select({
+    const result = await db
+      .select({
       id: cheatsheetsTable.id,
       user_id: cheatsheetsTable.user_id,
       title: cheatsheetsTable.title,
@@ -20,7 +21,9 @@ export async function getCheatsheets(userId, res) {
       public: cheatsheetsTable.public,
       created_at: cheatsheetsTable.created_at,
       updated_at: cheatsheetsTable.updated_at,
-    }).from(cheatsheetsTable).where(and(eq(cheatsheetsTable.user_id, userId),eq(cheatsheetsTable.status, 1)));
+    }).from(cheatsheetsTable)
+      .where(and(eq(cheatsheetsTable.user_id, userId),eq(cheatsheetsTable.status, 1)))
+      .orderBy(desc(cheatsheetsTable.updated_at));
     return result;
   } catch (error) {
     console.log(error);
@@ -218,8 +221,8 @@ export async function createCheatsheetMarkdown(id, body, req, res) {
 export async function updateCheatsheet(id, req, res) {
   try {
     // @todo get real userId
-    const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e";
-    console.log(req.body);
+    // const userId = "700a71fb-9f0e-4bf4-9f86-41c66ada062e";
+    // console.log(req.body);
     req.body.updated_at = new Date().toISOString();
     const result = await db.update(cheatsheetsTable).set(req.body).where(eq(cheatsheetsTable.id, id));
     res.status(200).json({result});
@@ -243,6 +246,8 @@ export async function updateMarkdown(id, req, res) {
     // const doc = await client.db("cheatsheets").collection("cheatsheets").updateOne({"id": id}, { $set: req.body });
     const mongodb = await getMongoClient();
     const doc = await mongodb.collection("cheatsheets").updateOne({"id": id}, {$set: req.body});
+    req.body.updated_at = new Date().toISOString();
+    const result = await db.update(cheatsheetsTable).set(req.body).where(eq(cheatsheetsTable.id, id));
     res.send(doc);
     return doc;
   } catch (error) {
