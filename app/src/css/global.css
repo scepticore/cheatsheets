@@ -318,6 +318,10 @@ main#mainframe {
     margin: 0 auto;
 }
 
+.block_content.editor {
+    max-width: none;
+}
+
 
 /*************************************/
 /* Buttons

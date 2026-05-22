@@ -1,5 +1,5 @@
 <div class="block">
-  <div class="block_content">
+  <div class="block_content editor">
     <div class="button_bar">
       <h1>Edit cheatsheet</h1>
       <p>
@@ -37,12 +37,12 @@
               <label for="public">public</label>
             </div>
             <div class="form_group">
-              <label for="columns">columns</label>
+              <label for="columns">columns (1-5)</label>
               <input id="columns" name="columns" type="range" placeholder="columns" min="1" max="5" value="{{ cheatsheet.columns }}">
             </div>
             <div class="form_group">
-              <label for="font_size">font size</label>
-              <input id="font_size" name="font_size" type="range" placeholder="font_size" min="5" max="12" value="{{ cheatsheet.font_size }}">
+              <label for="font_size">Font Size (min 4pt, max 12pt)</label>
+              <input id="font_size" name="font_size" type="range" placeholder="font_size" min="4" max="12" value="{{ cheatsheet.font_size }}">
             </div>
           </div>
         </article>
