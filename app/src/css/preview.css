@@ -118,7 +118,7 @@ hr {
     visibility: hidden;
 }
 
-ul {
+ul, ol {
     margin-left: 1em;
 }
 
