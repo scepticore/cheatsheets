@@ -81,8 +81,8 @@ h3 {
 }
 
 h4 {
-    background-color: #ffb74d; /* Orange */
-    color: #2c3e50;
+    background-color: #ba68c8; /* Lila */
+    color: white;
 }
 
 h5 {
@@ -91,8 +91,8 @@ h5 {
 }
 
 h6 {
-    background-color: #ba68c8; /* Lila */
-    color: white;
+    background-color: #ffb74d; /* Orange */
+    color: #2c3e50;
 }
 
 img {
