@@ -32,15 +32,23 @@ app.use(cors({
 }));
 app.use(express.json());
 
-const STATIC_PATH = path.join(process.cwd(), "output");
+const STATIC_OUTPUT_PATH = path.join(process.cwd(), "output");
 
-app.use("/output", express.static(STATIC_PATH, {
+app.use("/output", express.static(STATIC_OUTPUT_PATH, {
     setHeaders: (res) => {
         res.set("Cross-Origin-Resource-Policy", "cross-origin");
-        res.set("Access-Control-Allow-Origin", "*"); // Zum Testen auf Stern setzen
+        res.set("Access-Control-Allow-Origin", "*");
     }
 }));
 
+const STATIC_UPLOAD_PATH = path.join(process.cwd(), "uploads");
+
+app.use("/uploads", express.static(STATIC_UPLOAD_PATH, {
+    setHeaders: (res) => {
+        res.set("Cross-Origin-Resource-Policy", "cross-origin");
+        res.set("Access-Control-Allow-Origin", "*");
+    }
+}));
 
 app.use("/api", [userRoutes, cheatsheetRoutes, pdfRoutes]);
 app.use("/api/auth", authRoutes);
